@@ -1,7 +1,9 @@
-﻿using static HospitalManagmentApp.Common.EntityValidationConstants;
+﻿using Microsoft.EntityFrameworkCore;
+using static HospitalManagmentApp.Common.EntityValidationConstants;
 
 namespace HospitalManagmentApp.DataModels
 {
+    [PrimaryKey(nameof(PatientId), nameof(TreatmentId))]
     public class PatientTreatment
     {
         public Guid PatientId { get; set; } = Guid.Empty;

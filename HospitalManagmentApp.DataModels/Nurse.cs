@@ -29,7 +29,7 @@ namespace HospitalManagmentApp.DataModels
         [Comment("Nurse monthly salary")]
         public decimal Salary { get; set; }
 
-        [Required]
+       
         [Comment("Nurse`s department")]
         public Guid DepartmentId { get; set; }
 
