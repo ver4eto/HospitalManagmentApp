@@ -42,18 +42,18 @@ namespace HospitalManagmentApp.DataModels
         public IEnumerable<PatientTreatment> PatientTreatments { get; set; } = new HashSet<PatientTreatment>();
         public IEnumerable<PatientDoctor> Doctors { get; set; } = new HashSet<PatientDoctor>();
 
-    
+
         [Comment("In which department the patient is assigned")]
         public Guid DepartmentId { get; set; } = Guid.Empty;
 
         [ForeignKey(nameof(DepartmentId))]
         public Department Department { get; set; } = null!;
 
-     
+
         [Comment("Room of the patient")]
-        public Guid RoomId { get; set; } = Guid.Empty;
+        public Guid RoomId { get; set; }
 
         [ForeignKey(nameof(RoomId))]
-        public Room Room { get; set; } = null!;
+        public Room? Room { get; set; }
     }
 }

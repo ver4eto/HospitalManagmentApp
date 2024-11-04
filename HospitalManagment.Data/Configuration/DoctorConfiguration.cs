@@ -8,6 +8,12 @@ namespace HospitalManagmentApp.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Doctor> builder)
         {
+            builder
+                .HasOne(d => d.Department)
+                .WithMany(dd => dd.DepartmentDoctors)
+                .HasForeignKey(d => d.DepartmnetId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasData(SeedDoctor());
         }
 

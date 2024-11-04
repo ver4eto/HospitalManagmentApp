@@ -13,10 +13,12 @@ namespace HospitalManagmentApp.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Room> builder)
         {
-            builder
-                .HasMany(r => r.Patients)
-                .WithOne(p => p.Room)
-                .OnDelete(DeleteBehavior.Restrict);
+           
+            builder.
+                HasOne(r=>r.Department)
+                .WithMany(d=>d.Rooms)
+                .HasForeignKey(r=>r.DepartmnetId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasData(SeedRooms());
         }

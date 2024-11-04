@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HospitalManagmentApp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class changedRoomAndPatientConfiguration : Migration
+    public partial class changedRoomAndPatientAndDepConfiguration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Patients_Rooms_RoomId",
-                table: "Patients");
+                name: "FK_Rooms_Departments_DepartmnetId",
+                table: "Rooms");
 
             migrationBuilder.DeleteData(
                 table: "Patients",
@@ -62,10 +62,10 @@ namespace HospitalManagmentApp.Data.Migrations
                 columns: new[] { "Id", "Address", "DepartmentId", "EGN", "FirstName", "HasMedicalInsurance", "LastName", "PhoneNumber", "RoomId" },
                 values: new object[,]
                 {
-                    { new Guid("02d5b08e-7e96-406c-a445-332dfa30475b"), "Sofi, ul.Rezovo 13, et.2, ap.6", new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"), "4810234567", "Ivan", true, "Ivanov", "No phone", new Guid("6a746a43-8fe2-4b2f-b6a3-69104089e8ac") },
-                    { new Guid("17a95176-e310-42fa-91b4-90dbc11c76f0"), "Sofi, bul.Vitosha 123, et.7, ap.16", new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"), "6102193476", "Lazar", true, "Petrov", "No phone", new Guid("9f415f68-1979-4d9f-ba39-8586cc1d6c4c") },
-                    { new Guid("6e1de844-4cc6-4f27-a0d2-fb52806bd55d"), "Sofi, ul.Belomorska, et.7, ap.16", new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"), "6212094475", "Petar", true, "Stefanov", "No phone", new Guid("9f415f68-1979-4d9f-ba39-8586cc1d6c4c") },
-                    { new Guid("ceeb401e-96ed-401c-9fe9-0c44eaff91dc"), "Sofi, bul.Vitosha 3, et.7, ap.16", new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"), "8302198562", "Vanya", true, "Petrova", "No phone", new Guid("3b85738c-1a1a-40a9-952a-465e8914a2e0") }
+                    { new Guid("5c1e1f09-cd12-443b-8f2c-dc5b0bd775ef"), "Sofi, ul.Rezovo 13, et.2, ap.6", new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"), "4810234567", "Ivan", true, "Ivanov", "No phone", new Guid("6a746a43-8fe2-4b2f-b6a3-69104089e8ac") },
+                    { new Guid("9be05fc7-e16a-47f9-b7e4-b2e86f263f80"), "Sofi, bul.Vitosha 123, et.7, ap.16", new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"), "6102193476", "Lazar", true, "Petrov", "No phone", new Guid("9f415f68-1979-4d9f-ba39-8586cc1d6c4c") },
+                    { new Guid("f1da1441-c2e4-481b-b039-8d97b3acf5d4"), "Sofi, ul.Belomorska, et.7, ap.16", new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"), "6212094475", "Petar", true, "Stefanov", "No phone", new Guid("9f415f68-1979-4d9f-ba39-8586cc1d6c4c") },
+                    { new Guid("f8c073b1-c027-4439-b971-d76598d40883"), "Sofi, bul.Vitosha 3, et.7, ap.16", new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"), "8302198562", "Vanya", true, "Petrova", "No phone", new Guid("3b85738c-1a1a-40a9-952a-465e8914a2e0") }
                 });
 
             migrationBuilder.InsertData(
@@ -73,67 +73,66 @@ namespace HospitalManagmentApp.Data.Migrations
                 columns: new[] { "Id", "Name", "Price" },
                 values: new object[,]
                 {
-                    { new Guid("105b3c7a-b9f4-4d22-9788-f884074c6e5a"), "Physical Therapy", 100.0m },
-                    { new Guid("13f52fdf-4dbc-433d-a65e-0149ede03a53"), "Manual therapy", 170.0m },
-                    { new Guid("c79e4148-c5a8-415f-9c7b-0aab2254a01d"), "Massage Therapy", 80.0m },
-                    { new Guid("f8dddc6a-3dc0-47b6-a400-5bf6fc687278"), "Chiropractic Adjustment", 120.0m }
+                    { new Guid("4800d31a-7a3e-4e41-9b50-6bdfc5a9d843"), "Physical Therapy", 100.0m },
+                    { new Guid("71663a14-8bad-4448-8465-492d4b6b183d"), "Chiropractic Adjustment", 120.0m },
+                    { new Guid("7c7658ea-df00-4f9d-8294-9e9b4fba60ac"), "Massage Therapy", 80.0m },
+                    { new Guid("bde1aada-9775-4cd5-af6a-a35ef2b81c68"), "Manual therapy", 170.0m }
                 });
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Patients_Rooms_RoomId",
-                table: "Patients",
-                column: "RoomId",
-                principalTable: "Rooms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                name: "FK_Rooms_Departments_DepartmnetId",
+                table: "Rooms",
+                column: "DepartmnetId",
+                principalTable: "Departments",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Patients_Rooms_RoomId",
-                table: "Patients");
+                name: "FK_Rooms_Departments_DepartmnetId",
+                table: "Rooms");
 
             migrationBuilder.DeleteData(
                 table: "Patients",
                 keyColumn: "Id",
-                keyValue: new Guid("02d5b08e-7e96-406c-a445-332dfa30475b"));
+                keyValue: new Guid("5c1e1f09-cd12-443b-8f2c-dc5b0bd775ef"));
 
             migrationBuilder.DeleteData(
                 table: "Patients",
                 keyColumn: "Id",
-                keyValue: new Guid("17a95176-e310-42fa-91b4-90dbc11c76f0"));
+                keyValue: new Guid("9be05fc7-e16a-47f9-b7e4-b2e86f263f80"));
 
             migrationBuilder.DeleteData(
                 table: "Patients",
                 keyColumn: "Id",
-                keyValue: new Guid("6e1de844-4cc6-4f27-a0d2-fb52806bd55d"));
+                keyValue: new Guid("f1da1441-c2e4-481b-b039-8d97b3acf5d4"));
 
             migrationBuilder.DeleteData(
                 table: "Patients",
                 keyColumn: "Id",
-                keyValue: new Guid("ceeb401e-96ed-401c-9fe9-0c44eaff91dc"));
+                keyValue: new Guid("f8c073b1-c027-4439-b971-d76598d40883"));
 
             migrationBuilder.DeleteData(
                 table: "Treatments",
                 keyColumn: "Id",
-                keyValue: new Guid("105b3c7a-b9f4-4d22-9788-f884074c6e5a"));
+                keyValue: new Guid("4800d31a-7a3e-4e41-9b50-6bdfc5a9d843"));
 
             migrationBuilder.DeleteData(
                 table: "Treatments",
                 keyColumn: "Id",
-                keyValue: new Guid("13f52fdf-4dbc-433d-a65e-0149ede03a53"));
+                keyValue: new Guid("71663a14-8bad-4448-8465-492d4b6b183d"));
 
             migrationBuilder.DeleteData(
                 table: "Treatments",
                 keyColumn: "Id",
-                keyValue: new Guid("c79e4148-c5a8-415f-9c7b-0aab2254a01d"));
+                keyValue: new Guid("7c7658ea-df00-4f9d-8294-9e9b4fba60ac"));
 
             migrationBuilder.DeleteData(
                 table: "Treatments",
                 keyColumn: "Id",
-                keyValue: new Guid("f8dddc6a-3dc0-47b6-a400-5bf6fc687278"));
+                keyValue: new Guid("bde1aada-9775-4cd5-af6a-a35ef2b81c68"));
 
             migrationBuilder.InsertData(
                 table: "Patients",
@@ -158,11 +157,12 @@ namespace HospitalManagmentApp.Data.Migrations
                 });
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Patients_Rooms_RoomId",
-                table: "Patients",
-                column: "RoomId",
-                principalTable: "Rooms",
-                principalColumn: "Id");
+                name: "FK_Rooms_Departments_DepartmnetId",
+                table: "Rooms",
+                column: "DepartmnetId",
+                principalTable: "Departments",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.NoAction);
         }
     }
 }
