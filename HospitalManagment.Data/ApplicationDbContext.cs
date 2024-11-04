@@ -26,6 +26,11 @@ namespace HospitalManagmentApp.Data
             builder.ApplyConfiguration(new DepartmentConfiguration());
             builder.ApplyConfiguration(new DoctorConfiguration());
             builder.ApplyConfiguration(new NurseConfiguration());
+            builder.ApplyConfiguration(new RoomConfiguration());
+            builder.ApplyConfiguration(new TreatmentConfiguration());
+            builder.ApplyConfiguration(new PatientConfiguration());
+            builder.ApplyConfiguration(new PatientTreatmentConfiguration());
+
             base.OnModelCreating(builder);
         }
     }

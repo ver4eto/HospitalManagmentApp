@@ -4,6 +4,7 @@ using HospitalManagmentApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagmentApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241104140052_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,56 +294,6 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             t.HasComment("Patient Info Table");
                         });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("02d5b08e-7e96-406c-a445-332dfa30475b"),
-                            Address = "Sofi, ul.Rezovo 13, et.2, ap.6",
-                            DepartmentId = new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
-                            EGN = "4810234567",
-                            FirstName = "Ivan",
-                            HasMedicalInsurance = true,
-                            LastName = "Ivanov",
-                            PhoneNumber = "No phone",
-                            RoomId = new Guid("6a746a43-8fe2-4b2f-b6a3-69104089e8ac")
-                        },
-                        new
-                        {
-                            Id = new Guid("6e1de844-4cc6-4f27-a0d2-fb52806bd55d"),
-                            Address = "Sofi, ul.Belomorska, et.7, ap.16",
-                            DepartmentId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
-                            EGN = "6212094475",
-                            FirstName = "Petar",
-                            HasMedicalInsurance = true,
-                            LastName = "Stefanov",
-                            PhoneNumber = "No phone",
-                            RoomId = new Guid("9f415f68-1979-4d9f-ba39-8586cc1d6c4c")
-                        },
-                        new
-                        {
-                            Id = new Guid("17a95176-e310-42fa-91b4-90dbc11c76f0"),
-                            Address = "Sofi, bul.Vitosha 123, et.7, ap.16",
-                            DepartmentId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
-                            EGN = "6102193476",
-                            FirstName = "Lazar",
-                            HasMedicalInsurance = true,
-                            LastName = "Petrov",
-                            PhoneNumber = "No phone",
-                            RoomId = new Guid("9f415f68-1979-4d9f-ba39-8586cc1d6c4c")
-                        },
-                        new
-                        {
-                            Id = new Guid("ceeb401e-96ed-401c-9fe9-0c44eaff91dc"),
-                            Address = "Sofi, bul.Vitosha 3, et.7, ap.16",
-                            DepartmentId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
-                            EGN = "8302198562",
-                            FirstName = "Vanya",
-                            HasMedicalInsurance = true,
-                            LastName = "Petrova",
-                            PhoneNumber = "No phone",
-                            RoomId = new Guid("3b85738c-1a1a-40a9-952a-465e8914a2e0")
-                        });
                 });
 
             modelBuilder.Entity("HospitalManagmentApp.DataModels.PatientDoctor", b =>
@@ -404,56 +357,6 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             t.HasComment("Room information table");
                         });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("6a746a43-8fe2-4b2f-b6a3-69104089e8ac"),
-                            BedCount = 1,
-                            DepartmnetId = new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
-                            HasFreeBeds = true,
-                            RoomNumber = 101
-                        },
-                        new
-                        {
-                            Id = new Guid("fc4cc53a-2a34-4232-b63a-0724783fdfa3"),
-                            BedCount = 2,
-                            DepartmnetId = new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
-                            HasFreeBeds = true,
-                            RoomNumber = 102
-                        },
-                        new
-                        {
-                            Id = new Guid("334c034e-51e8-4956-a6a5-f25ce92bf8fa"),
-                            BedCount = 2,
-                            DepartmnetId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
-                            HasFreeBeds = true,
-                            RoomNumber = 201
-                        },
-                        new
-                        {
-                            Id = new Guid("3b85738c-1a1a-40a9-952a-465e8914a2e0"),
-                            BedCount = 3,
-                            DepartmnetId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
-                            HasFreeBeds = true,
-                            RoomNumber = 202
-                        },
-                        new
-                        {
-                            Id = new Guid("9f415f68-1979-4d9f-ba39-8586cc1d6c4c"),
-                            BedCount = 3,
-                            DepartmnetId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
-                            HasFreeBeds = true,
-                            RoomNumber = 301
-                        },
-                        new
-                        {
-                            Id = new Guid("ff64e198-4cac-40d9-817c-ca3a62637fed"),
-                            BedCount = 2,
-                            DepartmnetId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
-                            HasFreeBeds = true,
-                            RoomNumber = 302
-                        });
                 });
 
             modelBuilder.Entity("HospitalManagmentApp.DataModels.Treatment", b =>
@@ -476,32 +379,6 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.ToTable("Treatments", t =>
                         {
                             t.HasComment("Treatment info table");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("105b3c7a-b9f4-4d22-9788-f884074c6e5a"),
-                            Name = "Physical Therapy",
-                            Price = 100.0m
-                        },
-                        new
-                        {
-                            Id = new Guid("c79e4148-c5a8-415f-9c7b-0aab2254a01d"),
-                            Name = "Massage Therapy",
-                            Price = 80.0m
-                        },
-                        new
-                        {
-                            Id = new Guid("f8dddc6a-3dc0-47b6-a400-5bf6fc687278"),
-                            Name = "Chiropractic Adjustment",
-                            Price = 120.0m
-                        },
-                        new
-                        {
-                            Id = new Guid("13f52fdf-4dbc-433d-a65e-0149ede03a53"),
-                            Name = "Manual therapy",
-                            Price = 170.0m
                         });
                 });
 
@@ -740,7 +617,7 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasOne("HospitalManagmentApp.DataModels.Room", "Room")
                         .WithMany("Patients")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Department");
@@ -772,7 +649,7 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasOne("HospitalManagmentApp.DataModels.Patient", "Patient")
                         .WithMany("PatientTreatments")
                         .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HospitalManagmentApp.DataModels.Treatment", "Treatment")

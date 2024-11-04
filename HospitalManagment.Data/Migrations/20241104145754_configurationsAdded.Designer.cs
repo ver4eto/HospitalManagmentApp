@@ -4,6 +4,7 @@ using HospitalManagmentApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagmentApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241104145754_configurationsAdded")]
+    partial class configurationsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,7 +298,7 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("02d5b08e-7e96-406c-a445-332dfa30475b"),
+                            Id = new Guid("edeb559d-8ab1-440d-842c-ef6616fbeafa"),
                             Address = "Sofi, ul.Rezovo 13, et.2, ap.6",
                             DepartmentId = new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
                             EGN = "4810234567",
@@ -307,7 +310,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6e1de844-4cc6-4f27-a0d2-fb52806bd55d"),
+                            Id = new Guid("36425763-e699-46b9-8eea-356c2744f521"),
                             Address = "Sofi, ul.Belomorska, et.7, ap.16",
                             DepartmentId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
                             EGN = "6212094475",
@@ -319,7 +322,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("17a95176-e310-42fa-91b4-90dbc11c76f0"),
+                            Id = new Guid("17cb1541-eb44-4779-8c98-60cc6b6ffb40"),
                             Address = "Sofi, bul.Vitosha 123, et.7, ap.16",
                             DepartmentId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
                             EGN = "6102193476",
@@ -331,7 +334,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ceeb401e-96ed-401c-9fe9-0c44eaff91dc"),
+                            Id = new Guid("642ff24d-5a2b-4fea-8be2-61882a1dda7e"),
                             Address = "Sofi, bul.Vitosha 3, et.7, ap.16",
                             DepartmentId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
                             EGN = "8302198562",
@@ -481,25 +484,25 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("105b3c7a-b9f4-4d22-9788-f884074c6e5a"),
+                            Id = new Guid("e6346e0c-021b-46da-adaf-7c0b7563fac8"),
                             Name = "Physical Therapy",
                             Price = 100.0m
                         },
                         new
                         {
-                            Id = new Guid("c79e4148-c5a8-415f-9c7b-0aab2254a01d"),
+                            Id = new Guid("15029a07-3502-4798-a28d-13fc993a585c"),
                             Name = "Massage Therapy",
                             Price = 80.0m
                         },
                         new
                         {
-                            Id = new Guid("f8dddc6a-3dc0-47b6-a400-5bf6fc687278"),
+                            Id = new Guid("c5c5e258-842b-4276-84b5-8f040b599f16"),
                             Name = "Chiropractic Adjustment",
                             Price = 120.0m
                         },
                         new
                         {
-                            Id = new Guid("13f52fdf-4dbc-433d-a65e-0149ede03a53"),
+                            Id = new Guid("eec8035b-d157-427c-aaaa-10a35beb6e97"),
                             Name = "Manual therapy",
                             Price = 170.0m
                         });
@@ -740,7 +743,7 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasOne("HospitalManagmentApp.DataModels.Room", "Room")
                         .WithMany("Patients")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Department");

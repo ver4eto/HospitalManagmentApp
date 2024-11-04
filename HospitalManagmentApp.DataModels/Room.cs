@@ -26,7 +26,7 @@ namespace HospitalManagmentApp.DataModels
         [Comment("Does room has free beds?")]
         public bool HasFreeBeds { get; set; } = true;
 
-        [Required]
+      
         [Comment("In which department is the room")]
         public Guid DepartmnetId { get; set; } = Guid.Empty;
 
