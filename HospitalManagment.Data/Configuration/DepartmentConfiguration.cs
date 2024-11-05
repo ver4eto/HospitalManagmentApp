@@ -16,7 +16,7 @@ namespace HospitalManagmentApp.Data.Configuration
         {
             builder.HasMany(d => d.Rooms)
                 .WithOne(r => r.Department)
-                .OnDelete(DeleteBehavior.NoAction
+                .OnDelete(DeleteBehavior.Restrict
                 );
 
             
