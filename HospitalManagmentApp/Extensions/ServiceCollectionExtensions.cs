@@ -29,7 +29,14 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration configue)
         {
             services
-                    .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddDefaultIdentity<IdentityUser>(options =>
+                    { 
+                        options.SignIn.RequireConfirmedAccount = false; 
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireDigit = false;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequiredLength = 6;
+                    })
                     .AddEntityFrameworkStores<HMDbContext>();
 
             return services;
