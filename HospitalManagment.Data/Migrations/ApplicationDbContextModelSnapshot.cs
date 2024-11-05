@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HospitalManagmentApp.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(HMDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace HospitalManagmentApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments", t =>
+                    b.ToTable("Departments", null, t =>
                         {
                             t.HasComment("Department info");
                         });
@@ -102,7 +102,7 @@ namespace HospitalManagmentApp.Data.Migrations
 
                     b.HasIndex("DepartmnetId");
 
-                    b.ToTable("Doctors", t =>
+                    b.ToTable("Doctors", null, t =>
                         {
                             t.HasComment("Doctor info table");
                         });
@@ -186,7 +186,7 @@ namespace HospitalManagmentApp.Data.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Nurses", t =>
+                    b.ToTable("Nurses", null, t =>
                         {
                             t.HasComment("Nurse info table");
                         });
@@ -287,7 +287,7 @@ namespace HospitalManagmentApp.Data.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Patients", t =>
+                    b.ToTable("Patients", null, t =>
                         {
                             t.HasComment("Patient Info Table");
                         });
@@ -355,7 +355,7 @@ namespace HospitalManagmentApp.Data.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("PatientsDoctors");
+                    b.ToTable("PatientsDoctors", (string)null);
                 });
 
             modelBuilder.Entity("HospitalManagmentApp.DataModels.PatientTreatment", b =>
@@ -370,7 +370,7 @@ namespace HospitalManagmentApp.Data.Migrations
 
                     b.HasIndex("TreatmentId");
 
-                    b.ToTable("PatientsTreatments");
+                    b.ToTable("PatientsTreatments", (string)null);
                 });
 
             modelBuilder.Entity("HospitalManagmentApp.DataModels.Room", b =>
@@ -400,7 +400,7 @@ namespace HospitalManagmentApp.Data.Migrations
 
                     b.HasIndex("DepartmnetId");
 
-                    b.ToTable("Rooms", t =>
+                    b.ToTable("Rooms", null, t =>
                         {
                             t.HasComment("Room information table");
                         });
@@ -473,7 +473,7 @@ namespace HospitalManagmentApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Treatments", t =>
+                    b.ToTable("Treatments", null, t =>
                         {
                             t.HasComment("Treatment info table");
                         });

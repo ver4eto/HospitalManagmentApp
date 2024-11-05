@@ -1,6 +1,7 @@
 ﻿using HospitalManagmentApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -17,7 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var connectionString = configue.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<HMDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -29,7 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services
                     .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+                    .AddEntityFrameworkStores<HMDbContext>();
 
             return services;
         }

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagmentApp.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class HMDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public HMDbContext(DbContextOptions<HMDbContext> options)
             : base(options)
         {
         }
