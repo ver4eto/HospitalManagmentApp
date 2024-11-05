@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Nurse;
+
 namespace HospitalManagmentApp.DataModels
 {
 
     [Comment("Nurse info table")]
-    public class Nurse
+    public class Nurse :IdentityUser
     {
         [Key]
         [Comment("Nurse unnique identifier")]
@@ -35,5 +36,8 @@ namespace HospitalManagmentApp.DataModels
 
         [ForeignKey(nameof(DepartmentId))]
         public Department Department { get; set; } = null!;
+
+        //public Guid UserId { get; set; }
+        //public IdentityUser User { get; set; } = null!;
     }
 }

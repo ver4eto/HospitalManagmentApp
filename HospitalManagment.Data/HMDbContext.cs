@@ -1,11 +1,12 @@
 ﻿using HospitalManagmentApp.Data.Configuration;
 using HospitalManagmentApp.DataModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagmentApp.Data
 {
-    public class HMDbContext : IdentityDbContext
+    public class HMDbContext : IdentityDbContext<IdentityUser>
     {
         public HMDbContext(DbContextOptions<HMDbContext> options)
             : base(options)

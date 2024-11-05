@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,7 +8,7 @@ using static HospitalManagmentApp.Common.EntityValidationConstants.Doctor;
 namespace HospitalManagmentApp.DataModels
 {
     [Comment("Doctor info table")]
-    public class Doctor
+    public class Doctor : IdentityUser
     {
         [Key]
         [Comment("Doctor`s unique identifier")]
@@ -41,5 +42,8 @@ namespace HospitalManagmentApp.DataModels
         public Department? Department { get; set; } 
 
         public IEnumerable<PatientDoctor> DoctorPatients { get; set; } = new HashSet<PatientDoctor>();
+
+        //public Guid UserId { get; set; }
+        //public IdentityUser User { get; set; } = null!;
     }
 }
