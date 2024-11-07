@@ -3,12 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Nurse;
-using Microsoft.AspNet.Identity.EntityFramework;
 namespace HospitalManagmentApp.DataModels
 {
 
     [Comment("Nurse info table")]
-    public class Nurse :IdentityUser
+    public class Nurse 
     {
         [Key]
         [Comment("Nurse unnique identifier")]
