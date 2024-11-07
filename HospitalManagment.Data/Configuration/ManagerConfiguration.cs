@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace HospitalManagmentApp.Data.Configuration
 {
-    public class MenagerConfiguration : IEntityTypeConfiguration<Manager>
+    public class ManagerConfiguration : IEntityTypeConfiguration<Menager>
     {
-        public void Configure(EntityTypeBuilder<Manager> builder)
+        public void Configure(EntityTypeBuilder<Menager> builder)
         {
             builder.HasData
                 (
-                new Manager()
+                new Menager()
                 {
                     Id =Guid.NewGuid(),
                     FullName="Stoian Ivanov",

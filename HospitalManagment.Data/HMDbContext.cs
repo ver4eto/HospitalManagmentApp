@@ -22,7 +22,7 @@ namespace HospitalManagmentApp.Data
         public virtual DbSet<PatientTreatment> PatientsTreatments { get; set; }
         public virtual DbSet<PatientDoctor> PatientsDoctors { get; set; }
 
-        public virtual DbSet<Menager> Managers { get; set; }
+        public virtual DbSet<Manager> Managers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -33,7 +33,7 @@ namespace HospitalManagmentApp.Data
             builder.ApplyConfiguration(new TreatmentConfiguration());
             builder.ApplyConfiguration(new PatientConfiguration());
             builder.ApplyConfiguration(new PatientTreatmentConfiguration());
-            builder.ApplyConfiguration(new MenagerConfiguration());
+            builder.ApplyConfiguration(new ManagerConfiguration());
 
             base.OnModelCreating(builder);
         }

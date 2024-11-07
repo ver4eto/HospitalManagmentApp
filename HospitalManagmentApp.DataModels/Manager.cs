@@ -6,7 +6,7 @@ using static HospitalManagmentApp.Common.EntityValidationConstants.Manager;
 namespace HospitalManagmentApp.DataModels
 {
     [Comment("Data for Hospital Manager")]
-    public class Menager
+    public class Manager
     {
         [Comment("Manager unique identifier")]
         [Key]
