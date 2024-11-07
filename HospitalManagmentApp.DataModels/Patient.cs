@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace HospitalManagmentApp.DataModels
 {
     [Comment("Patient Info Table")]
-    public class Patient: IdentityUser
+    public class Patient
     {
         [Key]
         [Comment("Unique identifier of Patient")]
@@ -27,6 +27,11 @@ namespace HospitalManagmentApp.DataModels
         [Required]
         [Comment("Patient Personal Citizen Number")]
         public string EGN { get; set; } = EGNDefault;
+
+        [Required]
+        [EmailAddress]
+        [Comment("The person email address")]
+        public string EmailAddress { get; set; } = null!;
 
         [Comment("Patient phone number")]
         public string PhoneNumber { get; set; } = PhoneDefaultValue;

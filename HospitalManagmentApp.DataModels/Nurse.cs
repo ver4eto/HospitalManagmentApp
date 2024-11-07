@@ -25,6 +25,11 @@ namespace HospitalManagmentApp.DataModels
         public string LastName { get; set; } = null!;
 
         [Required]
+        [EmailAddress]
+        [Comment("The person email address")]
+        public string EmailAddress { get; set; } = null!;
+
+        [Required]
         [Column(TypeName = "money")]
         [Comment("Nurse monthly salary")]
         public decimal Salary { get; set; }

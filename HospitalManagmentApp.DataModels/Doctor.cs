@@ -8,7 +8,7 @@ using static HospitalManagmentApp.Common.EntityValidationConstants.Doctor;
 namespace HospitalManagmentApp.DataModels
 {
     [Comment("Doctor info table")]
-    public class Doctor : IdentityUser
+    public class Doctor 
     {
         [Key]
         [Comment("Doctor`s unique identifier")]
@@ -28,6 +28,11 @@ namespace HospitalManagmentApp.DataModels
         [MaxLength(SpecialtyMaxLenght)]
         [Comment("Doctor`s Speciality")]
         public string Specialty { get; set; } = SpecialtyDefaultValue;
+
+        [Required]
+        [EmailAddress]
+        [Comment("The person email address")]
+        public string EmailAddress { get; set; } = null!;
 
         [Required]
         [Column(TypeName = "money")]

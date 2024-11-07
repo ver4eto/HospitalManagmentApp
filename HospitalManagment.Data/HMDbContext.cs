@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagmentApp.Data
 {
-    public class HMDbContext : IdentityDbContext<IdentityUser>
+    public class HMDbContext : IdentityDbContext
     {
         public HMDbContext(DbContextOptions<HMDbContext> options)
             : base(options)

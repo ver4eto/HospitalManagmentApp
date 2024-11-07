@@ -18,6 +18,11 @@ namespace HospitalManagmentApp.DataModels
         [MaxLength(ManagerNameMaxLength)]
         public string FullName { get; set; } = null!;
 
+        [Required]
+        [EmailAddress]
+        [Comment("The person email address")]
+        public string EmailAddress { get; set; } = null!;
+
         [Comment("Manager phone number")]
         [MinLength(PhoneMinLenght)]
         [MaxLength(PhoneMaxLenght)]

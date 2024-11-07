@@ -42,7 +42,8 @@ namespace HospitalManagmentApp.Data.Configuration
                 EGN = "4810234567",
                 Address = "Sofi, ul.Rezovo 13, et.2, ap.6",
                 DepartmentId = Guid.Parse("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
-                RoomId = Guid.Parse("6a746a43-8fe2-4b2f-b6a3-69104089e8ac")
+                RoomId = Guid.Parse("6a746a43-8fe2-4b2f-b6a3-69104089e8ac"),
+                EmailAddress = "ivanovivan@abv.bg"
             };
             patients.Add(patient);
 
@@ -54,7 +55,8 @@ namespace HospitalManagmentApp.Data.Configuration
                 EGN = "6212094475",
                 Address = "Sofi, ul.Belomorska, et.7, ap.16",
                 DepartmentId = Guid.Parse("43f9018c-2a02-448d-b26e-bc832bc097d3"),
-                RoomId = Guid.Parse("9f415f68-1979-4d9f-ba39-8586cc1d6c4c")
+                RoomId = Guid.Parse("9f415f68-1979-4d9f-ba39-8586cc1d6c4c"),
+                EmailAddress = "stefanovp@abv.bg"
             };
             patients.Add(patient);
 
@@ -66,7 +68,8 @@ namespace HospitalManagmentApp.Data.Configuration
                 EGN = "6102193476",
                 Address = "Sofi, bul.Vitosha 123, et.7, ap.16",
                 DepartmentId = Guid.Parse("43f9018c-2a02-448d-b26e-bc832bc097d3"),
-               RoomId = Guid.Parse("9f415f68-1979-4d9f-ba39-8586cc1d6c4c")
+               RoomId = Guid.Parse("9f415f68-1979-4d9f-ba39-8586cc1d6c4c"),
+                EmailAddress = "petrovlazar@abv.bg"
             };
             patients.Add(patient);
 
@@ -79,7 +82,8 @@ namespace HospitalManagmentApp.Data.Configuration
                 EGN = "8302198562",
                 Address = "Sofi, bul.Vitosha 3, et.7, ap.16",
                 DepartmentId = Guid.Parse("70dd58b3-966e-4498-806f-04411c1bbbee"),
-                RoomId = Guid.Parse("3b85738c-1a1a-40a9-952a-465e8914a2e0")
+                RoomId = Guid.Parse("3b85738c-1a1a-40a9-952a-465e8914a2e0"),
+                EmailAddress = "petrovavanya@abv.bg"
             };
             patients.Add(patient);
 
