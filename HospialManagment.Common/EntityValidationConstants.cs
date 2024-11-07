@@ -70,5 +70,14 @@ namespace HospitalManagmentApp.Common
             public const int TreatmentMinLength = 2;
             public const int TreatmentMaxLength = 30;
         }
+
+        public static class Manager
+        {
+            public const int ManagerNameMinLength = 5;
+            public const int ManagerNameMaxLength = 60;
+            public const int PhoneMinLenght = 5;
+            public const int PhoneMaxLenght = 15;
+            public const string PhoneDefaultValue = "No phone";
+        }
     }
 }

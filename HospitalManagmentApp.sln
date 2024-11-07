@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagmentApp", "HospitalManagmentApp\HospitalManagmentApp.csproj", "{A42010CC-AA0A-4E34-8786-EF7E4EEAFD37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagmentApp", "HospitalManagmentApp\HospitalManagmentApp.csproj", "{A42010CC-AA0A-4E34-8786-EF7E4EEAFD37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagmentApp.Common", "HospialManagment.Common\HospitalManagmentApp.Common.csproj", "{97053594-7470-4DF1-AA23-089D40661E64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagmentApp.Common", "HospialManagment.Common\HospitalManagmentApp.Common.csproj", "{97053594-7470-4DF1-AA23-089D40661E64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagmentApp.Data", "HospitalManagment.Data\HospitalManagmentApp.Data.csproj", "{DBAB4B8E-36BE-458D-805B-605B54495327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagmentApp.Data", "HospitalManagment.Data\HospitalManagmentApp.Data.csproj", "{DBAB4B8E-36BE-458D-805B-605B54495327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagmentApp.DataModels", "HospitalManagmentApp.DataModels\HospitalManagmentApp.DataModels.csproj", "{A17C082D-7416-4A74-866E-8E41CF6CE9BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagmentApp.DataModels", "HospitalManagmentApp.DataModels\HospitalManagmentApp.DataModels.csproj", "{A17C082D-7416-4A74-866E-8E41CF6CE9BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

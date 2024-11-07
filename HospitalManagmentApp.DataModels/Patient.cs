@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 using static HospitalManagmentApp.Common.EntityValidationConstants.Patient;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HospitalManagmentApp.DataModels
 {

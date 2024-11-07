@@ -4,6 +4,7 @@ using HospitalManagmentApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagmentApp.Data.Migrations
 {
     [DbContext(typeof(HMDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105142504_IdentityUserAdded")]
+    partial class IdentityUserAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,41 +155,6 @@ namespace HospitalManagmentApp.Data.Migrations
                             LastName = "Petrova",
                             Salary = 4150m,
                             Specialty = "Surgeon"
-                        });
-                });
-
-            modelBuilder.Entity("HospitalManagmentApp.DataModels.Menager", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Manager unique identifier");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
-                        .HasComment("Manager Full Name");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasComment("Manager phone number");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Managers", t =>
-                        {
-                            t.HasComment("Data for Hospital Manager");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("780f800a-f64b-4b8d-bb7e-1ca5263f252b"),
-                            FullName = "Stoian Ivanov",
-                            PhoneNumber = "+359883456789"
                         });
                 });
 
@@ -330,7 +298,7 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bddfc4b6-786e-431f-be55-0069c97d182a"),
+                            Id = new Guid("c892c0aa-a489-48dd-8b8e-233b7e271feb"),
                             Address = "Sofi, ul.Rezovo 13, et.2, ap.6",
                             DepartmentId = new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
                             EGN = "4810234567",
@@ -342,7 +310,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ef8b9ea5-83bc-4931-a94a-f0f04af51ab5"),
+                            Id = new Guid("e5c503eb-54a5-4bca-b1b0-a9d4e6a77207"),
                             Address = "Sofi, ul.Belomorska, et.7, ap.16",
                             DepartmentId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
                             EGN = "6212094475",
@@ -354,7 +322,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a918352c-1aec-4f24-b862-44f9a6634302"),
+                            Id = new Guid("c8724be4-1fef-4c65-bfef-4c22a0396d36"),
                             Address = "Sofi, bul.Vitosha 123, et.7, ap.16",
                             DepartmentId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
                             EGN = "6102193476",
@@ -366,7 +334,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ed677dff-3c61-49e7-8181-c2db15706066"),
+                            Id = new Guid("56b32c95-a076-43e0-a2f9-6a6cbbcb720a"),
                             Address = "Sofi, bul.Vitosha 3, et.7, ap.16",
                             DepartmentId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
                             EGN = "8302198562",
@@ -516,25 +484,25 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b54f5e41-602f-4344-a46b-d43d21791bab"),
+                            Id = new Guid("7d134953-42f9-4caf-9358-1f9960d8d579"),
                             Name = "Physical Therapy",
                             Price = 100.0m
                         },
                         new
                         {
-                            Id = new Guid("e7945d0a-f7f5-443e-8478-0e258338f4b6"),
+                            Id = new Guid("34e66570-6348-4855-9725-ba3281bbfa2d"),
                             Name = "Massage Therapy",
                             Price = 80.0m
                         },
                         new
                         {
-                            Id = new Guid("b3bbf08a-154a-493a-a32f-ecdad601fb46"),
+                            Id = new Guid("054271e0-5814-41cc-aa60-1da02a970405"),
                             Name = "Chiropractic Adjustment",
                             Price = 120.0m
                         },
                         new
                         {
-                            Id = new Guid("a53f0866-9dbf-459e-806b-681e03a859f7"),
+                            Id = new Guid("690f963c-5181-451d-8dda-9eb3c1992064"),
                             Name = "Manual therapy",
                             Price = 170.0m
                         });

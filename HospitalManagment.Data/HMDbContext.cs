@@ -1,11 +1,12 @@
 ﻿using HospitalManagmentApp.Data.Configuration;
 using HospitalManagmentApp.DataModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagmentApp.Data
 {
-    public class HMDbContext : IdentityDbContext
+    public class HMDbContext : IdentityDbContext<IdentityUser>
     {
         public HMDbContext(DbContextOptions<HMDbContext> options)
             : base(options)
@@ -21,6 +22,8 @@ namespace HospitalManagmentApp.Data
         public virtual DbSet<PatientTreatment> PatientsTreatments { get; set; }
         public virtual DbSet<PatientDoctor> PatientsDoctors { get; set; }
 
+        public virtual DbSet<Menager> Managers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new DepartmentConfiguration());
@@ -30,6 +33,7 @@ namespace HospitalManagmentApp.Data
             builder.ApplyConfiguration(new TreatmentConfiguration());
             builder.ApplyConfiguration(new PatientConfiguration());
             builder.ApplyConfiguration(new PatientTreatmentConfiguration());
+            builder.ApplyConfiguration(new MenagerConfiguration());
 
             base.OnModelCreating(builder);
         }
