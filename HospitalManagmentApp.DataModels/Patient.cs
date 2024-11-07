@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace HospitalManagmentApp.DataModels
 {
     [Comment("Patient Info Table")]
-    public class Patient
+    public class Patient: IdentityUser
     {
         [Key]
         [Comment("Unique identifier of Patient")]
@@ -56,5 +56,8 @@ namespace HospitalManagmentApp.DataModels
 
         [ForeignKey(nameof(RoomId))]
         public Room? Room { get; set; }
+
+        //public Guid UserId { get; set; }
+        //public IdentityUser User { get; set; } = null!;
     }
 }

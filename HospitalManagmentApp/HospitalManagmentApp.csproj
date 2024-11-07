@@ -24,8 +24,4 @@
     <ProjectReference Include="..\HospitalManagment.Data\HospitalManagmentApp.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Identity\Data\" />
-  </ItemGroup>
-
 </Project>
