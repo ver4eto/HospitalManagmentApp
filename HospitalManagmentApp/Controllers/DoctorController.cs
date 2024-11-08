@@ -28,7 +28,7 @@ namespace HospitalManagmentApp.Controllers
                 })
                 .ToArray()
                 ;
-            return View();
+            return View(doctors);
         }
     }
 }
