@@ -35,6 +35,9 @@ namespace HospitalManagmentApp.Common
             public const int FirstNameMaxLenght = 50;
             public const int FirstNameMinLenght = 2;
 
+            public const int LastNameMaxLenght = 50;
+            public const int LastNameMinLenght = 2;
+
             public const int SpecialtyMaxLenght = 50;
             public const int SpecialtyMinLenght = 5;
 
