@@ -43,6 +43,7 @@ namespace HospitalManagmentApp.Common
 
 
             public const string SpecialtyDefaultValue = "Resident";
+            public const string SalaryMinValueErrorMessage = "The salary must be higher than {1}!";
 
         }
 
