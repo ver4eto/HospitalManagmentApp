@@ -1,0 +1,30 @@
+﻿@using HospitalManagment.ViewModels.Patient
+@model IEnumerable<PatientIndexViewModel>
+
+@{
+    ViewData["Title"] = "All Patients";
+}
+
+<h2>All Patients</h2>
+
+<div class="row">
+    @foreach (var patient in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="~/images/patient.png" class="card-img-top" alt="Doctor Image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <p class="card-title">Name: @patient.Name</p>
+                    <p class="card-title">Address: @patient.Address</p>
+                    <p class="card-title">Phone number: @patient.PhoneNumber</p>
+
+                    <p class="card-title">Has medical insurance: @patient.HasMedicalInsurance</p>
+                    <p class="card-title">Email: @patient.EmailAddress</p>
+                    <p class="card-text">Department: @patient.Department</p>
+
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
