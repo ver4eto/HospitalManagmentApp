@@ -20,7 +20,7 @@ namespace HospitalManagmentApp.DataModels
         public string LastName { get; set; } = null!;
 
         [Required]
-        [MaxLength(FirstNameMaxLenght)]
+        [MaxLength(LastNameMaxLenght)]
         [Comment("Doctor`s Last Name")]
         public string FirstName { get; set; } = null!;
 
