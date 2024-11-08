@@ -39,7 +39,11 @@ namespace HospitalManagmentApp.DataModels
         [Comment("Doctor`s monthly salary")]
         public decimal Salary { get; set; }
 
-       
+        [Required]
+        [Comment("Soft delete property")]
+        public bool IsDeleted { get; set; } = false;
+
+
         [Comment("In which department works the doctor")]
         public Guid DepartmnetId { get; set; } 
 

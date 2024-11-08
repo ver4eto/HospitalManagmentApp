@@ -26,8 +26,7 @@ namespace HospitalManagmentApp.Controllers
                    DepartmentName= d.Department.Name,
 
                 })
-                .ToArray()
-                ;
+                .ToArray();
             return View(doctors);
         }
     }

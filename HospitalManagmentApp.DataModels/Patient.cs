@@ -29,6 +29,10 @@ namespace HospitalManagmentApp.DataModels
         public string EGN { get; set; } = EGNDefault;
 
         [Required]
+        [Comment("Soft delete property")]
+        public bool IsDeleted { get; set; } = false;
+
+        [Required]
         [EmailAddress]
         [Comment("The person email address")]
         public string EmailAddress { get; set; } = null!;

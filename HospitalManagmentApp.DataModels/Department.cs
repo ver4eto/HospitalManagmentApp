@@ -17,6 +17,10 @@ namespace HospitalManagmentApp.DataModels
         [Comment("Name of the Department")]
         public string Name { get; set; } = null!;
 
+        [Required]
+        [Comment("Soft delete property")]
+        public bool IsDeleted { get; set; } = false;
+
         public virtual IEnumerable<Doctor> DepartmentDoctors { get; set; } = new HashSet<Doctor>();
 
         public virtual IEnumerable<Room> Rooms { get; set; } = new HashSet<Room>();

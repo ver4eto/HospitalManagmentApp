@@ -19,6 +19,10 @@ namespace HospitalManagmentApp.DataModels
         public string FullName { get; set; } = null!;
 
         [Required]
+        [Comment("Soft delete property")]
+        public bool IsDeleted { get; set; } = false;
+
+        [Required]
         [EmailAddress]
         [Comment("The person email address")]
         public string EmailAddress { get; set; } = null!;

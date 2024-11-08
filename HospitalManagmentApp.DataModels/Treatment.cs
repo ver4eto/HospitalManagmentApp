@@ -21,6 +21,10 @@ namespace HospitalManagmentApp.DataModels
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
 
+        [Required]
+        [Comment("Soft delete property")]
+        public bool IsDeleted { get; set; } = false;
+
         public IEnumerable<PatientTreatment> Patients { get; set; } = new HashSet<PatientTreatment>();
     }
 }
