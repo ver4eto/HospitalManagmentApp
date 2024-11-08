@@ -14,10 +14,11 @@ namespace HospitalManagmentApp.Controllers
         {
             this.context = _context;
         }
-        public IActionResult Index()
+        public async Task< IActionResult> Index()
         {
-            var doctors=context
-                .Doctors                
+            var doctors=await context
+                .Doctors    
+                .Where(d=>d.IsDeleted==false)
                 .Select(d=>new DoctorIndexViewModel()
                 {
                    FirstName= d.FirstName,
@@ -26,7 +27,7 @@ namespace HospitalManagmentApp.Controllers
                    DepartmentName= d.Department.Name,
 
                 })
-                .ToArray();
+                .ToArrayAsync();
             return View(doctors);
         }
     }
