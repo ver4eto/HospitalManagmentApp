@@ -1,8 +1,8 @@
 ﻿using HospitalManagment.ViewModels.Doctor;
 using HospitalManagmentApp.Data;
-using HospitalManagmentApp.DataModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace HospitalManagmentApp.Controllers
 {
@@ -27,7 +27,7 @@ namespace HospitalManagmentApp.Controllers
                    DepartmentName= d.Department.Name,
 
                 })
-                .ToArrayAsync();
+                .ToListAsync();
             return View(doctors);
         }
     }
