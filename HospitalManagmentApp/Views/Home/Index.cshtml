@@ -1,8 +1,82 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Hospital Management System";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <h2 class="text-center">Hospital Management System</h2>
+    <div class="row justify-content-center mt-4">
+
+        <!-- Doctor Dropdown -->
+        <div class="col-md-2">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="doctorDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Doctor
+                </button>
+
+                <div class="dropdown-menu" aria-labelledby="doctorDropdown">
+                    
+                    <a class="dropdown-item" asp-area="" asp-controller="Doctor" asp-action="Index">View Doctors</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Doctor" asp-action="Create">Add Doctor</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Doctor" asp-action="Manage">Manage Doctors</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nurse Dropdown -->
+        <div class="col-md-2">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="nurseDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Nurse
+                </button>
+                <div class="dropdown-menu" aria-labelledby="nurseDropdown">
+                    <a class="dropdown-item" href="/Nurse/Index">View Nurses</a>
+                    <a class="dropdown-item" href="/Nurse/Create">Add Nurse</a>
+                    <a class="dropdown-item" href="/Nurse/Manage">Manage Nurses</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Dropdown -->
+        <div class="col-md-2">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="patientDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Patient
+                </button>
+                <div class="dropdown-menu" aria-labelledby="patientDropdown">
+                    <a class="dropdown-item" href="/Patient/Index">View Patients</a>
+                    <a class="dropdown-item" href="/Patient/Create">Add Patient</a>
+                    <a class="dropdown-item" href="/Patient/Manage">Manage Patients</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Department Dropdown -->
+        <div class="col-md-2">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="departmentDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Department
+                </button>
+                <div class="dropdown-menu" aria-labelledby="departmentDropdown">
+                    <a class="dropdown-item" href="/Department/Index">View Departments</a>
+                    <a class="dropdown-item" href="/Department/Create">Add Department</a>
+                    <a class="dropdown-item" href="/Department/Manage">Manage Departments</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Treatment Dropdown -->
+        <div class="col-md-2">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="treatmentDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Treatment
+                </button>
+                <div class="dropdown-menu" aria-labelledby="treatmentDropdown">
+                    <a class="dropdown-item" href="/Treatment/Index">View Treatments</a>
+                    <a class="dropdown-item" href="/Treatment/Create">Add Treatment</a>
+                    <a class="dropdown-item" href="/Treatment/Manage">Manage Treatments</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
