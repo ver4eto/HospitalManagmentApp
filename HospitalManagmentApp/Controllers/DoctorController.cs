@@ -69,7 +69,7 @@ namespace HospitalManagmentApp.Controllers
         {
             var doctor  =await context
                 .Doctors                
-                .Where(d=>d.Id==id /*&& d.IsDeleted==false*/)  
+                .Where(d=>d.Id==id && d.IsDeleted == false)  
                 .Include(d=>d.Department)
                 .FirstOrDefaultAsync();
 
