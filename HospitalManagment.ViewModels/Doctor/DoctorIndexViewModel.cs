@@ -8,7 +8,7 @@ namespace HospitalManagment.ViewModels.Doctor
 {
     public class DoctorIndexViewModel
     {
-
+        public Guid Id { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string DepartmentName { get; set; } = null!;
