@@ -92,6 +92,65 @@ namespace HospitalManagmentApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var doctor = await context
+                .Doctors
+                .Where(d => d.Id == id && d.IsDeleted == false)
+                .Include(d => d.Department)
+                .FirstOrDefaultAsync();
+
+            if(doctor == null)
+            {
+                return this.View();
+            }
+
+            EditDoctorViewModel model = new()
+            {
+                Id = doctor.Id,
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                Specialty = doctor.Specialty,
+                EmailAddress = doctor.EmailAddress,
+                Salary = doctor.Salary,
+                DepartmentId = doctor.Department.Id,
+                Departments=await GetDepartments()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditDoctorViewModel model,Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var doctor= await context
+                .Doctors
+                .FindAsync(id);
+
+            if (doctor == null)
+            { 
+                return BadRequest();
+            }
+
+            doctor.FirstName = model.FirstName;
+            doctor.LastName = model.LastName;
+            doctor.Salary = model.Salary;
+            doctor.Specialty = model.Specialty;
+            doctor.DepartmnetId=model.DepartmentId;
+            doctor.EmailAddress = model.EmailAddress;
+           
+            
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+        }
+
         private async Task<ICollection<Department>> GetDepartments()
         {
            return await context.Departments.ToListAsync();
