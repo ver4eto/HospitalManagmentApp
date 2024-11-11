@@ -122,6 +122,51 @@ namespace HospitalManagmentApp.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var nurse = await context
+                .Nurses
+                .FindAsync(id);
+
+            if (nurse == null)
+            {
+                return BadRequest();
+            }
+
+            var model = new DeleteNurseViewModel
+            {
+                Id = id,
+                FirstName = nurse.FirstName,
+                LastName = nurse.LastName,
+                DepartmentName = nurse.Department.Name,
+               
+            };
+
+            return View(model);
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(DeleteNurseViewModel model, Guid id)
+        {
+            var nurse = await context
+                .Nurses
+                .Where(d => d.Id == id)
+                .Where(d => d.IsDeleted == false)
+                .FirstOrDefaultAsync();
+
+            if (nurse == null)
+            {
+                return BadRequest();
+            }
+
+            nurse.IsDeleted = true;
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
 
 
         private async Task<ICollection<Department>> GetDepartments()
