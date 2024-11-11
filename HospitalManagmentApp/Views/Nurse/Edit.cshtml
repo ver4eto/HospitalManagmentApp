@@ -1,11 +1,13 @@
-﻿@using HospitalManagment.ViewModels.Doctor
-@model EditDoctorViewModel
+﻿@using HospitalManagment.ViewModels.Nurse
+@model EditNurseViewModel
+
 @{
-    ViewData["Title"] = "Edit Doctor";
+
+    ViewData["Title"] = "Edit Nurse";
 }
 
 <div class="container mt-5">
-    <h2 class="text-center">Edit Doctor Details</h2>
+    <h2 class="text-center">Edit Nurse Details</h2>
 
     <form asp-action="Edit" method="post" class="mt-4">
         <input type="hidden" asp-for="Id" />
@@ -28,11 +30,7 @@
             <span asp-validation-for="Salary" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Specialty" class="control-label">Specialty</label>
-            <input asp-for="Specialty" class="form-control" />
-            <span asp-validation-for="Specialty" class="text-danger"></span>
-        </div>
+        
 
         <div class="form-group">
             <label asp-for="EmailAddress" class="control-label">Email</label>
@@ -55,8 +53,8 @@
         <div class="mb-2">
             <a asp-action="Manage" class="btn btn-secondary mt-3 ml-2">Cancel</a>
         </div>
-
-      @*   <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+@* 
+        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
         <a asp-action="Manage" class="btn btn-secondary mt-3 ml-2">Cancel</a> *@
     </form>
 </div>

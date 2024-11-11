@@ -9,7 +9,7 @@ namespace HospitalManagment.ViewModels.Nurse
 {
     public class NurseIndexViewModel
     {
-       
+        public Guid Id { get; set; }
         public string FirstName { get; set; } = null!;
 
 
