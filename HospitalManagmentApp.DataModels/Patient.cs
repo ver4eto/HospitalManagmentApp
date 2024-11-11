@@ -61,7 +61,7 @@ namespace HospitalManagmentApp.DataModels
 
 
         [Comment("Room of the patient")]
-        public Guid? RoomId { get; set; }
+        public Guid RoomId { get; set; }
 
         [ForeignKey(nameof(RoomId))]
         public Room? Room { get; set; }
