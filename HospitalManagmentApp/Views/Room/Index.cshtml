@@ -1,0 +1,38 @@
+﻿﻿@using HospitalManagment.ViewModels.Room
+@model IEnumerable<IndexRoomViewModel>
+
+@{
+    ViewData["Title"] = "All Nurses";
+}
+
+<h2>All Rooms</h2>
+
+<div class="row">
+    @foreach (var room in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="~/images/room.jpg" class="card-img-top" alt="Room Image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <p class="card-title"><strong>RoomNumber: </strong>@room.RoomNumber </p>
+                    <p class="card-text"><strong>Department: </strong>@room.Departmnet</p>
+                    <p class="card-title"><strong>Count of beds: </strong>@room.BedCount </p>
+                    <p class="card-title"><strong>Has available beds: </strong>@room.HasFreeBeds </p>
+                    <div class="btn-group" role="group" aria-label="Nurse Actions">
+
+                        <!-- Update Button -->
+                        <a asp-controller="Nurse" asp-action="Edit" asp-route-id="@room.Id" class="btn btn-warning btn-sm">Update</a>
+
+                        <!-- Delete Button -->
+                        <form asp-controller="Nurse" asp-action="Delete" asp-route-id="@room.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this doctor?');">
+                                Delete
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
