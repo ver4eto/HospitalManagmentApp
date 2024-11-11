@@ -1,0 +1,55 @@
+﻿@using HospitalManagment.ViewModels.Room
+@model AddRoomViewModel
+
+@{
+    ViewData["Title"] = "Add New Room";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Add New Room</h2>
+
+    @if (!ViewData.ModelState.IsValid)
+
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <form asp-action="Add" method="post" class="mt-4">
+        <div class="form-group">
+            <label asp-for="RoomNumber" class="control-label" p style="font-weight: bold;">Room Number</label>
+            <input asp-for="RoomNumber" class="form-control" aria-required="true" />
+            <span asp-validation-for="RoomNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BedCount" class="control-label" p style="font-weight: bold;">Count of beds</label>
+            <input asp-for="BedCount" class="form-control" aria-required="true" />
+            <span asp-validation-for="BedCount" class="text-danger"></span>
+        </div>
+
+
+        <
+        <div class="col-sm-6 mb-2">
+            <label asp-for="@Model.DepartmnetId" class="form-label-add-edit" p style="font-weight: bold;">Select Department</label>
+            <select asp-for="@Model.DepartmnetId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Departments, "Id", "Name"))">
+                <option value="">Select Department...</option>
+            </select>
+            <span asp-validation-for="@Model.DepartmnetId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Add Room</button>
+        <a asp-action="Index" class="btn btn-secondary mt-3 ml-2">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
