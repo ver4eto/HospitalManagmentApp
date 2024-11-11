@@ -1,5 +1,7 @@
-﻿using HospitalManagment.ViewModels.Patient;
+﻿using HospitalManagment.ViewModels.Nurse;
+using HospitalManagment.ViewModels.Patient;
 using HospitalManagmentApp.Data;
+using HospitalManagmentApp.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +39,41 @@ namespace HospitalManagmentApp.Controllers
             return View(patients);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var patient = new AddPatientViewModel();
+            patient.Departments = await GetDepartments();
+            return View(patient);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddPatientViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Departments = await GetDepartments();
+                return View(model);
+            }
+
+            var patient = new Patient()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                EmailAddress = model.EmailAddress,
+                Address = model.Address,
+                DepartmentId = model.DepartmentId,
+                HasMedicalInsurance=model.HasMedicalInsurance,
+                EGN=model.EGN,
+                PhoneNumber=model.PhoneNumber
+
+            };
+
+            await context.Patients.AddAsync(patient);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         private static string HasMedicalInsurance(bool hasMedicalInsurance)
         {
             if (hasMedicalInsurance==true)
@@ -45,6 +82,11 @@ namespace HospitalManagmentApp.Controllers
             }
             return "No";
 
+        }
+
+        private async Task<ICollection<Department>> GetDepartments()
+        {
+            return await context.Departments.ToListAsync();
         }
     }
 }
