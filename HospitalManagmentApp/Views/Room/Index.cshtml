@@ -21,10 +21,10 @@
                     <div class="btn-group" role="group" aria-label="Nurse Actions">
 
                         <!-- Update Button -->
-                        <a asp-controller="Nurse" asp-action="Edit" asp-route-id="@room.Id" class="btn btn-warning btn-sm">Update</a>
+                        <a asp-controller="Room" asp-action="Edit" asp-route-id="@room.Id" class="btn btn-warning btn-sm">Update</a>
 
                         <!-- Delete Button -->
-                        <form asp-controller="Nurse" asp-action="Delete" asp-route-id="@room.Id" method="post" class="d-inline">
+                        <form asp-controller="Room" asp-action="Delete" asp-route-id="@room.Id" method="post" class="d-inline">
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this doctor?');">
                                 Delete
                             </button>
