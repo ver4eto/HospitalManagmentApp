@@ -1,0 +1,39 @@
+﻿@using HospitalManagment.ViewModels.Doctor
+@model AddDoctorToDepartmentViewModel
+
+<h2>Add Doctor to Department: @Model.DepartmentName</h2>
+
+<form asp-action="AddDoctorToDepartment" method="post">
+    @Html.HiddenFor(m => m.DepartmentId)
+
+    <div class="form-group">
+        <label>Select Doctor</label>
+        <select asp-for="SelectedDoctorId" class="form-control" id="doctorSelect">
+            <option value="">-- Select a Doctor --</option>
+            @foreach (var doctor in Model.Doctors)
+            {
+                <option value="@doctor.Id">@doctor.FirstName @doctor.LastName <strong>@doctor.Specialty</strong></option>
+              
+            }
+        </select>
+    </div>
+
+    <form asp-controller="Doctor" asp-action="AddDoctorToDepartment" method="post" class="d-inline">
+        <input type="hidden" name="depId" value="@Model.DepartmentId" />
+        <button type="submit" class="btn btn-warning">+Add to department</button>
+    </form>
+</form>
+
+@section Scripts {
+    <script>
+        // Show the button when a doctor is selected
+        document.getElementById("doctorSelect").addEventListener("change", function () {
+            var addButton = document.getElementById("addButton");
+            if (this.value) {
+                addButton.style.display = "inline-block";
+            } else {
+                addButton.style.display = "none";
+            }
+        });
+    </script>
+}

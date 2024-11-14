@@ -28,7 +28,7 @@ namespace HospitalManagment.ViewModels.Nurse
         public decimal Salary { get; set; }
 
         public Guid DepartmentId { get; set; }
-        public IEnumerable<Department> Departments { get; set; }=new List<Department>();
+        public IEnumerable<HospitalManagmentApp.DataModels.Department> Departments { get; set; }=new List<HospitalManagmentApp.DataModels.Department>();
 
     }
 }

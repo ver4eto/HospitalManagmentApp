@@ -30,7 +30,7 @@ namespace HospitalManagment.ViewModels.Doctor
         public decimal Salary { get; set; }
 
         [Required(ErrorMessage = RequiredErrorMessage)]
-        public IEnumerable<Department> Departments { get; set; } =new List<Department>();
+        public IEnumerable<HospitalManagmentApp.DataModels.Department> Departments { get; set; } =new List<HospitalManagmentApp.DataModels.Department>();
 
         [Required(ErrorMessage = RequiredErrorMessage)]
         public Guid DepartmentId { get; set; }

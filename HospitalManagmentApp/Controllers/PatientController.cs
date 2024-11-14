@@ -74,6 +74,64 @@ namespace HospitalManagmentApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(Guid id)
+        //{
+        //    var patient = await context
+        //        .Patients
+        //        .Where(d => d.Id == id && d.IsDeleted == false)
+        //        .Include(d => d.Department)
+        //        .FirstOrDefaultAsync();
+
+        //    if (patient == null)
+        //    {
+        //        return this.View();
+        //    }
+
+        //    EditNurseViewModel model = new()
+        //    {
+        //        Id = nurse.Id,
+        //        FirstName = nurse.FirstName,
+        //        LastName = nurse.LastName,
+
+        //        EmailAddress = nurse.EmailAddress,
+        //        Salary = nurse.Salary,
+        //        DepartmentId = nurse.Department.Id,
+        //        Departments = await GetDepartments()
+        //    };
+
+        //    return View(model);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(EditNurseViewModel model, Guid id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
+
+        //    var nurse = await context
+        //        .Nurses
+        //        .FindAsync(id);
+
+        //    if (nurse == null)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    nurse.FirstName = model.FirstName;
+        //    nurse.LastName = model.LastName;
+        //    nurse.Salary = model.Salary;
+        //    nurse.DepartmentId = model.DepartmentId;
+        //    nurse.EmailAddress = model.EmailAddress;
+
+
+        //    await context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+
+        //}
+
         private static string HasMedicalInsurance(bool hasMedicalInsurance)
         {
             if (hasMedicalInsurance==true)

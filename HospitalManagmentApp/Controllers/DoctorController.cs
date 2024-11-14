@@ -1,8 +1,10 @@
 ﻿using HospitalManagment.ViewModels.Doctor;
 using HospitalManagmentApp.Data;
-using HospitalManagmentApp.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
+using Department = HospitalManagmentApp.DataModels.Department;
+using Doctor = HospitalManagmentApp.DataModels.Doctor;
 
 namespace HospitalManagmentApp.Controllers
 {
@@ -70,7 +72,7 @@ namespace HospitalManagmentApp.Controllers
             var doctor  =await context
                 .Doctors                
                 .Where(d=>d.Id==id && d.IsDeleted == false)  
-                .Include(d=>d.Department)
+                //.Include(d=>d.Department)
                 .FirstOrDefaultAsync();
 
             if (doctor == null)
@@ -98,7 +100,7 @@ namespace HospitalManagmentApp.Controllers
             var doctor = await context
                 .Doctors
                 .Where(d => d.Id == id && d.IsDeleted == false)
-                .Include(d => d.Department)
+                //.Include(d => d.Department)
                 .FirstOrDefaultAsync();
 
             if(doctor == null)
@@ -195,6 +197,61 @@ namespace HospitalManagmentApp.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AddDoctorToDepartment(Guid depId) 
+        {
+            var department = await context
+                .Departments
+                .FindAsync(depId);
+
+            if (department == null)
+            {
+                return BadRequest();
+            }
+
+            var doctors = await context
+                .Doctors
+                .Where(d => d.IsDeleted == false && d.DepartmnetId != depId)
+                .ToListAsync();
+
+            department =await context.Departments.FindAsync(depId);
+
+            var viewModel = new AddDoctorToDepartmentViewModel
+            {
+                DepartmentId = depId,
+                DepartmentName = department?.Name,               
+                Doctors = doctors // Passing the list of Doctor objects
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task< IActionResult> AddDoctorToDepartment(AddDoctorToDepartmentViewModel model,Guid depId)
+        {
+            var department=await context
+                .Departments
+                .FindAsync(depId);
+
+
+            if(department == null)
+            {
+                return BadRequest();
+            }
+
+            var doctor = await context.Doctors.FindAsync(model.SelectedDoctorId);
+
+            if (doctor != null)
+            {
+                doctor.DepartmnetId = model.DepartmentId;
+                await context.SaveChangesAsync();                           
+
+            }
+            
+            return RedirectToAction("Index","Department");
+        }
+
         private async Task<ICollection<Department>> GetDepartments()
         {
            return await context.Departments.ToListAsync();

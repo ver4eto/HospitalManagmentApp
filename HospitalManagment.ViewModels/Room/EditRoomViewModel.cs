@@ -24,7 +24,7 @@ namespace HospitalManagment.ViewModels.Room
       
         
         public Guid DepartmnetId { get; set; }    
-        public IEnumerable<Department> Departments { get; set; } = new List<Department>();
+        public IEnumerable<HospitalManagmentApp.DataModels.Department> Departments { get; set; } = new List<HospitalManagmentApp.DataModels.Department>();
     }
 }
 

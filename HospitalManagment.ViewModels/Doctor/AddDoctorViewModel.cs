@@ -1,10 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-using static HospitalManagmentApp.Common.EntityValidationConstants.Doctor;
+﻿using System.ComponentModel.DataAnnotations;
 using static HospitalManagmentApp.Common.ApplicationConstants;
-using HospitalManagmentApp.DataModels;
+using static HospitalManagmentApp.Common.EntityValidationConstants.Doctor;
 
 namespace HospitalManagment.ViewModels.Doctor
 {
@@ -32,7 +28,7 @@ namespace HospitalManagment.ViewModels.Doctor
 
         [Required(ErrorMessage = RequiredErrorMessage)]
         public Guid DepartmentId { get; set; }
-        public ICollection<Department> Departents { get; set; }=new List<Department>();
+        public ICollection<HospitalManagmentApp.DataModels.Department> Departents { get; set; }=new List<HospitalManagmentApp.DataModels.Department>();
 
        
     }
