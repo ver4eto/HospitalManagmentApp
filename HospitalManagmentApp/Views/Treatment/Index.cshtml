@@ -1,0 +1,38 @@
+﻿﻿@using HospitalManagment.ViewModels.Treatment
+@model IEnumerable<TreatmentIndexViewModel>
+
+@{
+    ViewData["Title"] = "All Treatment";
+}
+
+<h2>All Treatments </h2>
+
+<div class="row">
+    @foreach (var treatment in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="~/images/treatment.png" class="card-img-top" alt="Doctor Image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <p class="card-title"><strong>Treatment name: </strong>@treatment.Name</p>
+                    <p class="card-text"><strong>Treatment ptice: </strong>@treatment.Price</p>
+                   
+                    <div class="btn-group" role="group" aria-label="Treatment Actions">
+
+                        
+                        <!-- Update Button -->
+                        <a asp-controller="Treatment" asp-action="Edit" asp-route-id="@treatment.Id" class="btn btn-warning btn-sm">Update</a>
+
+                        <!-- Delete Button -->
+                        <form asp-controller="Treatment" asp-action="Delete" asp-route-id="@treatment.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this doctor?');">
+                                Delete
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

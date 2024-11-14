@@ -1,0 +1,30 @@
+﻿@using HospitalManagment.ViewModels.Treatment
+@model AddTreatmentViewModel
+
+@{
+    ViewData["Title"] = "Add New Treatment";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Add New Treatment</h2>
+
+    <form asp-action="Add" method="post" class="mt-4">
+        <div class="form-group">
+            <label asp-for="Name" class="control-label" p style="font-weight: bold;">Name of treatment</label>
+            <input asp-for="Name" class="form-control" aria-required="true" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="control-label" p style="font-weight: bold;">Price of treatment</label>
+            <input asp-for="Price" class="form-control" aria-required="true" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Add Treatment</button>
+        <a asp-action="Index" class="btn btn-secondary mt-3 ml-2">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
