@@ -25,9 +25,12 @@
                             <input type="hidden" name="depId" value="@department.Id" />
                             <button type="submit" class="btn btn-warning">Add doctor to department</button>
                         </form>
-                      
 
-                        <a asp-controller="Room" asp-action="AddRoomToDepartment" asp-route-id="@department.Id" class="btn btn-light ">Add Room to this Department</a>
+
+                        <form asp-controller="Room" asp-action="Add" method="get" class="d-inline">
+                            <input type="hidden" name="depId" value="@department.Id" />
+                            <button type="submit" class="btn btn-warning">Add room to department</button>
+                        </form>
                         <!-- Update Button -->
                         <a asp-controller="Department" asp-action="Edit" asp-route-id="@department.Id" class="btn btn-warning btn-sm">Update</a>
 

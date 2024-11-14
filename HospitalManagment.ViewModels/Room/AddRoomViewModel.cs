@@ -26,7 +26,7 @@ namespace HospitalManagment.ViewModels.Room
         //public bool HasFreeBeds { get; set; } = true;
       
         
-        public Guid DepartmnetId { get; set; }    
-        public IEnumerable<HospitalManagmentApp.DataModels.Department> Departments { get; set; } = new List<HospitalManagmentApp.DataModels.Department>();
+        public Guid DepartmnetId { get; set; }
+        public string DepartmentName { get; set; } = null!;
     }
 }

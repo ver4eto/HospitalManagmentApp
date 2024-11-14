@@ -1,4 +1,5 @@
-﻿using HospitalManagment.ViewModels.Nurse;
+﻿using HospitalManagment.ViewModels.Doctor;
+using HospitalManagment.ViewModels.Nurse;
 using HospitalManagment.ViewModels.Room;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
@@ -32,11 +33,20 @@ namespace HospitalManagmentApp.Controllers
             return View(rooms);
 
         }
+     
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(Guid depId)
         {
+            var dep = await context
+                .Departments
+                .FirstOrDefaultAsync(n => n.Id == depId);
+            if(dep == null)
+            {
+                return BadRequest();
+            }
             var room = new AddRoomViewModel();
-            room.Departments = await GetDepartments();
+          room.DepartmnetId = depId;
+           room.DepartmentName = dep.Name;
             return View(room);
         }
 
@@ -45,7 +55,7 @@ namespace HospitalManagmentApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Departments = await GetDepartments();
+               // model.Departments = await GetDepartments();
                 return View(model);
             }
 
@@ -62,12 +72,13 @@ namespace HospitalManagmentApp.Controllers
                 RoomNumber = model.RoomNumber,
                 BedCount = model.BedCount,
                 DepartmnetId = model.DepartmnetId,
+               
             };
 
 
             await context.Rooms.AddAsync(room);
             await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index","Department");
         }
 
         [HttpGet]
@@ -174,6 +185,8 @@ namespace HospitalManagmentApp.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+       
 
 
 
