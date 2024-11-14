@@ -1,6 +1,7 @@
 ﻿using HospitalManagment.ViewModels.Department;
 using HospitalManagment.ViewModels.Doctor;
 using HospitalManagmentApp.Data;
+using HospitalManagmentApp.DataModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +31,32 @@ namespace HospitalManagmentApp.Controllers
                 })
                 .ToListAsync();
             return View(dep);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var doctor = new AddDepartmentViewModel();           
+            return View(doctor);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddDepartmentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+              
+                return View(model);
+            }
+
+            var deparment = new Department()
+            {
+                Name = model.Name,
+            };
+
+            await context.Departments.AddAsync(deparment);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
