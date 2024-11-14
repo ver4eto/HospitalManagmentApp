@@ -26,6 +26,11 @@
                             <button type="submit" class="btn btn-warning">Add doctor to department</button>
                         </form>
 
+                        <form asp-controller="Nurse" asp-action="AddNurseToDepartment" method="get" class="d-inline">
+                            <input type="hidden" name="depId" value="@department.Id" />
+                            <button type="submit" class="btn btn-warning">Add nurse to department</button>
+                        </form>
+
 
                         <form asp-controller="Room" asp-action="Add" method="get" class="d-inline">
                             <input type="hidden" name="depId" value="@department.Id" />

@@ -167,6 +167,61 @@ namespace HospitalManagmentApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AddNurseToDepartment(Guid depId)
+        {
+            var department = await context
+                .Departments
+                .FindAsync(depId);
+
+            if (department == null)
+            {
+                return BadRequest();
+            }
+
+            var nurses = await context
+                .Nurses
+                .Where(d => d.IsDeleted == false && d.DepartmentId != depId)
+                .ToListAsync();
+
+            department = await context.Departments.FindAsync(depId);
+
+            var viewModel = new AddNurseToDepartmentViewModel
+            {
+                DepartmentId = depId,
+                DepartmentName = department?.Name,
+                Nurses = nurses
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNurseToDepartment(AddNurseToDepartmentViewModel model, Guid depId)
+        {
+            var department = await context
+                .Departments
+                .FindAsync(depId);
+
+
+            if (department == null)
+            {
+                return BadRequest();
+            }
+
+            var nurse = await context.Nurses.FindAsync(model.SelectedNurseId);
+
+            if (nurse != null)
+            {
+                nurse.DepartmentId = model.DepartmentId;
+                await context.SaveChangesAsync();
+
+            }
+
+            return RedirectToAction("Index", "Department");
+        }
+
+
 
 
         private async Task<ICollection<Department>> GetDepartments()
