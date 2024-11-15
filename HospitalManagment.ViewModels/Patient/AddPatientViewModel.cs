@@ -1,8 +1,8 @@
-﻿using HospitalManagmentApp.DataModels;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using static HospitalManagmentApp.Common.ApplicationConstants;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Patient;
+
+using System.Web.Mvc;
 
 namespace HospitalManagment.ViewModels.Patient
 {
@@ -37,5 +37,10 @@ namespace HospitalManagment.ViewModels.Patient
         public Guid DepartmentId { get; set; }
 
         public IEnumerable<HospitalManagmentApp.DataModels.Department> Departments { get; set; }=new List<HospitalManagmentApp.DataModels.Department>();
+
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        public Guid RoomId { get; set; }
+
+        public List<SelectListItem> Rooms { get; set; } = new List<SelectListItem>();
     }
 }

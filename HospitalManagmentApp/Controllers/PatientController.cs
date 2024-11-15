@@ -3,7 +3,13 @@ using HospitalManagment.ViewModels.Patient;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
 using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
+
+using System.Web.Mvc;
+using Controller = Microsoft.AspNetCore.Mvc.Controller;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 
 namespace HospitalManagmentApp.Controllers
 {
@@ -44,8 +50,24 @@ namespace HospitalManagmentApp.Controllers
         {
             var patient = new AddPatientViewModel();
             patient.Departments = await GetDepartments();
+            patient.Rooms = new List<SelectListItem>() ;
             return View(patient);
         }
+
+        [HttpGet]
+        public async Task< IActionResult> GetFreeRooms(Guid departmentId)
+        {
+            var freeRooms = context.Rooms
+                .Where(r => r.DepartmnetId == departmentId && r.HasFreeBeds == true)
+                .Select(r => new SelectListItem
+                {
+                    Value = r.Id.ToString(),
+                    Text = r.RoomNumber.ToString(),
+                }).ToList();
+
+            return Json(freeRooms); // Return free rooms as JSON
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Add(AddPatientViewModel model)
@@ -53,6 +75,14 @@ namespace HospitalManagmentApp.Controllers
             if (!ModelState.IsValid)
             {
                 model.Departments = await GetDepartments();
+                model.Rooms = context.Rooms
+               .Where(r => r.DepartmnetId == model.DepartmentId && r.HasFreeBeds == true)
+               .Select(r => new SelectListItem
+               {
+                   Value = r.Id.ToString(),
+                   Text = r.RoomNumber.ToString()
+               }).ToList();
+
                 return View(model);
             }
 
@@ -65,9 +95,18 @@ namespace HospitalManagmentApp.Controllers
                 DepartmentId = model.DepartmentId,
                 HasMedicalInsurance=model.HasMedicalInsurance,
                 EGN=model.EGN,
-                PhoneNumber=model.PhoneNumber
+                PhoneNumber=model.PhoneNumber,
+                RoomId=model.RoomId,
 
             };
+            var room = await context
+                .Rooms
+                .FindAsync(model.RoomId);
+
+            if (room != null)
+            {
+                room.HasFreeBeds = false;
+            }
 
             await context.Patients.AddAsync(patient);
             await context.SaveChangesAsync();
