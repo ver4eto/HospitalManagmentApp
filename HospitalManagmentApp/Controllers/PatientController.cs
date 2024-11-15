@@ -113,6 +113,86 @@ namespace HospitalManagmentApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Manage()
+        {
+            var patients = await context
+                .Patients
+                .Where(p => p.IsDeleted == false)
+                .Select(p => new PatientIndexViewModel()
+                {
+                    Id = p.Id,
+                    Name = $"{p.FirstName} {p.LastName}",
+                    EGN = p.EGN,
+                    PhoneNumber = p.PhoneNumber,
+                    Address = p.Address,
+                    Department = p.Department.Name,
+                    Room = p.Room.RoomNumber,
+                    HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
+                    EmailAddress = p.EmailAddress,
+
+                })
+                .ToListAsync();
+
+            return View(patients);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MovePatient(Guid id)
+        {
+            var patient=await context
+                .Patients
+                .Where (p => p.IsDeleted == false && p.Id==id)
+                .Include(p=>p.Room)
+                .Include(p=>p.Department)
+                .FirstOrDefaultAsync();
+
+            if (patient == null)
+            {
+                return BadRequest();
+            }
+
+            var model = new MovePatientToDepartmentViewModel()
+            {
+                PatientId = id,
+                Name = $"{patient.FirstName} {patient.LastName}",
+                EGN = patient.EGN,
+                CurrentRoom = patient.Room.RoomNumber,
+                CurrentDepartment = patient.Department.Name,
+                CurrentDepartmentId = patient.Department.Id,
+                CurrentRoomId = patient.Room.Id,
+                Departments=await GetDepartments()
+            };
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task< IActionResult> GetFreeRoomsOnMove(Guid departmentId)
+        {
+            var freeRooms =await context.Rooms
+                .Where(r => r.DepartmnetId == departmentId && !r.Patients.Any())
+                .Select(r => new { value = r.Id, text = r.RoomNumber })
+                .ToListAsync();
+
+            return Json(freeRooms);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MovePatient(MovePatientToDepartmentViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var patient =await context.Patients.FindAsync(model.PatientId);
+
+            if (patient == null)
+                return NotFound();
+
+            patient.DepartmentId = model.NewDepartmentId;
+            patient.RoomId = model.NewRoomId;
+           await context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
         //[HttpGet]
         //public async Task<IActionResult> Edit(Guid id)
         //{

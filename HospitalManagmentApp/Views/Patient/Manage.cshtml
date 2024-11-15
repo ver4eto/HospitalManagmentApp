@@ -1,0 +1,42 @@
+﻿@using HospitalManagment.ViewModels.Patient
+@model IEnumerable<PatientIndexViewModel>
+
+@{
+    ViewData["Title"] = "All Patients";
+}
+
+<h2>All Patients</h2>
+
+<div class="row">
+    @foreach (var patient in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="~/images/patient.png" class="card-img-top" alt="Doctor Image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <p class="card-title">Name: @patient.Name</p>
+                    <p class="card-title">Address: @patient.Address</p>
+                   
+                    <p class="card-title">EGN: @patient.EGN</p>                   
+                    <p class="card-text">Department: @patient.Department</p>
+                    <p class="card-text">RoomNumber: @patient.Room</p>
+
+                    <form asp-action="DischargePatient" method="post" class="d-inline">
+                        <input type="hidden" name="patientId" value="@patient.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Discharge</button>
+                    </form>
+
+                    @* <form asp-action="MovePatient" method="get" class="d-inline">
+                        <input type="hidden" name="patientId" value="@patient.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Move Patient to other department</button>
+                    </form>
+ *@
+                    <!-- Move Patient to Another Department Button -->
+                    <a asp-action="MovePatient" asp-route-id="@patient.Id" class="btn btn-primary btn-sm ml-2">
+                        Move to Another Department
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

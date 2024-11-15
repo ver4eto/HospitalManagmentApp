@@ -9,7 +9,7 @@ namespace HospitalManagment.ViewModels.Patient
 {
     public class PatientIndexViewModel
     {
-        
+        public Guid Id { get; set; }
         public string Name { get; set; } = null!;
                 
         
