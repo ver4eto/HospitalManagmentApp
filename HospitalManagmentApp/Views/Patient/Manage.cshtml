@@ -21,8 +21,8 @@
                     <p class="card-text">Department: @patient.Department</p>
                     <p class="card-text">RoomNumber: @patient.Room</p>
 
-                    <form asp-action="DischargePatient" method="post" class="d-inline">
-                        <input type="hidden" name="patientId" value="@patient.Id" />
+                    <form asp-action="DischargePatient" method="get" class="d-inline">
+                        <input type="hidden" name="id" value="@patient.Id" />
                         <button type="submit" class="btn btn-danger btn-sm">Discharge</button>
                     </form>
 
