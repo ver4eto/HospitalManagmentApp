@@ -1,0 +1,24 @@
+﻿@using HospitalManagment.ViewModels.Room
+@model DeleteRoomViewModel
+
+@{
+    ViewData["Title"] = "Delete Room";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-danger">Delete Room</h2>
+
+    <p class="mt-4">Are you sure you want to delete this room?</p>
+
+    <div class="card p-3 mb-4">
+        <h4><strong>@Model.RoomNumber</strong></h4>
+       
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a asp-controller="Room" asp-action="Index" class="btn btn-secondary ml-2">Cancel</a>
+    </form>
+</div>

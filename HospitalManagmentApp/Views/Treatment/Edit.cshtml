@@ -1,0 +1,39 @@
+﻿@using HospitalManagment.ViewModels.Treatment
+@model EditTreatmentViewModel
+@{
+    ViewData["Title"] = "Edit treatment ";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Edit treatment @Model.Name</h2>
+
+    <form asp-action="Edit" method="post" class="mt-4">
+        <input type="hidden" asp-for="TreatmentId" />
+
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Treatment Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="control-label">Treatment price</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+
+        <input type="hidden" asp-for="@Model.TreatmentId" />
+        <div class="mb-2">
+            <input class="btn btn-warning btn-dark-text w-100 py-2 fw-bold rounded" type="submit" value="Save Changes" />
+        </div>
+        <div class="mb-2">
+            <a asp-action="Manage" class="btn btn-secondary mt-3 ml-2">Cancel</a>
+        </div>
+
+       
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

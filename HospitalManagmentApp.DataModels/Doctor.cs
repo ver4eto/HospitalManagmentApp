@@ -20,7 +20,7 @@ namespace HospitalManagmentApp.DataModels
         public string LastName { get; set; } = null!;
 
         [Required]
-        [MaxLength(FirstNameMaxLenght)]
+        [MaxLength(LastNameMaxLenght)]
         [Comment("Doctor`s Last Name")]
         public string FirstName { get; set; } = null!;
 
@@ -43,12 +43,12 @@ namespace HospitalManagmentApp.DataModels
         [Comment("Soft delete property")]
         public bool IsDeleted { get; set; } = false;
 
-
+       
         [Comment("In which department works the doctor")]
         public Guid DepartmnetId { get; set; } 
 
         [ForeignKey(nameof(DepartmnetId))]
-        public Department? Department { get; set; } 
+        public Department Department { get; set; } =null!;
 
         public IEnumerable<PatientDoctor> DoctorPatients { get; set; } = new HashSet<PatientDoctor>();
 

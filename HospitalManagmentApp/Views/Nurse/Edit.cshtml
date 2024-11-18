@@ -1,0 +1,64 @@
+﻿@using HospitalManagment.ViewModels.Nurse
+@model EditNurseViewModel
+
+@{
+
+    ViewData["Title"] = "Edit Nurse";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Edit Nurse Details</h2>
+
+    <form asp-action="Edit" method="post" class="mt-4">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label">First Name</label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label">Last Name</label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Salary" class="control-label">Salary</label>
+            <input asp-for="Salary" type="number" class="form-control" />
+            <span asp-validation-for="Salary" class="text-danger"></span>
+        </div>
+
+        
+
+        <div class="form-group">
+            <label asp-for="EmailAddress" class="control-label">Email</label>
+            <input asp-for="EmailAddress" type="email" class="form-control" />
+            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-6 mb-2">
+            <label asp-for="@Model.DepartmentId" class="form-label-add-edit">Department Name</label>
+            <select asp-for="@Model.DepartmentId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Departments, "Id", "Name"))">
+                <option value="">Select Category...</option>
+            </select>
+            <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="@Model.Id" />
+        <div class="mb-2">
+            <input class="btn btn-warning btn-dark-text w-100 py-2 fw-bold rounded" type="submit" value="Save Changes" />
+        </div>
+        <div class="mb-2">
+            <a asp-action="Manage" class="btn btn-secondary mt-3 ml-2">Cancel</a>
+        </div>
+@* 
+        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+        <a asp-action="Manage" class="btn btn-secondary mt-3 ml-2">Cancel</a> *@
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

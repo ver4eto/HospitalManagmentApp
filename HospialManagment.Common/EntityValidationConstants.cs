@@ -35,11 +35,15 @@ namespace HospitalManagmentApp.Common
             public const int FirstNameMaxLenght = 50;
             public const int FirstNameMinLenght = 2;
 
+            public const int LastNameMaxLenght = 50;
+            public const int LastNameMinLenght = 2;
+
             public const int SpecialtyMaxLenght = 50;
             public const int SpecialtyMinLenght = 5;
 
 
             public const string SpecialtyDefaultValue = "Resident";
+            public const string SalaryMinValueErrorMessage = "The salary must be higher than {1}!";
 
         }
 
@@ -63,6 +67,8 @@ namespace HospitalManagmentApp.Common
 
             public const int NurseLastNameMinLength = 2;
             public const int NurseLastNameMaxLength = 50;
+
+            public const string SalaryMinValueErrorMessage = "The salary must be higher than {1}!";
         }
 
         public static class Treatment
