@@ -52,6 +52,7 @@ namespace HospitalManagmentApp.Controllers
             var patient = new AddPatientViewModel();
             patient.Departments = await GetDepartments();
             patient.Rooms = new List<SelectListItem>() ;
+            
             return View(patient);
         }
 
@@ -84,6 +85,7 @@ namespace HospitalManagmentApp.Controllers
                    Text = r.RoomNumber.ToString()
                }).ToList();
 
+
                 return View(model);
             }
 
@@ -98,7 +100,7 @@ namespace HospitalManagmentApp.Controllers
                 EGN=model.EGN,
                 PhoneNumber=model.PhoneNumber,
                 RoomId=model.RoomId,
-
+                UserId=model.EmailAddress
             };
             var room = await context
                 .Rooms

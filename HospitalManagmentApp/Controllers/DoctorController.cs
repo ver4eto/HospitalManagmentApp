@@ -59,6 +59,7 @@ namespace HospitalManagmentApp.Controllers
                 EmailAddress= model.EmailAddress,
                 Salary= model.Salary,
                 DepartmnetId=model.DepartmentId,
+                UserId=model.EmailAddress,
             };
 
            await context.Doctors.AddAsync(doctor);
