@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagmentApp.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagmentApp.DataModels", "HospitalManagmentApp.DataModels\HospitalManagmentApp.DataModels.csproj", "{A17C082D-7416-4A74-866E-8E41CF6CE9BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagment.ViewModels", "HospitalManagment.ViewModels\HospitalManagment.ViewModels.csproj", "{6C3CDA4F-820C-4FFB-AB98-0F1A59179D51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagment.ViewModels", "HospitalManagment.ViewModels\HospitalManagment.ViewModels.csproj", "{6C3CDA4F-820C-4FFB-AB98-0F1A59179D51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagment.Infrastructure", "HospitalManagment.Infrastructure\HospitalManagment.Infrastructure.csproj", "{55B63D05-B3E1-4161-B39B-8442D5D6DB66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{6C3CDA4F-820C-4FFB-AB98-0F1A59179D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C3CDA4F-820C-4FFB-AB98-0F1A59179D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C3CDA4F-820C-4FFB-AB98-0F1A59179D51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55B63D05-B3E1-4161-B39B-8442D5D6DB66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55B63D05-B3E1-4161-B39B-8442D5D6DB66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55B63D05-B3E1-4161-B39B-8442D5D6DB66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55B63D05-B3E1-4161-B39B-8442D5D6DB66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
