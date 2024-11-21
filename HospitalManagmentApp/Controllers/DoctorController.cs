@@ -1,5 +1,7 @@
 ﻿using HospitalManagment.ViewModels.Doctor;
 using HospitalManagmentApp.Data;
+using HospitalManagmentApp.DataModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +13,11 @@ namespace HospitalManagmentApp.Controllers
     public class DoctorController : Controller
     {
         private readonly HMDbContext context;
-
-        public DoctorController(HMDbContext _context)
+        private readonly UserManager<ApplicationUser> userManager;
+        public DoctorController(HMDbContext _context, UserManager<ApplicationUser> userManager)
         {
             this.context = _context;
+            this.userManager = userManager;
         }
         public async Task< IActionResult> Index()
         {
