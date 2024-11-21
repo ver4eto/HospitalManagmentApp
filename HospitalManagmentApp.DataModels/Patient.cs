@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Patient;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HospitalManagmentApp.DataModels
 {
@@ -66,7 +64,9 @@ namespace HospitalManagmentApp.DataModels
         [ForeignKey(nameof(RoomId))]
         public Room? Room { get; set; }
 
-        //public Guid UserId { get; set; }
-        //public IdentityUser User { get; set; } = null!;
+        public string UserId { get; set; } = null!;
+
+        [ForeignKey(nameof(UserId))]
+        public ApplicationUser User { get; set; } = null!;
     }
 }

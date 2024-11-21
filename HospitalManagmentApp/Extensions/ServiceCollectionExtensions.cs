@@ -1,4 +1,5 @@
 ﻿using HospitalManagmentApp.Data;
+using HospitalManagmentApp.DataModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -29,7 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration configue)
         {
             services
-                    .AddDefaultIdentity<IdentityUser>(options =>
+                    .AddDefaultIdentity<ApplicationUser>(options =>
                     { 
                         options.SignIn.RequireConfirmedAccount = false; 
                         options.Password.RequireNonAlphanumeric = false;

@@ -58,15 +58,15 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task< IActionResult> GetFreeRooms(Guid departmentId)
         {
-            var freeRooms = context.Rooms
+            var freeRooms =await context.Rooms
                 .Where(r => r.DepartmnetId == departmentId && r.HasFreeBeds == true)
                 .Select(r => new SelectListItem
                 {
                     Value = r.Id.ToString(),
                     Text = r.RoomNumber.ToString(),
-                }).ToList();
+                }).ToListAsync();
 
-            return Json(freeRooms); // Return free rooms as JSON
+            return Json(freeRooms); 
         }
 
 

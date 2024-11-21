@@ -14,6 +14,12 @@ namespace HospitalManagmentApp.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Manager> builder)
         {
+            builder
+                .HasOne(m => m.User)
+                .WithMany(um => um.Managers)
+                .HasForeignKey(m => m.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasData
                 (
                 new Manager()
@@ -21,7 +27,8 @@ namespace HospitalManagmentApp.Data.Configuration
                     Id =Guid.NewGuid(),
                     FullName="Stoian Ivanov",
                     PhoneNumber="+359883456789",
-                    EmailAddress=  "ivanovst@abv.bg"
+                    EmailAddress=  "ivanovst@abv.bg",
+                    UserId= "ivanovst@abv.bg"
                 }
                 );
         }

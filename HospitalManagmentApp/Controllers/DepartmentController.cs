@@ -36,7 +36,7 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             var doctor = new AddDepartmentViewModel();           
             return View(doctor);
