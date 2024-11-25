@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagment.Infrastructure.Repositories
 {
-    public class Repository<TType, TId> : IRepository<TType, TId> where TType : class
+    public class BaseRepository<TType, TId> : IRepository<TType, TId> where TType : class
     {
         private readonly HMDbContext dbContext;
         private readonly DbSet<TType> dbSet;
 
-        public Repository(HMDbContext context)
+        public BaseRepository(HMDbContext context)
         {
             this.dbContext = context;
             this.dbSet = this.dbContext.Set<TType>();

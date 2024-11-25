@@ -13,6 +13,20 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services;
         }
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped(typeof(IRepository<Doctor, Guid>), typeof(BaseRepository<Doctor, Guid>));
+            services.AddScoped(typeof(IRepository<Manager, Guid>), typeof(BaseRepository<Manager, Guid>));
+            services.AddScoped(typeof(IRepository<Nurse, Guid>), typeof(BaseRepository<Nurse, Guid>));
+            services.AddScoped(typeof(IRepository<Patient, Guid>), typeof(BaseRepository<Patient, Guid>));
+            services.AddScoped(typeof(IRepository<Department, Guid>), typeof(BaseRepository<Department, Guid>));
+            services.AddScoped(typeof(IRepository<Room, Guid>), typeof(BaseRepository<Room, Guid>));
+            services.AddScoped(typeof(IRepository<Treatment, Guid>), typeof(BaseRepository<Treatment, Guid>));
+            services.AddScoped(typeof(IRepository<PatientDoctor, object>), typeof(BaseRepository<PatientDoctor, object>));
+            services.AddScoped(typeof(IRepository<PatientTreatment, object>), typeof(BaseRepository<PatientTreatment, object>));
+
+            return services;
+        }
 
         public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration configue)
         {

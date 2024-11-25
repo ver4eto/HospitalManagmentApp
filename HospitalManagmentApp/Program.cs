@@ -1,5 +1,6 @@
 using HospitalManagment.Infrastructure.Repositories;
 using HospitalManagment.Infrastructure.Repositories.Contracts;
+using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Models;
 using HospitalManagmentApp.Services.Mapping;
 using NuGet.Protocol.Core.Types;
@@ -10,7 +11,9 @@ builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+//TODO extension method
+builder.Services.AddRepositories();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
