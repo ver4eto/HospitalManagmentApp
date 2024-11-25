@@ -1,7 +1,10 @@
 using HospitalManagment.Infrastructure.Repositories;
 using HospitalManagment.Infrastructure.Repositories.Contracts;
+using HospitalManagment.ViewModels.Doctor;
 using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Models;
+using HospitalManagmentApp.Services.Data;
+using HospitalManagmentApp.Services.Data.Interfaces;
 using HospitalManagmentApp.Services.Mapping;
 using NuGet.Protocol.Core.Types;
 
@@ -14,10 +17,11 @@ builder.Services.AddControllersWithViews();
 
 //TODO extension method
 builder.Services.AddRepositories();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
-
+AutoMapperConfig.RegisterMappings(typeof(Program).Assembly, typeof(DoctorIndexViewModel).Assembly);
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
 if (app.Environment.IsDevelopment())

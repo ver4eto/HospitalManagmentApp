@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HospialManagment.Common\HospitalManagmentApp.Common.csproj" />
     <ProjectReference Include="..\HospitalManagmentApp.DataModels\HospitalManagmentApp.DataModels.csproj" />
+    <ProjectReference Include="..\HospitalManagmentApp.Services.AutoMapper\HospitalManagmentApp.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

@@ -64,7 +64,7 @@ namespace HospitalManagment.Infrastructure.Repositories
 
         }
 
-        public IEnumerable<TType> GetAllAttcahed()
+        public IQueryable<TType> GetAllAttcahed()
         {
             return this.dbSet.AsQueryable();
         }

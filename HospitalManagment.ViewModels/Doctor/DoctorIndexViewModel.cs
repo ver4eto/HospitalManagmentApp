@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DoctorModel = HospitalManagmentApp.DataModels.Doctor;
+
+using HospitalManagmentApp.Services.AutoMapper;
 
 namespace HospitalManagment.ViewModels.Doctor
 {
-    public class DoctorIndexViewModel
+    public class DoctorIndexViewModel : IMapFrom<DoctorModel>
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; } = null!;

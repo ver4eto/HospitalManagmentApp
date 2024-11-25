@@ -14,7 +14,7 @@ namespace HospitalManagment.Infrastructure.Repositories.Contracts
 
          
 
-        IEnumerable<TType> GetAllAttcahed();
+        IQueryable<TType> GetAllAttcahed();
 
         Task<TType> GetByIdAsync(TId id);
 

@@ -1,6 +1,7 @@
 ﻿using HospitalManagment.ViewModels.Doctor;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
+using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,26 +15,16 @@ namespace HospitalManagmentApp.Controllers
     {
         private readonly HMDbContext context;
         private readonly UserManager<ApplicationUser> userManager;
-        public DoctorController(HMDbContext _context, UserManager<ApplicationUser> userManager)
+        private readonly IDoctorService doctorService;
+        public DoctorController(HMDbContext _context, UserManager<ApplicationUser> userManager, IDoctorService doctorService)
         {
             this.context = _context;
             this.userManager = userManager;
+            this.doctorService = doctorService;
         }
         public async Task< IActionResult> Index()
         {
-            var doctors=await context
-                .Doctors    
-                .Where(d=>d.IsDeleted==false)
-                .Select(d=>new DoctorIndexViewModel()
-                {
-                    Id = d.Id,
-                   FirstName= d.FirstName,
-                  LastName=  d.LastName,
-                   Specialty= d.Specialty,
-                   DepartmentName= d.Department.Name,
-
-                })
-                .ToListAsync();
+           IEnumerable<DoctorIndexViewModel> doctors= await this.doctorService.IndexGetAllDoctorsAsync();
             return View(doctors);
         }
 
