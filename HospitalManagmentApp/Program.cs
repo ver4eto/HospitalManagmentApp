@@ -1,5 +1,7 @@
 using HospitalManagment.Infrastructure.Repositories;
 using HospitalManagment.Infrastructure.Repositories.Contracts;
+using HospitalManagmentApp.Models;
+using HospitalManagmentApp.Services.Mapping;
 using NuGet.Protocol.Core.Types;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,7 @@ builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
+AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
 if (app.Environment.IsDevelopment())
 {

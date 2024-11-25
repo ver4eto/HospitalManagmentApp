@@ -23,6 +23,7 @@
     <ProjectReference Include="..\HospitalManagment.Data\HospitalManagmentApp.Data.csproj" />
     <ProjectReference Include="..\HospitalManagment.Infrastructure\HospitalManagment.Infrastructure.csproj" />
     <ProjectReference Include="..\HospitalManagment.ViewModels\HospitalManagment.ViewModels.csproj" />
+    <ProjectReference Include="..\HospitalManagmentApp.Services.AutoMapper\HospitalManagmentApp.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>
