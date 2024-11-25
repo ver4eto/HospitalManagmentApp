@@ -6,16 +6,27 @@ using System.Threading.Tasks;
 
 namespace HospitalManagment.Infrastructure.Repositories.Contracts
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<TType, TId> 
     {
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<TType>> GetAllAsync();
 
-        Task<T> GetByIdAsync(Guid id);
+        IEnumerable<TType> GetAll();
 
-        Task AddAsync(T entity);
+         
 
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(Guid id);
+        IEnumerable<TType> GetAllAttcahed();
+
+        Task<TType> GetByIdAsync(TId id);
+
+        TType GetById(TId id);
+
+        void Add(TType item);
+        Task AddAsync(TType entity);
+
+        bool Update(TType entity);
+        Task <bool>UpdateAsync(TType entity);
+        bool Delete(TId id);
+        Task<bool> DeleteAsync(TId id);
 
     }
 }
