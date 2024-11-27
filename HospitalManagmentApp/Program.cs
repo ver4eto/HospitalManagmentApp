@@ -1,13 +1,8 @@
-using HospitalManagment.Infrastructure.Repositories;
-using HospitalManagment.Infrastructure.Repositories.Contracts;
 using HospitalManagment.ViewModels.Doctor;
-using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Models;
 using HospitalManagmentApp.Services.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using HospitalManagmentApp.Services.Mapping;
-using Microsoft.Build.Exceptions;
-using NuGet.Protocol.Core.Types;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +15,7 @@ builder.Services.AddRazorPages();
 //TODO extension method
 builder.Services.AddRepositories();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<INurseService, NurseService>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();

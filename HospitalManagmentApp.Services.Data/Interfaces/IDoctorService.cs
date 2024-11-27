@@ -1,6 +1,4 @@
 ﻿using HospitalManagment.ViewModels.Doctor;
-using HospitalManagmentApp.DataModels;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Services.Data.Interfaces
 {

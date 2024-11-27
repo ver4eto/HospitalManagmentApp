@@ -2,6 +2,8 @@
 using HospitalManagment.ViewModels.Nurse;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
+using HospitalManagmentApp.Services.Data;
+using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,25 +14,17 @@ namespace HospitalManagmentApp.Controllers
     {
         private readonly HMDbContext context;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly INurseService nurseService;
 
-        public NurseController(HMDbContext context, UserManager<ApplicationUser> userManager)
+        public NurseController(HMDbContext context, UserManager<ApplicationUser> userManager,INurseService nurseService)
         {
             this.context = context;
             this.userManager = userManager;
+            this.nurseService = nurseService;
         }
         public async Task< IActionResult> Index()
         {
-            var nurses=await context
-                .Nurses
-                .Where(n=>n.IsDeleted==false)
-                .Select(n =>new NurseIndexViewModel
-                { 
-                    Id=n.Id,
-                FirstName = n.FirstName,
-                LastName = n.LastName,
-                Department=n.Department.Name,
-                })
-                .ToListAsync();
+            var nurses=await nurseService.GetAllNursesAsync();
 
             return View(nurses);
         }
@@ -38,8 +32,8 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var nurse = new AddNurseViewModel();
-            nurse.Departments = await GetDepartments();
+            var nurse = await nurseService.GetAddNurseViewModelAsync();
+           
             return View(nurse);
         }
 
@@ -48,53 +42,26 @@ namespace HospitalManagmentApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Departments = await GetDepartments();
+                //model.Departments = await nurseService.
                 return View(model);
             }
 
-            var nurse = new Nurse()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-               
-                EmailAddress = model.EmailAddress,
-                Salary = model.Salary,
-                DepartmentId = model.DepartmentId,
-                UserId=model.EmailAddress
-            };
-
-            await context.Nurses.AddAsync(nurse);
-            await context.SaveChangesAsync();
+            await nurseService.AddNurseAsync(model);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var nurse = await context
-                .Nurses
-                .Where(d => d.Id == id && d.IsDeleted == false)
-                .Include(d => d.Department)
-                .FirstOrDefaultAsync();
+            var nurse = await nurseService.GetEditNurseViewModelAsync(id);
 
             if (nurse == null)
             {
                 return this.View();
             }
+                       
 
-            EditNurseViewModel model = new()
-            {
-                Id = nurse.Id,
-                FirstName = nurse.FirstName,
-                LastName = nurse.LastName,
-                
-                EmailAddress = nurse.EmailAddress,
-                Salary = nurse.Salary,
-                DepartmentId = nurse.Department.Id,
-                Departments = await GetDepartments()
-            };
-
-            return View(model);
+            return View(nurse);
         }
 
         [HttpPost]
@@ -105,23 +72,13 @@ namespace HospitalManagmentApp.Controllers
                 return View(model);
             }
 
-            var nurse = await context
-                .Nurses
-                .FindAsync(id);
-
-            if (nurse == null)
+            var nurse = await nurseService.UpdateNurseAsync(id,model);
+            if (nurse == false)
             {
                 return BadRequest();
             }
 
-            nurse.FirstName = model.FirstName;
-            nurse.LastName = model.LastName;
-            nurse.Salary = model.Salary;           
-            nurse.DepartmentId = model.DepartmentId;
-            nurse.EmailAddress = model.EmailAddress;
-
-
-            await context.SaveChangesAsync();
+           
             return RedirectToAction(nameof(Index));
 
         }
@@ -129,25 +86,15 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var nurse = await context
-                .Nurses
-                .FindAsync(id);
+            var nurse = await nurseService.GetDeleteNurseViewModelAsync(id);
 
             if (nurse == null)
             {
                 return BadRequest();
             }
 
-            var model = new DeleteNurseViewModel
-            {
-                Id = id,
-                FirstName = nurse.FirstName,
-                LastName = nurse.LastName,
-                DepartmentName = nurse.Department.Name,
-               
-            };
 
-            return View(model);
+            return View(nurse);
 
         }
 
@@ -155,82 +102,46 @@ namespace HospitalManagmentApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteNurseViewModel model, Guid id)
         {
-            var nurse = await context
-                .Nurses
-                .Where(d => d.Id == id)
-                .Where(d => d.IsDeleted == false)
-                .FirstOrDefaultAsync();
+            var nurse = await nurseService.DeleteNurseAsync(id);
 
-            if (nurse == null)
+            if (nurse == false)
             {
                 return BadRequest();
             }
 
-            nurse.IsDeleted = true;
-            await context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> AddNurseToDepartment(Guid depId)
         {
-            var department = await context
-                .Departments
-                .FindAsync(depId);
+            
+            var nurse = await nurseService.GetAddNurseToDepartmentViewModelAsync(depId);
 
-            if (department == null)
+           if(nurse == null)
             {
                 return BadRequest();
             }
 
-            var nurses = await context
-                .Nurses
-                .Where(d => d.IsDeleted == false && d.DepartmentId != depId)
-                .ToListAsync();
-
-            department = await context.Departments.FindAsync(depId);
-
-            var viewModel = new AddNurseToDepartmentViewModel
-            {
-                DepartmentId = depId,
-                DepartmentName = department?.Name,
-                Nurses = nurses
-            };
-
-            return View(viewModel);
+            return View(nurse);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddNurseToDepartment(AddNurseToDepartmentViewModel model, Guid depId)
         {
-            var department = await context
-                .Departments
-                .FindAsync(depId);
 
 
-            if (department == null)
+            var nurse = await nurseService.AddNurseToDepartmentAsync(depId, model.SelectedNurseId);
+
+            if (nurse == false)
             {
                 return BadRequest();
-            }
-
-            var nurse = await context.Nurses.FindAsync(model.SelectedNurseId);
-
-            if (nurse != null)
-            {
-                nurse.DepartmentId = model.DepartmentId;
-                await context.SaveChangesAsync();
-
             }
 
             return RedirectToAction("Index", "Department");
         }
 
 
-
-
-        private async Task<ICollection<Department>> GetDepartments()
-        {
-            return await context.Departments.ToListAsync();
-        }
     }
 }
