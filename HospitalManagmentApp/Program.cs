@@ -17,6 +17,7 @@ builder.Services.AddRepositories();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<INurseService, NurseService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();

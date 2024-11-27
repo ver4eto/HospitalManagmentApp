@@ -3,6 +3,8 @@ using HospitalManagment.ViewModels.Nurse;
 using HospitalManagment.ViewModels.Room;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
+using HospitalManagmentApp.Services.Data;
+using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,24 +13,15 @@ namespace HospitalManagmentApp.Controllers
     public class RoomController : Controller
     {
         private readonly HMDbContext context;
-        public RoomController(HMDbContext hMDb)
+        private IRoomService roomService;
+        public RoomController(HMDbContext hMDb,IRoomService room)
         {
             this.context = hMDb;
+            this.roomService = room;
         }
         public async Task<IActionResult> Index()
         {
-            var rooms = await context
-               .Rooms
-               .Where(n => n.IsDeleted == false)
-               .Select(n => new IndexRoomViewModel
-               {
-                   Id = n.Id,
-                   BedCount = n.BedCount,
-                   RoomNumber = n.RoomNumber,
-                   Departmnet = n.Department.Name,
-                   HasFreeBeds = HasFreeBeds(n.HasFreeBeds)
-               })
-               .ToListAsync();
+            var rooms = await roomService.GetAllRoomsAsync();
 
             return View(rooms);
 
@@ -37,16 +30,13 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Add(Guid depId)
         {
-            var dep = await context
-                .Departments
-                .FirstOrDefaultAsync(n => n.Id == depId);
-            if(dep == null)
+            var room = await roomService.GetAddRoomViewModelAsync(depId);
+
+            if(room == null)
             {
                 return BadRequest();
             }
-            var room = new AddRoomViewModel();
-          room.DepartmnetId = depId;
-           room.DepartmentName = dep.Name;
+            
             return View(room);
         }
 
@@ -55,54 +45,27 @@ namespace HospitalManagmentApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-               // model.Departments = await GetDepartments();
                 return View(model);
             }
 
-            var room = await CheckIfSameNumberRoomExistInCurrentDepartment(model.DepartmnetId, model.RoomNumber);
-
-            if (room != null)
+            var success = await roomService.AddRoomAsync(model);
+            if (!success)
             {
                 ModelState.AddModelError(string.Empty, "This room already exists in the current department.");
                 return View(model);
             }
 
-           room = new Room()
-            {
-                RoomNumber = model.RoomNumber,
-                BedCount = model.BedCount,
-                DepartmnetId = model.DepartmnetId,
-               
-            };
-
-
-            await context.Rooms.AddAsync(room);
-            await context.SaveChangesAsync();
-            return RedirectToAction("Index","Department");
+            return RedirectToAction("Index", "Department");
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var room = await context
-                .Rooms
-                .Where(d => d.Id == id && d.IsDeleted == false)
-                .Include(d => d.Department)
-                .FirstOrDefaultAsync();
-
-            if (room == null)
-            {               
-               return BadRequest();
-            }
-
-            EditRoomViewModel model = new()
+            var model = await roomService.GetEditRoomViewModelAsync(id);
+            if (model == null)
             {
-                Id = room.Id,
-                RoomNumber = room.RoomNumber,
-                BedCount = room.BedCount,
-                DepartmnetId=room.DepartmnetId,
-                Departments = await GetDepartments()
-            };
+                return BadRequest();
+            }
 
             return View(model);
         }
@@ -146,56 +109,30 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var room = await context
-                .Rooms
-                .FindAsync(id);
+            var room = await roomService.GetDeleteRoomViewModelAsync(id);
 
             if (room == null)
             {
                 return BadRequest();
             }
 
-            var model = new DeleteRoomViewModel
-            {
-                Id = id,
-                RoomNumber=room.RoomNumber,
-
-            };
-
-            return View(model);
-
+            return View(room);
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteRoomViewModel model, Guid id)
         {
-            var room = await context
-                .Rooms
-                .Where(d => d.Id == id)
-                .Where(d => d.IsDeleted == false)
-                .FirstOrDefaultAsync();
-
-            if (room == null)
+            var success = await roomService.DeleteRoomAsync(id);
+            if (!success)
             {
                 return BadRequest();
             }
 
-            room.IsDeleted = true;
-            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-       
-
-
-
-        private async Task<Room?> CheckIfSameNumberRoomExistInCurrentDepartment(Guid id, int roomNumber)
-        {
-            return await context.Rooms
-                          .Where(r => r.DepartmnetId == id && r.RoomNumber == roomNumber)
-                          .FirstOrDefaultAsync();
-        }
+              
 
         private static string HasFreeBeds(bool hasFreeBeds)
         {
@@ -206,9 +143,6 @@ namespace HospitalManagmentApp.Controllers
             return "No";
         }
 
-        private async Task<ICollection<Department>> GetDepartments()
-        {
-            return await context.Departments.ToListAsync();
-        }
+    
     }
 }
