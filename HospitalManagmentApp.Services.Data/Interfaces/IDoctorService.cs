@@ -1,4 +1,5 @@
 ﻿using HospitalManagment.ViewModels.Doctor;
+using HospitalManagmentApp.DataModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Services.Data.Interfaces
@@ -8,15 +9,16 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
 
         Task<IEnumerable<DoctorIndexViewModel>> IndexGetAllDoctorsAsync();
         Task AddDoctorAsync(AddDoctorViewModel model);
-        Task <IActionResult> MenageDoctor(Guid id);
-        Task <EditDoctorViewModel> GetEditDoctorViewModel(Guid id);
+        Task <MenageDoctorViewModel?> MenageDoctor(Guid id);
+        Task <EditDoctorViewModel?> GetEditDoctorViewModel(Guid id);
         Task <bool> EditDoctorAsync(EditDoctorViewModel model);
       
         Task<AddDoctorToDepartmentViewModel> GetAddDoctorToDepartmentViewModel(Guid id);
+        Task<bool> GetAddDoctorToDepartmentAsync(AddDoctorToDepartmentViewModel model,Guid depId);
         Task<bool> AddDoctorToDepartmentAsync(AddDoctorViewModel model,Guid id);
 
         Task<DeleteDoctorViewModel> GetDeleteDoctorViewModel(Guid id);
         Task<bool> DeleteDoctorAsync(DeleteDoctorViewModel model);
-
+       // Task<IEnumerable<Department>> GetDepartments();
     }
 }

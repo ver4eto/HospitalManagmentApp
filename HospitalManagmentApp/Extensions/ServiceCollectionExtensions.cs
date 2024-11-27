@@ -2,6 +2,7 @@
 using HospitalManagment.Infrastructure.Repositories.Contracts;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -74,6 +75,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<HMDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             return services;
@@ -82,15 +84,32 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration configue)
         {
             services
-                    .AddDefaultIdentity<ApplicationUser>(options =>
-                    { 
-                        options.SignIn.RequireConfirmedAccount = false; 
-                        options.Password.RequireNonAlphanumeric = false;
-                        options.Password.RequireDigit = false;
-                        options.Password.RequireUppercase = false;
-                        options.Password.RequiredLength = 6;
-                    })
-                    .AddEntityFrameworkStores<HMDbContext>();
+                    .AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+               
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+            })
+                    .AddEntityFrameworkStores<HMDbContext>()
+                    .AddDefaultTokenProviders();
+
+            //     services.AddIdentity<ApplicationUser, IdentityRole>()
+            //.AddEntityFrameworkStores<HMDbContext>()
+            //.AddDefaultTokenProviders();
+
+            //     services
+            //             .AddDefaultIdentity<ApplicationUser>(options =>
+            //             {
+            //                 options.SignIn.RequireConfirmedAccount = false;
+            //                 options.Password.RequireNonAlphanumeric = false;
+            //                 options.Password.RequireDigit = false;
+            //                 options.Password.RequireUppercase = false;
+            //                 options.Password.RequiredLength = 6;
+            //             })
+            //             .AddEntityFrameworkStores<HMDbContext>();
 
             return services;
         }

@@ -44,9 +44,9 @@ namespace HospitalManagmentApp.DataModels
 
        
         [Comment("In which department works the doctor")]
-        public Guid DepartmnetId { get; set; } 
+        public Guid DepartmentId { get; set; } 
 
-        [ForeignKey(nameof(DepartmnetId))]
+        [ForeignKey(nameof(DepartmentId))]
         public Department Department { get; set; } =null!;
 
         public IEnumerable<PatientDoctor> DoctorPatients { get; set; } = new HashSet<PatientDoctor>();

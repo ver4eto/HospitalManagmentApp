@@ -4,6 +4,7 @@ using HospitalManagmentApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagmentApp.Data.Migrations
 {
     [DbContext(typeof(HMDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241126081440_SomethigToAdd")]
+    partial class SomethigToAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,15 +98,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "smith@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "476fb837-5805-454a-9528-762797af125c",
+                            ConcurrencyStamp = "552df82c-feea-440b-a9d4-565a48db9e46",
                             Email = "smith@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "SMITH@ABV.BG",
                             NormalizedUserName = "SMITH@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKvoYgAvY1JP2ujTCjNxBP83Zh+4fRAsoDZXyTK6FfaN1zblvlQ+u4rN8gUIbLGVGg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMPWkX1JZvAl8jLsLKtV0WAxTr/ryRZ0TyRFE4ZTU5A7BcuIpFk489Gs8OgetFKZSw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2cf618ae-6e20-49ca-9c3b-2158ef06a91f",
+                            SecurityStamp = "45fce59f-930e-45d9-baa1-7f21cae19b42",
                             TwoFactorEnabled = false,
                             UserName = "smith@abv.bg",
                             UserType = "Doctor"
@@ -112,15 +115,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "jhondoe@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8366fa3b-2e17-4fa0-9e1b-5d4237b41643",
+                            ConcurrencyStamp = "d74c6f13-3a38-4498-9e00-41881bebefc7",
                             Email = "jhondoe@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JHONDOE@ABV.BG",
                             NormalizedUserName = "JHONDOE@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFocf8TDw0vgex//p/T4rAj+UQZ3FJnIaYIiK51i7bJMX5gO4RffCc5QG9tzT7cvZQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJCjazj6eU9BUA41wnpFsdzbuR7pE+GWS4/aXyiSSoRI7EGQv9AaeL9IZc4E+IwEeQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2e16c7d5-f88d-40a9-87f4-b297171570f5",
+                            SecurityStamp = "d3e09534-dc59-4d92-83ed-ab1ee8c1e715",
                             TwoFactorEnabled = false,
                             UserName = "jhondoe@abv.bg",
                             UserType = "Doctor"
@@ -129,15 +132,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "jhonson@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9aff2152-f8bc-436b-aa37-e4a40aba5383",
+                            ConcurrencyStamp = "2cd071ad-c55c-4ec9-941c-673592093e45",
                             Email = "jhonson@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JHONSON@ABV.BG",
                             NormalizedUserName = "JHONSON@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOlPiu2IEEajUH2sbYQod1/4GPPWkEJpxy58mp611TosCt7hpYw5fhZU+ImvGSvNDA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPTWiyS091RMR3nLzNj9wg1+92vNRSJs2EGTd/fsBfQ/qbQFzSYVgZ+VRiuePK2b8Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2ea76c03-71a1-40bf-9cff-3dc84700d485",
+                            SecurityStamp = "eda2d6e6-d0fe-4486-9d4d-4c71c199a416",
                             TwoFactorEnabled = false,
                             UserName = "jhonson@abv.bg",
                             UserType = "Doctor"
@@ -146,15 +149,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "petrovp@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1db139c0-7021-4ec8-9122-9c95d4b18700",
+                            ConcurrencyStamp = "6308b26c-9f1e-49c5-8814-242c4c0504c1",
                             Email = "petrovp@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PETROVP@ABV.BG",
                             NormalizedUserName = "PETROVP@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGVYBoUQ7VucyD/bxfQFCOkxirqkFY+laTIj49wSRk6SDJVcty+HC3CLk5yRiGDA+w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBrv2K+ewOdOkH/QaLxIpJrMQcbSQIBuwJCqdEZolk0j8wOi5aWakMCopAsrFCY00g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "97d14058-a63f-4359-98ed-76e43f487c89",
+                            SecurityStamp = "3cefa7e6-5ad2-4bd3-a7d8-4aeb3656f539",
                             TwoFactorEnabled = false,
                             UserName = "petrovp@abv.bg",
                             UserType = "Doctor"
@@ -163,15 +166,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "petrovai@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "eb28a81c-05fc-4f24-ba46-07eafdf6782c",
+                            ConcurrencyStamp = "8a01d08a-4e8b-4431-99ec-13448959579d",
                             Email = "petrovai@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PETROVAI@ABV.BG",
                             NormalizedUserName = "PETROVAI@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP4H/Vb57qO7tNUX7Ys0Ez4aO9bC8Rm5lZTS1Y2nyQflQmEM6Q5HUJviluQDMkdc/w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFcB9nAjw9wllFbUkpArI098opAJDJSM9ZX7/O9p/h+gE1kJiGhsmNKeZoWFU7GtQw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d4c89be7-50b8-4f5f-a6ae-9851ec28196c",
+                            SecurityStamp = "7d2864de-66b2-41fb-8fec-7b78fdbcff23",
                             TwoFactorEnabled = false,
                             UserName = "petrovai@abv.bg",
                             UserType = "Doctor"
@@ -180,15 +183,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "williams@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4b4e431-8a9c-4856-a689-9286b1d2f8c6",
+                            ConcurrencyStamp = "0152a1a3-287a-4a74-bea7-b1923a03ec57",
                             Email = "williams@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "WILLIAMS@ABV.BG",
                             NormalizedUserName = "WILLIAMS@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJy16qxThdEUaxGkrmDDvkiAkiq30N6qZ2hjoAUfV2LutZTVkRY3msSNHHFUpcjUQQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAW2j4dnpVrZNmnnKj0WeNZGcSg5hhrSAPM9CSmWAPHU3wfXxVOrMtPMydrzzDrPWg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a682dc9e-2977-43fc-83f8-7517087fe0dc",
+                            SecurityStamp = "99826895-834d-40aa-acae-13244dc20c4d",
                             TwoFactorEnabled = false,
                             UserName = "williams@abv.bg",
                             UserType = "Nurse"
@@ -197,15 +200,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "brown@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f77e2d4b-5c2b-4382-bc2f-49b6bb768216",
+                            ConcurrencyStamp = "6cdcd23b-6ea9-42eb-bfa8-be4234056c50",
                             Email = "brown@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "BROWN@ABV.BG",
                             NormalizedUserName = "BROWN@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEZZOqF1Fzg7K3tVc/qXXcvN6i7l+zmxEGxXz/LJ5mxTtRdNA1n/k3cE2kWI+jZx+A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMu1HgsFS2rj0RgsGzTY9iseHqUZDH3uUJRYhMNbHFE/BHIzsRL3mNqnoU2SCQMZ/w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8d17650f-3e12-46db-a6f9-aed8a5d45d2c",
+                            SecurityStamp = "038596e9-5688-4b77-8616-3251e7a08c8b",
                             TwoFactorEnabled = false,
                             UserName = "brown@abv.bg",
                             UserType = "Nurse"
@@ -214,15 +217,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "ivanovst@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "68e2ab2e-2725-4868-bade-0f2d0091ec9a",
+                            ConcurrencyStamp = "d909600b-0b27-44fb-8d2c-2745bb5c8082",
                             Email = "ivanovst@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "IVANOVST@ABV.BG",
                             NormalizedUserName = "IVANOVST@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPoshEHzAgqNfWycP2BdOjIzqddMZt8CMofrze4wi2M6vvcd7ZtoiPykzLF1Z+TUzw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA3X44YavGlUbJQg9ufEUBklzQ8K+S5TwRCggmBHOxvjO19GQdV33wnQP5x5gX+ehw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cd5f058d-600c-4bc4-a838-39db55c69238",
+                            SecurityStamp = "b69fdaa6-34a1-4a31-a95c-a298373398cf",
                             TwoFactorEnabled = false,
                             UserName = "ivanovst@abv.bg",
                             UserType = "Manager"
@@ -231,15 +234,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "davissophia@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "654ace96-fd9c-43ca-89c9-950c23205cc1",
+                            ConcurrencyStamp = "ce75c6c9-1f84-47a3-a680-51e318c4e0b6",
                             Email = "davissophia@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "DAVISSOPHIA@ABV.BG",
                             NormalizedUserName = "DAVISSOPHIA@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDPnYirBobhSBKuoGEXOILMnD7AHXIMAafyAB5PdA5teTin8bDTFvTQUw/79/5GRUQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAED13sGoNKiEJkXcVQmM1mN43XmT6L6Z+oM3yZhu9NpvHte2vb+qd0Yibpc43sm4rcg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "16ac7a37-2382-448c-baef-f6aeff0d8930",
+                            SecurityStamp = "1a468d6f-bc3d-41c3-8d7e-e700805ff3f8",
                             TwoFactorEnabled = false,
                             UserName = "davissophia@abv.bg",
                             UserType = "Nurse"
@@ -248,15 +251,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "miller@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "042e227f-a538-41c7-ae66-d4850e542914",
+                            ConcurrencyStamp = "31e2b659-a391-4446-869f-ff774efbe440",
                             Email = "miller@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MILLER@ABV.BG",
                             NormalizedUserName = "MILLER@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAECfVhau5JxsVf6Vm2JXPYslDKJADuGHEWHjNSYRpJOCt8u1hw5NM8Y2T8AyULEl1jw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJrgDkrqCCCjhamOl8l4rozeNV+GrU7j1aOa1CS7YIOw+tqnfKojVRnJ9yFG8NLDjQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d5686880-75a8-4f67-a2ca-5310e4139ac6",
+                            SecurityStamp = "043ff1a4-c62b-4a0a-b2e1-99779509fc37",
                             TwoFactorEnabled = false,
                             UserName = "miller@abv.bg",
                             UserType = "Nurse"
@@ -265,15 +268,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "taylor@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b5245027-50d8-426e-94a5-4b956ca2498e",
+                            ConcurrencyStamp = "7a521e4f-38ec-4d44-8ed0-2b48e995e17f",
                             Email = "taylor@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TAYLOR@ABV.BG",
                             NormalizedUserName = "TAYLOR@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAED5sPyi9Xd/4oJynBsyJBVVBIfUio1wD6GonhbiFkZd2sOdNidQFrJ7G7x1QPZfecg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGhSBTKaO+8yly9GcdIL1NFfAnDARjnZ4NtffvHfXAcjpPqNCTSEPTX8MB1zQEkWLA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "40dad66a-4638-467c-9b12-2c78641fb979",
+                            SecurityStamp = "6fb84e7e-4c2e-4b6e-8092-a4c3fc82f45f",
                             TwoFactorEnabled = false,
                             UserName = "taylor@abv.bg",
                             UserType = "Nurse"
@@ -282,15 +285,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "ivanovivan@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a410b6f8-b63e-4626-8793-3ac992881dee",
+                            ConcurrencyStamp = "a0966c80-00b3-4c8e-8b1f-0b022af4dc93",
                             Email = "ivanovivan@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "IVANOVIVAN@ABV.BG",
                             NormalizedUserName = "IVANOVIVAN@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIdAEJeqKgLWuA7Uy3Ml3mgiZ00vMD1yRYVMZZm50jg0SULILbTKFtGQQ4T7NGR4IA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJNA410r5LqRXXpFE3KMuo7TnRw22diX6nhQWNatbxTannXJylo6CUAumtgEGV/slg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4fe2ac5c-c85b-45cf-a6d1-6f6657374125",
+                            SecurityStamp = "9b33bdc7-438d-4eb8-8046-1beb37fb2bee",
                             TwoFactorEnabled = false,
                             UserName = "ivanovivan@abv.bg",
                             UserType = "Patient"
@@ -299,15 +302,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "stefanovp@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "43788661-d9d6-4ac3-bc45-f3c229038768",
+                            ConcurrencyStamp = "c97de153-0fc4-4de0-8c4e-42485d474409",
                             Email = "stefanovp@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "STEFANOVP@ABV.BG",
                             NormalizedUserName = "STEFANOVP@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIk+xlpMR5fA3IW6Y7FIDlWsG0iqypJsRiq59Pi5TUCZha6LCb0gLGUtRVP26SDBag==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENQTVfcQMbLs+k4S2XJ+rK7kwuPjiAtelQVuaW0RdAmiUPZg9x0mAEDlroXJSbyMYQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "151f3761-95f7-4e4e-b134-2a3a89657391",
+                            SecurityStamp = "bb219129-cda5-4388-a691-ac2210a68c81",
                             TwoFactorEnabled = false,
                             UserName = "stefanovp@abv.bg",
                             UserType = "Patient"
@@ -316,15 +319,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "petrovlazar@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fc1e5a1c-55c1-45af-8cc8-8d3a5a4a49ef",
+                            ConcurrencyStamp = "3b7edc90-4d23-4bda-b869-98edacb177be",
                             Email = "petrovlazar@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PETROVLAZAR@ABV.BG",
                             NormalizedUserName = "PETROVLAZAR@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAELnF9nEq2ZFO144P99z/rygIR0dVhlvXhpHEGCUlL0SlFC2WvEELjrgZugz8oOEUCQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN/ee65+EkgotaqBp+eu9aWJD+C35KsJflXvLAEAJCffoFSxcx4XKY4P40ruC5DTEQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c5f0e3d8-e755-472e-8afb-197c1f817d13",
+                            SecurityStamp = "3144677f-2825-4825-a010-e91553f7d428",
                             TwoFactorEnabled = false,
                             UserName = "petrovlazar@abv.bg",
                             UserType = "Patient"
@@ -333,15 +336,15 @@ namespace HospitalManagmentApp.Data.Migrations
                         {
                             Id = "petrovavanya@abv.bg",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c7c67be6-a6b1-4a15-a441-e9ba1aa25056",
+                            ConcurrencyStamp = "a4bc3703-8c8d-4aa7-8148-f2b37936b8c3",
                             Email = "petrovavanya@abv.bg",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PETROVAVANYA@ABV.BG",
                             NormalizedUserName = "PETROVAVANYA@ABV.BG",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAEzJwx6aTL749rwFI/8ioOFHCfOksSDz26m2kZ60d9LX8g3lQ5G70mlk3U9tIW/rA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECs4aJvdfWN71mWWeF4GWoH2DcJ9IOIomVsu0dZDrzB9QLXfra52Uf9cSQC873lQQQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "608c9bda-6ae1-43c8-b718-84af6c69b75d",
+                            SecurityStamp = "3d4a9fb1-7b41-4f51-b8e5-d4c20c95c1ab",
                             TwoFactorEnabled = false,
                             UserName = "petrovavanya@abv.bg",
                             UserType = "Patient"
@@ -406,7 +409,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Doctor`s unique identifier");
 
-                    b.Property<Guid>("DepartmentId")
+                    b.Property<Guid>("DepartmnetId")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("In which department works the doctor");
 
@@ -447,7 +450,7 @@ namespace HospitalManagmentApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId");
+                    b.HasIndex("DepartmnetId");
 
                     b.HasIndex("UserId");
 
@@ -460,7 +463,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         new
                         {
                             Id = new Guid("78429ef3-6e8f-441a-8224-cf9a41152a2c"),
-                            DepartmentId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
+                            DepartmnetId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
                             EmailAddress = "smith@abv.bg",
                             FirstName = "Alice",
                             IsDeleted = false,
@@ -472,7 +475,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         new
                         {
                             Id = new Guid("38a0afd0-c8d6-4674-b24a-db1e6861fcc8"),
-                            DepartmentId = new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
+                            DepartmnetId = new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
                             EmailAddress = "jhondoe@abv.bg",
                             FirstName = "John",
                             IsDeleted = false,
@@ -484,7 +487,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         new
                         {
                             Id = new Guid("a15998c9-52af-4c6b-a032-b135b879e5a7"),
-                            DepartmentId = new Guid("3a19290a-8b6d-4551-97ae-b87ecf3f2dd2"),
+                            DepartmnetId = new Guid("3a19290a-8b6d-4551-97ae-b87ecf3f2dd2"),
                             EmailAddress = "jhonson@abv.bg",
                             FirstName = "Sara",
                             IsDeleted = false,
@@ -496,7 +499,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         new
                         {
                             Id = new Guid("0b04322a-bab8-41ca-b791-ec1abdd7e8a0"),
-                            DepartmentId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
+                            DepartmnetId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
                             EmailAddress = "petrovp@abv.bg",
                             FirstName = "Petar",
                             IsDeleted = false,
@@ -508,7 +511,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         new
                         {
                             Id = new Guid("18538144-c4ee-4d7d-b4eb-fd9267ca134f"),
-                            DepartmentId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
+                            DepartmnetId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
                             EmailAddress = "petrovai@abv.bg",
                             FirstName = "Ivana",
                             IsDeleted = false,
@@ -563,7 +566,7 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3ea074a2-b24a-4d9f-870c-eb59e79e6cbe"),
+                            Id = new Guid("c425430a-de81-4a95-88c1-e3513f1b33d4"),
                             EmailAddress = "ivanovst@abv.bg",
                             FullName = "Stoian Ivanov",
                             IsDeleted = false,
@@ -757,7 +760,7 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("688e114e-68e4-41f0-8d58-b2655d5e599d"),
+                            Id = new Guid("d7d31152-3063-4189-8378-1274fade1d07"),
                             Address = "Sofi, ul.Rezovo 13, et.2, ap.6",
                             DepartmentId = new Guid("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
                             EGN = "4810234567",
@@ -772,7 +775,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9054c053-ef1b-4dc9-820b-4c244684e4d7"),
+                            Id = new Guid("4eb35d81-ab56-4fc2-ad5b-861daf593182"),
                             Address = "Sofi, ul.Belomorska, et.7, ap.16",
                             DepartmentId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
                             EGN = "6212094475",
@@ -787,7 +790,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a688da38-a5f7-42ef-adb5-87a153a538e1"),
+                            Id = new Guid("63afc1bc-555f-4287-b8d3-0617f5b1dc9e"),
                             Address = "Sofi, bul.Vitosha 123, et.7, ap.16",
                             DepartmentId = new Guid("43f9018c-2a02-448d-b26e-bc832bc097d3"),
                             EGN = "6102193476",
@@ -802,7 +805,7 @@ namespace HospitalManagmentApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("04f9fbae-c80f-4ae8-8306-74a3e26af7d1"),
+                            Id = new Guid("c0d6b6db-888d-49f6-aa04-04d31e034ac7"),
                             Address = "Sofi, bul.Vitosha 3, et.7, ap.16",
                             DepartmentId = new Guid("70dd58b3-966e-4498-806f-04411c1bbbee"),
                             EGN = "8302198562",
@@ -969,28 +972,28 @@ namespace HospitalManagmentApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4c2ff5de-b529-41bf-af45-885bdec6bd87"),
+                            Id = new Guid("34ff9ecb-0078-48a7-8a51-61942f631a1e"),
                             IsDeleted = false,
                             Name = "Physical Therapy",
                             Price = 100.0m
                         },
                         new
                         {
-                            Id = new Guid("6df98aa6-f5b6-4b96-a5d3-d966f93e8bb6"),
+                            Id = new Guid("34b1292a-4584-42c9-a08a-04cdb7dc46ef"),
                             IsDeleted = false,
                             Name = "Massage Therapy",
                             Price = 80.0m
                         },
                         new
                         {
-                            Id = new Guid("be0c0656-f3a5-4ed6-8b96-fe877b11ca1e"),
+                            Id = new Guid("1c1218e7-6e90-4ddd-ac30-1c3727fb613a"),
                             IsDeleted = false,
                             Name = "Chiropractic Adjustment",
                             Price = 120.0m
                         },
                         new
                         {
-                            Id = new Guid("d3195cfd-84d6-4ae6-b175-bf4af2b09ed9"),
+                            Id = new Guid("ffc81b40-375b-407e-9727-52f16c2dcae4"),
                             IsDeleted = false,
                             Name = "Manual therapy",
                             Price = 170.0m
@@ -1138,7 +1141,7 @@ namespace HospitalManagmentApp.Data.Migrations
                 {
                     b.HasOne("HospitalManagmentApp.DataModels.Department", "Department")
                         .WithMany("DepartmentDoctors")
-                        .HasForeignKey("DepartmentId")
+                        .HasForeignKey("DepartmnetId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

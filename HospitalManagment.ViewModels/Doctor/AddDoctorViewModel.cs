@@ -1,10 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+
+using DoctorModel= HospitalManagmentApp.DataModels.Doctor;
+using HospitalManagmentApp.Services.Mapping;
+using System.ComponentModel.DataAnnotations;
 using static HospitalManagmentApp.Common.ApplicationConstants;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Doctor;
+using AutoMapper;
+using Microsoft.Extensions.Configuration;
 
 namespace HospitalManagment.ViewModels.Doctor
 {
-    public class AddDoctorViewModel
+    public class AddDoctorViewModel : IMapTo<DoctorModel>,IHaveCustomMappings
     {
         [Required(ErrorMessage =RequiredErrorMessage)]
         [Length(LastNameMinLenght,LastNameMaxLenght,ErrorMessage =LenghtErrorMessage)]
@@ -30,6 +36,11 @@ namespace HospitalManagment.ViewModels.Doctor
         public Guid DepartmentId { get; set; }
         public ICollection<HospitalManagmentApp.DataModels.Department> Departents { get; set; }=new List<HospitalManagmentApp.DataModels.Department>();
 
-       
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration
+        .CreateMap<AddDoctorViewModel, DoctorModel>()
+        .ForMember(d => d.DepartmentId, x => x.MapFrom(s => s.DepartmentId));
+        }
     }
 }

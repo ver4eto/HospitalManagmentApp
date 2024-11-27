@@ -1,11 +1,13 @@
-﻿using HospitalManagmentApp.DataModels;
+﻿using AutoMapper;
+using HospitalManagmentApp.Services.Mapping;
 using System.ComponentModel.DataAnnotations;
 using static HospitalManagmentApp.Common.ApplicationConstants;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Doctor;
+using DoctorModel = HospitalManagmentApp.DataModels.Doctor;
 
 namespace HospitalManagment.ViewModels.Doctor
 {
-    public class EditDoctorViewModel
+    public class EditDoctorViewModel : IMapTo<DoctorModel>,IHaveCustomMappings
     {
         public Guid Id { get; set; }
 
@@ -34,5 +36,20 @@ namespace HospitalManagment.ViewModels.Doctor
 
         [Required(ErrorMessage = RequiredErrorMessage)]
         public Guid DepartmentId { get; set; }
+
+        [Required]
+        public string UserId { get; set; } = null!;
+
+        public void CreateMappings(IProfileExpression configuartion)
+        {
+            configuartion
+                 .CreateMap<EditDoctorViewModel, DoctorModel>()
+                 .ForMember(d => d.DepartmentId, x => x.MapFrom(s => s.DepartmentId));
+
+            //configuartion
+            //     .CreateMap<EditDoctorViewModel, DoctorModel>()
+            //     .ForMember(d => d.UserId, x => x.MapFrom(s => s.EmailAddress));
+
+        }
     }
 }
