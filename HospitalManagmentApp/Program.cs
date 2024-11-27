@@ -16,6 +16,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddRepositories();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<INurseService, NurseService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();

@@ -1,37 +1,27 @@
 ﻿using HospitalManagment.ViewModels.Department;
-using HospitalManagment.ViewModels.Doctor;
-using HospitalManagment.ViewModels.Nurse;
-using HospitalManagment.ViewModels.Room;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
+using HospitalManagmentApp.Services.Data;
+using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace HospitalManagmentApp.Controllers
 {
     public class DepartmentController : Controller
     {
         private readonly HMDbContext context;
+        private readonly IDepartmentService departmentService;
 
-        public DepartmentController(HMDbContext _context)
+        public DepartmentController(HMDbContext _context,IDepartmentService department)
         {
             this.context = _context;
+            this.departmentService = department;
         }
         public async Task<IActionResult> Index()
         {
-            var dep = await context
-                .Departments
-                .Where(d => d.IsDeleted == false)
-                .Select(d => new DepartmentIndexViewModel()
-                {
-                    Id = d.Id,
-                   Name = d.Name,
-                   DepartmentDoctors=d.DepartmentDoctors.Count(),
-                   Rooms=d.Rooms.Count(),
-                   Nurses=d.Nurses.Count(),
-
-                })
-                .ToListAsync();
+            var dep = await departmentService.GetAllDepartmentsAsync();
             return View(dep);
         }
 
@@ -51,36 +41,27 @@ namespace HospitalManagmentApp.Controllers
                 return View(model);
             }
 
-            var deparment = new Department()
-            {
-                Name = model.Name,
-            };
+            var deparmentIsAdded = await departmentService.AddDepartmentAsync(model);
 
-            await context.Departments.AddAsync(deparment);
-            await context.SaveChangesAsync();
+            if (deparmentIsAdded == false)
+            {
+                return View(model);
+            }
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var department = await context
-                .Departments
-                .Where(d => d.Id == id && d.IsDeleted == false)                
-                .FirstOrDefaultAsync();
+            var department = await departmentService.GetEditDepartmentViewModelAsync(id);
 
             if (department == null)
             {
                 return this.View();
             }
 
-            EditDepartmentViewModel model = new()
-            {
-              Name= department.Name,
-              DepartmentId= department.Id
-            };
-
-            return View(model);
+           
+            return View(department);
         }
 
         [HttpPost]
@@ -91,19 +72,13 @@ namespace HospitalManagmentApp.Controllers
                 return View(model);
             }
 
-            var dep = await context
-                .Departments
-                .FindAsync(id);
+            var isDepartmentUpdated = await departmentService.UpdateDepartmentAsync(id, model);
 
-            if (dep == null)
+            if (isDepartmentUpdated == false)
             {
                 return BadRequest();
             }
 
-            dep.Name = model.Name;
-
-
-            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
         }
@@ -111,22 +86,14 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var department = await context
-                .Departments
-                .FindAsync(id);
+            var department = await departmentService.GetDeleteDepartmentViewModelAsync(id);
 
             if (department == null)
             {
                 return BadRequest();
-            }
+            }            
 
-            var model = new DeleteDepartmentViewModel
-            {
-               DepartmentId = department.Id,
-               Name = department.Name
-            };
-
-            return View(model);
+            return View(department);
 
         }
 
@@ -134,19 +101,13 @@ namespace HospitalManagmentApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteDepartmentViewModel model, Guid id)
         {
-            var dep = await context
-                .Departments
-                .Where(d => d.Id == id)
-                .Where(d => d.IsDeleted == false)
-                .FirstOrDefaultAsync();
+            var dep = await departmentService.DeleteDepartmentAsync(id);
 
             if (dep == null)
             {
                 return BadRequest();
             }
-
-            dep.IsDeleted = true;
-            await context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 
