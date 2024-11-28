@@ -34,7 +34,7 @@ namespace HospitalManagment.ViewModels.Doctor
 
         [Required(ErrorMessage = RequiredErrorMessage)]
         public Guid DepartmentId { get; set; }
-        public ICollection<HospitalManagmentApp.DataModels.Department> Departents { get; set; }=new List<HospitalManagmentApp.DataModels.Department>();
+        public IEnumerable<HospitalManagmentApp.DataModels.Department> Departents { get; set; }=new List<HospitalManagmentApp.DataModels.Department>();
 
         public void CreateMappings(IProfileExpression configuration)
         {

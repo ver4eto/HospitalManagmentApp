@@ -1,24 +1,20 @@
-﻿using HospitalManagment.ViewModels.Doctor;
-using HospitalManagment.ViewModels.Nurse;
+﻿using HospitalManagment.ViewModels.Nurse;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
-using HospitalManagmentApp.Services.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagmentApp.Controllers
 {
     public class NurseController : Controller
     {
-        private readonly HMDbContext context;
+     
         private readonly UserManager<ApplicationUser> userManager;
         private readonly INurseService nurseService;
 
-        public NurseController(HMDbContext context, UserManager<ApplicationUser> userManager,INurseService nurseService)
-        {
-            this.context = context;
+        public NurseController( UserManager<ApplicationUser> userManager,INurseService nurseService)
+        {          
             this.userManager = userManager;
             this.nurseService = nurseService;
         }

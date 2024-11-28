@@ -1,22 +1,18 @@
 ﻿using HospitalManagment.ViewModels.Department;
 using HospitalManagmentApp.Data;
-using HospitalManagmentApp.DataModels;
-using HospitalManagmentApp.Services.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 
 namespace HospitalManagmentApp.Controllers
 {
     public class DepartmentController : Controller
     {
-        private readonly HMDbContext context;
+        
         private readonly IDepartmentService departmentService;
 
-        public DepartmentController(HMDbContext _context,IDepartmentService department)
+        public DepartmentController(IDepartmentService department)
         {
-            this.context = _context;
+           
             this.departmentService = department;
         }
         public async Task<IActionResult> Index()

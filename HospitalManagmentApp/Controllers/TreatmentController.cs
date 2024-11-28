@@ -1,20 +1,15 @@
-﻿using HospitalManagment.ViewModels.Nurse;
-using HospitalManagment.ViewModels.Treatment;
+﻿using HospitalManagment.ViewModels.Treatment;
 using HospitalManagmentApp.Data;
-using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagmentApp.Controllers
 {
     public class TreatmentController : Controller
     {
-        private readonly HMDbContext context;
         private readonly ITreatmentService treatmentService;
-        public TreatmentController(HMDbContext dbContext, ITreatmentService treatmentService)
+        public TreatmentController( ITreatmentService treatmentService)
         {
-            this.context = dbContext;
             this.treatmentService = treatmentService;
 
         }

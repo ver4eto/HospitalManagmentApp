@@ -1,24 +1,19 @@
 ﻿using HospitalManagment.ViewModels.Doctor;
-using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-using Department = HospitalManagmentApp.DataModels.Department;
-using Doctor = HospitalManagmentApp.DataModels.Doctor;
 
 namespace HospitalManagmentApp.Controllers
 {
     public class DoctorController : Controller
     {
-        private readonly HMDbContext context;
+       
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDoctorService doctorService;
-        public DoctorController(HMDbContext _context, UserManager<ApplicationUser> userManager, IDoctorService doctorService)
+        public DoctorController(UserManager<ApplicationUser> userManager, IDoctorService doctorService)
         {
-            this.context = _context;
+           
             this.userManager = userManager;
             this.doctorService = doctorService;
         }
@@ -31,8 +26,7 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var doctor = new AddDoctorViewModel();
-            doctor.Departents = await GetDepartments();
+            var doctor = doctorService.GetAddDoctorViewModel();
             return View(doctor);
         }
 
@@ -40,8 +34,7 @@ namespace HospitalManagmentApp.Controllers
         public async Task<IActionResult> Create(AddDoctorViewModel model)
         {
             if (!ModelState.IsValid) 
-            { 
-                model.Departents=await GetDepartments();
+            {                 
                 return View(model);
             }
 
@@ -130,19 +123,13 @@ namespace HospitalManagmentApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteDoctorViewModel model, Guid id)
         {
-            var doctor = await context
-                .Doctors
-                .Where(d => d.Id == id)
-                .Where(d => d.IsDeleted == false)
-                .FirstOrDefaultAsync();
+            var doctorIsDeleted = await doctorService.DeleteDoctorAsync(model,id);
 
-            if (doctor == null)
+            if (doctorIsDeleted == false)
             {
                 return BadRequest();
             }
-
-            doctor.IsDeleted = true;
-            await context.SaveChangesAsync();
+                        
             return RedirectToAction(nameof(Index));
         }
 
@@ -172,9 +159,6 @@ namespace HospitalManagmentApp.Controllers
             
         }
 
-        private async Task<ICollection<Department>> GetDepartments()
-        {
-            return await context.Departments.ToListAsync();
-        }
+        
     }
 }

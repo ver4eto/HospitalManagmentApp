@@ -13,10 +13,10 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
       
         Task<AddDoctorToDepartmentViewModel> GetAddDoctorToDepartmentViewModel(Guid id);
         Task<bool> GetAddDoctorToDepartmentAsync(AddDoctorToDepartmentViewModel model,Guid depId);
-        Task<bool> AddDoctorToDepartmentAsync(AddDoctorViewModel model,Guid id);
 
+        Task<AddDoctorViewModel> GetAddDoctorViewModel();
         Task<DeleteDoctorViewModel> GetDeleteDoctorViewModel(Guid id);
-        Task<bool> DeleteDoctorAsync(DeleteDoctorViewModel model);
+        Task<bool> DeleteDoctorAsync(DeleteDoctorViewModel model,Guid id);
        // Task<IEnumerable<Department>> GetDepartments();
     }
 }

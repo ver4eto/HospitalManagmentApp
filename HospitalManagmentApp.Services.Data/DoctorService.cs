@@ -26,14 +26,21 @@ namespace HospitalManagmentApp.Services.Data
            await this.doctorsRepository.AddAsync(doctor);
         }
 
-        public Task<bool> AddDoctorToDepartmentAsync(AddDoctorViewModel model, Guid id)
+       
+        public async Task<bool> DeleteDoctorAsync(DeleteDoctorViewModel model,Guid id)
         {
-            throw new NotImplementedException();
-        }
+            var doctor = await doctorsRepository.GetAllAttcahed()
+                .Where(d => d.Id == id && d.IsDeleted == false)
+                .FirstOrDefaultAsync();
 
-        public Task<bool> DeleteDoctorAsync(DeleteDoctorViewModel model)
-        {
-            throw new NotImplementedException();
+       
+
+            if (doctor == null) return false;
+
+            doctor.IsDeleted = true;
+            await doctorsRepository.UpdateAsync(doctor);
+
+            return true;
         }
 
         public async Task<bool> EditDoctorAsync(EditDoctorViewModel model)
@@ -94,6 +101,13 @@ namespace HospitalManagmentApp.Services.Data
             };
 
 
+            return model;
+        }
+
+        public async Task<AddDoctorViewModel> GetAddDoctorViewModel()
+        {
+            AddDoctorViewModel model = new AddDoctorViewModel();
+            model.Departents =await GetDepartments();
             return model;
         }
 

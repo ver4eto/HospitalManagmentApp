@@ -1,22 +1,15 @@
-﻿using HospitalManagment.ViewModels.Doctor;
-using HospitalManagment.ViewModels.Nurse;
-using HospitalManagment.ViewModels.Room;
+﻿using HospitalManagment.ViewModels.Room;
 using HospitalManagmentApp.Data;
-using HospitalManagmentApp.DataModels;
-using HospitalManagmentApp.Services.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagmentApp.Controllers
 {
     public class RoomController : Controller
     {
-        private readonly HMDbContext context;
         private IRoomService roomService;
-        public RoomController(HMDbContext hMDb,IRoomService room)
+        public RoomController(IRoomService room)
         {
-            this.context = hMDb;
             this.roomService = room;
         }
         public async Task<IActionResult> Index()
@@ -79,29 +72,16 @@ namespace HospitalManagmentApp.Controllers
                 return View(model);
             }
 
-            var room = await context
-                .Rooms
-                .FindAsync(id);
+            var roomIsUpdated = await roomService.UpdateRoomAsync(id, model);
 
-            if (room == null)
+            if (roomIsUpdated == false)
             {
                 ModelState.AddModelError(string.Empty, "No such room exists in the current department.");
                 return View(model);
                 //return BadRequest();
             }                       
 
-            //if (await CheckIfSameNumberRoomExistInCurrentDepartment(model.DepartmnetId,model.RoomNumber) != null)
-            //{
-            //    ModelState.AddModelError(string.Empty, "This room already exists in the current department.");
-            //    return View(model);
-            //}
-
-            room.RoomNumber = model.RoomNumber;
-            room.BedCount = model.BedCount;            
-            room.DepartmnetId = model.DepartmnetId;
-
-
-            await context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
 
         }

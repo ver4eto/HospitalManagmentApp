@@ -4,10 +4,6 @@ using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
-using Microsoft.EntityFrameworkCore;
-
-using System.Web.Mvc;
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
@@ -17,13 +13,11 @@ namespace HospitalManagmentApp.Controllers
 
     public class PatientController : Controller
     {
-
-        private readonly HMDbContext context;
         private readonly UserManager <ApplicationUser> userManager;
         private readonly IPatientService patientService;
-        public PatientController(HMDbContext context, UserManager<ApplicationUser> userManager, IPatientService patientService)
+
+        public PatientController(UserManager<ApplicationUser> userManager, IPatientService patientService)
         {
-            this.context = context;
             this.userManager = userManager;
             this.patientService = patientService;
         }
