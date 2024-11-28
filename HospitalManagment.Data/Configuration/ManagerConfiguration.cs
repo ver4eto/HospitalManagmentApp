@@ -18,17 +18,17 @@ namespace HospitalManagmentApp.Data.Configuration
                 .HasOne(m => m.User)
                 .WithMany(um => um.Managers)
                 .HasForeignKey(m => m.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData
                 (
                 new Manager()
                 {
-                    Id =Guid.NewGuid(),
+                    Id =new Guid ("06ea23a1-095e-475f-937e-cb3e34c4def2"),
                     FullName="Stoian Ivanov",
                     PhoneNumber="+359883456789",
                     EmailAddress=  "ivanovst@abv.bg",
-                    UserId= "ivanovst@abv.bg"
+                    UserId= "06ea23a1-095e-475f-937e-cb3e34c4def2"
                 }
                 );
         }

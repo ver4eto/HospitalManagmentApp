@@ -1,8 +1,10 @@
 using HospitalManagment.ViewModels.Doctor;
+using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Models;
 using HospitalManagmentApp.Services.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using HospitalManagmentApp.Services.Mapping;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,5 +51,40 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+using(var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    var roles = new[] { "Admin", "Manager", "Doctor", "Nurse", "Patient" };
+
+    foreach (var role in roles)
+    {
+        if(!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager=scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+
+    string email = "admin@abv.bg";
+    string password = "Test123*";
+
+   if(await userManager.FindByEmailAsync(email) == null)
+    {
+        var user = new ApplicationUser();
+        user.Email = email;
+        user.UserName = email;
+
+       await userManager.CreateAsync(user, password);
+
+        await userManager.AddToRoleAsync(user, "Admin");
+    }
+}
+
 
 await app.RunAsync();

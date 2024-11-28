@@ -93,6 +93,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
             })
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<HMDbContext>()
                     .AddDefaultTokenProviders();
 

@@ -18,7 +18,7 @@ namespace HospitalManagmentApp.Data.Configuration
                 .HasOne(p => p.Room)
                 .WithMany(p => p.Patients)
                 .HasForeignKey(p => p.RoomId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
         .HasOne(p => p.Department)
@@ -30,7 +30,7 @@ namespace HospitalManagmentApp.Data.Configuration
                 .HasOne(p=>p.User)
                 .WithMany(up=>up.Patients)
                 .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(SeedPatients());
         }
@@ -42,7 +42,7 @@ namespace HospitalManagmentApp.Data.Configuration
 
             patient = new Patient()
             {
-                Id = Guid.NewGuid(),
+                Id =new Guid("17e9933d-2a1b-467b-b6a2-79297246b8b3"),
                 FirstName = "Ivan",
                 LastName = "Ivanov",
                 EGN = "4810234567",
@@ -50,13 +50,13 @@ namespace HospitalManagmentApp.Data.Configuration
                 DepartmentId = Guid.Parse("af2f0ad4-ff86-4e51-ab19-630145898ec6"),
                 RoomId = Guid.Parse("6a746a43-8fe2-4b2f-b6a3-69104089e8ac"),
                 EmailAddress = "ivanovivan@abv.bg",
-                UserId= "ivanovivan@abv.bg"
+                UserId= "17e9933d-2a1b-467b-b6a2-79297246b8b3"
             };
             patients.Add(patient);
 
             patient = new Patient()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("57c0a3b2-bf91-4c97-9a31-cb7b454c1415"),
                 FirstName = "Petar",
                 LastName = "Stefanov",
                 EGN = "6212094475",
@@ -64,13 +64,13 @@ namespace HospitalManagmentApp.Data.Configuration
                 DepartmentId = Guid.Parse("43f9018c-2a02-448d-b26e-bc832bc097d3"),
                 RoomId = Guid.Parse("9f415f68-1979-4d9f-ba39-8586cc1d6c4c"),
                 EmailAddress = "stefanovp@abv.bg",
-                UserId= "stefanovp@abv.bg"
+                UserId= "57c0a3b2-bf91-4c97-9a31-cb7b454c1415"
             };
             patients.Add(patient);
 
             patient = new Patient()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("621fb5c5-b634-405d-951b-3088891c3d5c"),
                 FirstName = "Lazar",
                 LastName = "Petrov",
                 EGN = "6102193476",
@@ -78,14 +78,14 @@ namespace HospitalManagmentApp.Data.Configuration
                 DepartmentId = Guid.Parse("43f9018c-2a02-448d-b26e-bc832bc097d3"),
                RoomId = Guid.Parse("9f415f68-1979-4d9f-ba39-8586cc1d6c4c"),
                 EmailAddress = "petrovlazar@abv.bg",
-                UserId= "petrovlazar@abv.bg"
+                UserId= "621fb5c5-b634-405d-951b-3088891c3d5c"
             };
             patients.Add(patient);
 
 
             patient = new Patient()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("dd5538d3-1f68-412f-9949-94edde16d8a2"),
                 FirstName = "Vanya",
                 LastName = "Petrova",
                 EGN = "8302198562",
@@ -93,7 +93,7 @@ namespace HospitalManagmentApp.Data.Configuration
                 DepartmentId = Guid.Parse("70dd58b3-966e-4498-806f-04411c1bbbee"),
                 RoomId = Guid.Parse("3b85738c-1a1a-40a9-952a-465e8914a2e0"),
                 EmailAddress = "petrovavanya@abv.bg",
-                UserId= "petrovavanya@abv.bg"
+                UserId= "dd5538d3-1f68-412f-9949-94edde16d8a2"
             };
             patients.Add(patient);
 
