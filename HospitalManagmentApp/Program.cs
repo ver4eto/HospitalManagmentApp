@@ -19,6 +19,7 @@ builder.Services.AddScoped<INurseService, NurseService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<ITreatmentService, TreatmentService>();
+builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
