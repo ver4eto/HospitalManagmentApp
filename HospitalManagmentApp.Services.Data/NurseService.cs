@@ -8,13 +8,15 @@ namespace HospitalManagmentApp.Services.Data
 {
     public class NurseService : INurseService
     {
-        private IRepository<Nurse, Guid> nurseRepository;
-        private IRepository<Department, Guid> departmentRepository;
+        private readonly IRepository<Nurse, Guid> nurseRepository;
+        private readonly IRepository<Department, Guid> departmentRepository;
+        private readonly UserEntityService userEntityService;
 
-        public NurseService(IRepository<Nurse, Guid> nurseRepository, IRepository<Department, Guid> departmentRepository)
+        public NurseService(IRepository<Nurse, Guid> nurseRepository, IRepository<Department, Guid> departmentRepository, UserEntityService userEntityService)
         {
             this.nurseRepository = nurseRepository; 
             this.departmentRepository = departmentRepository;
+            this.userEntityService = userEntityService;
         }
         public async Task<List<NurseIndexViewModel>> GetAllNursesAsync()
         {
@@ -40,19 +42,31 @@ namespace HospitalManagmentApp.Services.Data
 
         public async Task<bool> AddNurseAsync(AddNurseViewModel model)
         {
-            var nurse = new Nurse
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                EmailAddress = model.EmailAddress,
-                Salary = model.Salary,
-                DepartmentId = model.DepartmentId,
-                UserId = model.EmailAddress
-            };
+            //try
+            //{
+                var nurseUserId = await userEntityService.CreateApplicationUserAsync(model.EmailAddress, model.Password, "Nurse");
 
-            await nurseRepository.AddAsync(nurse);
+                var nurse = new Nurse
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    EmailAddress = model.EmailAddress,
+                    Salary = model.Salary,
+                    DepartmentId = model.DepartmentId,
+                    UserId = nurseUserId,
+                    Id = new Guid(nurseUserId),
+                };
+
+                await nurseRepository.AddAsync(nurse);
+
+                return true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //    return false;
+            //}
             
-            return true;
         }
 
         public async Task<EditNurseViewModel> GetEditNurseViewModelAsync(Guid id)

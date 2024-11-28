@@ -1,4 +1,5 @@
 ﻿using HospitalManagmentApp.DataModels;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,6 +22,10 @@ namespace HospitalManagment.ViewModels.Nurse
         [Required(ErrorMessage = RequiredErrorMessage)]
         [EmailAddress]
         public string EmailAddress { get; set; } = null!;
+
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [PasswordPropertyText]
+        public string Password { get; set; } = null!;
 
         [Required(ErrorMessage = RequiredErrorMessage)]
         [Column(TypeName = "money")]

@@ -36,19 +36,13 @@ namespace HospitalManagmentApp.Controllers
             return View(patient);
         }
 
-        //[HttpGet]
-        //public async Task< IActionResult> GetFreeRooms(Guid departmentId)
-        //{
-        //    var freeRooms =await context.Rooms
-        //        .Where(r => r.DepartmnetId == departmentId && r.HasFreeBeds == true)
-        //        .Select(r => new SelectListItem
-        //        {
-        //            Value = r.Id.ToString(),
-        //            Text = r.RoomNumber.ToString(),
-        //        }).ToListAsync();
+        [HttpGet]
+        public async Task<IActionResult> GetFreeRooms(Guid departmentId)
+        {
+            var freeRooms = await patientService.GetFreeRoomsAsync(departmentId);
 
-        //    return Json(freeRooms); 
-        //}
+            return Json(freeRooms);
+        }
 
 
         [HttpPost]
@@ -89,16 +83,13 @@ namespace HospitalManagmentApp.Controllers
             return View(patient);
         }
 
-        //[HttpGet]
-        //public async Task< IActionResult> GetFreeRoomsOnMove(Guid departmentId)
-        //{
-        //    var freeRooms =await context.Rooms
-        //        .Where(r => r.DepartmnetId == departmentId && !r.Patients.Any())
-        //        .Select(r => new { value = r.Id, text = r.RoomNumber })
-        //        .ToListAsync();
+        [HttpGet]
+        public async Task<IActionResult> GetFreeRoomsOnMove(Guid departmentId)
+        {
+            var freeRooms = await patientService.GetFreeRoomsOnMoveAsync(departmentId);
 
-        //    return Json(freeRooms);
-        //}
+            return Json(freeRooms);
+        }
 
         [HttpPost]
         public async Task<IActionResult> MovePatient(MovePatientToDepartmentViewModel model)

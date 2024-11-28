@@ -4,6 +4,7 @@ using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Web.Mvc;
+//using SelectListItem = System.Web.WebPages.Html;
 
 namespace HospitalManagmentApp.Services.Data
 {
@@ -12,20 +13,23 @@ namespace HospitalManagmentApp.Services.Data
         private readonly IRepository<Patient, Guid> patientRepo;
         private readonly IRepository<Department, Guid> departmentRepo;
         private readonly IRepository<Room, Guid> roomRepo;
-
-        public PatientService(IRepository<Patient, Guid> patientRepo, IRepository<Department, Guid> departmenttRepo, IRepository<Room, Guid> roomRepo)
+        private readonly UserEntityService userEntityService;
+        public PatientService(IRepository<Patient, Guid> patientRepo, IRepository<Department, Guid> departmenttRepo, IRepository<Room, Guid> roomRepo, UserEntityService userEntityService)
         {
             this.patientRepo = patientRepo;
             this.departmentRepo = departmenttRepo;
             this.roomRepo = roomRepo;
+            this.userEntityService = userEntityService;
         }
 
         //TODO Refactor so it can be added with USerId
         public async Task<bool> AddPatientAsync(AddPatientViewModel model)
         {
-            
+            var patientUserId = await userEntityService.CreateApplicationUserAsync(model.EmailAddress, model.Password, "Patient");
+
             var patient = new Patient
             {
+                Id=new Guid(patientUserId),
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 EmailAddress = model.EmailAddress,
@@ -35,7 +39,7 @@ namespace HospitalManagmentApp.Services.Data
                 EGN = model.EGN,
                 PhoneNumber = model.PhoneNumber,
                 RoomId = model.RoomId,
-                UserId = model.EmailAddress
+                UserId = patientUserId,
             };
 
             var room = await roomRepo.GetByIdAsync(model.RoomId);
@@ -168,5 +172,43 @@ namespace HospitalManagmentApp.Services.Data
 
             return patients;
         }
+
+        public async Task<List<SelectListItem>> GetFreeRoomsAsync(Guid departmentId)
+        {
+            // Fetch free rooms based on the given department ID
+            var freeRooms = await roomRepo.GetAllAttcahed()
+                .Where(r => r.DepartmnetId == departmentId && r.HasFreeBeds)
+                .Select(r => new SelectListItem
+                {
+                    Value = r.Id.ToString(),
+                    Text = r.RoomNumber.ToString()
+                })
+                .ToListAsync();
+
+            if (!freeRooms.Any())
+            {
+                return new List<SelectListItem> { new SelectListItem { Text = "No free rooms available", Value = "" } };
+            }
+
+            return freeRooms;
+        }
+
+        public async Task<List<SelectListItem>> GetFreeRoomsOnMoveAsync(Guid departmentId)
+        {
+            var freeRooms = await roomRepo.GetAllAttcahed()
+                .Where(r => r.DepartmnetId == departmentId && !r.Patients.Any())
+                .Select(r => new SelectListItem {
+                    Value = r.Id.ToString(),
+                    Text = r.RoomNumber.ToString() })
+                .ToListAsync();
+
+            if (!freeRooms.Any())
+            {
+                return new List<SelectListItem> { new SelectListItem{ Text = "No free rooms available", Value="" } };
+            }
+
+            return freeRooms;
+        }
+
     }
 }

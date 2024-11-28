@@ -1,7 +1,9 @@
 ﻿using HospitalManagment.Infrastructure.Repositories.Contracts;
 using HospitalManagment.ViewModels.Doctor;
+using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using HospitalManagmentApp.Services.Mapping;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Department = HospitalManagmentApp.DataModels.Department;
 using Doctor = HospitalManagmentApp.DataModels.Doctor;
@@ -12,18 +14,39 @@ namespace HospitalManagmentApp.Services.Data
     {
         private IRepository<Doctor, Guid> doctorsRepository;
         private IRepository<Department, Guid> departmentRepository;
+        public readonly UserEntityService userEntityService;
 
-        public DoctorService(IRepository<Doctor, Guid> repository,IRepository<Department,Guid> departmentRepo)
+        public DoctorService(IRepository<Doctor, Guid> repository,IRepository<Department,Guid> departmentRepo, UserEntityService userEntityService)
         {
             this.doctorsRepository = repository;
             this.departmentRepository = departmentRepo;
+            this.userEntityService = userEntityService;
         }
         public async Task AddDoctorAsync(AddDoctorViewModel model)
         {
             Doctor doctor = new Doctor();
-            AutoMapperConfig.MapperInstance.Map(model, doctor);
+            try
+            {
+                var isUserCreated = await userEntityService.CreateApplicationUserAsync(model.EmailAddress, model.Password, "Doctor");
 
-           await this.doctorsRepository.AddAsync(doctor);
+                doctor.Id = new Guid(isUserCreated);
+                doctor.FirstName = model.FirstName;
+                doctor.LastName = model.LastName;
+                doctor.EmailAddress = model.EmailAddress;
+                doctor.Salary = model.Salary;
+                doctor.DepartmentId=model.DepartmentId;
+                doctor.UserId = isUserCreated;
+                doctor.Specialty = model.Specialty;
+              
+                await this.doctorsRepository.AddAsync(doctor);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
+
         }
 
        

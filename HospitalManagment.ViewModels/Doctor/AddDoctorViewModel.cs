@@ -7,6 +7,7 @@ using static HospitalManagmentApp.Common.ApplicationConstants;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Doctor;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using System.ComponentModel;
 
 namespace HospitalManagment.ViewModels.Doctor
 {
@@ -27,6 +28,10 @@ namespace HospitalManagment.ViewModels.Doctor
         [Required(ErrorMessage = RequiredErrorMessage)]
         [EmailAddress]       
         public string EmailAddress { get; set; } = null!;
+
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [PasswordPropertyText]
+        public string Password { get; set; } = null!;
 
         [Required(ErrorMessage = RequiredErrorMessage)]
         [Range(1.0d, double.MaxValue,ErrorMessage =SalaryMinValueErrorMessage)]

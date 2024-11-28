@@ -26,7 +26,7 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var doctor = doctorService.GetAddDoctorViewModel();
+            var doctor = await doctorService.GetAddDoctorViewModel();
             return View(doctor);
         }
 

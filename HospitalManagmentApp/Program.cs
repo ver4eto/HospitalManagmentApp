@@ -22,6 +22,7 @@ builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<ITreatmentService, TreatmentService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<UserEntityService>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
@@ -67,24 +68,24 @@ using(var scope = app.Services.CreateScope())
     }
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var userManager=scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+//using (var scope = app.Services.CreateScope())
+//{
+//    var userManager=scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
 
-    string email = "admin@abv.bg";
-    string password = "Test123*";
+//    string email = "admin@abv.bg";
+//    string password = "Test123*";
 
-   if(await userManager.FindByEmailAsync(email) == null)
-    {
-        var user = new ApplicationUser();
-        user.Email = email;
-        user.UserName = email;
+//   if(await userManager.FindByEmailAsync(email) == null)
+//    {
+//        var user = new ApplicationUser();
+//        user.Email = email;
+//        user.UserName = email;
 
-       await userManager.CreateAsync(user, password);
+//       await userManager.CreateAsync(user, password);
 
-        await userManager.AddToRoleAsync(user, "Admin");
-    }
-}
+//        await userManager.AddToRoleAsync(user, "Admin");
+//    }
+//}
 
 
 await app.RunAsync();
