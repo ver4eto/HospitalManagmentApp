@@ -2,6 +2,7 @@
 using HospitalManagment.ViewModels.Treatment;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
+using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,23 +11,16 @@ namespace HospitalManagmentApp.Controllers
     public class TreatmentController : Controller
     {
         private readonly HMDbContext context;
-
-        public TreatmentController(HMDbContext dbContext)
+        private readonly ITreatmentService treatmentService;
+        public TreatmentController(HMDbContext dbContext, ITreatmentService treatmentService)
         {
             this.context = dbContext;
+            this.treatmentService = treatmentService;
+
         }
-        public async Task< IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
-            var treatments=  await context
-                .Treatments
-                .Where(t=>t.IsDeleted==false)
-                .Select(t=>new TreatmentIndexViewModel()
-                {
-                    Name = t.Name,
-                    Price=t.Price.ToString("f2"),
-                    Id=t.Id
-                })
-                .ToListAsync();
+            var treatments= await treatmentService.GetAllTreatmentsAsync();
             return View(treatments);
         }
 
@@ -46,38 +40,16 @@ namespace HospitalManagmentApp.Controllers
                 return View(model);
             }
 
-            var treatment = new Treatment()
-            {
-                Name=model.Name,
-                Price=model.Price,
-            };
-
-            await context.Treatments.AddAsync(treatment);
-            await context.SaveChangesAsync();
+            var treatment = await treatmentService.AddTreatmentAsync(model);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var treatment = await context
-                .Treatments
-                .Where(d => d.Id == id && d.IsDeleted == false)
-                .FirstOrDefaultAsync();
+            var treatment = await treatmentService.GetEditTreatmentViewModelAsync(id);
 
-            if (treatment == null)
-            {
-                return this.View();
-            }
-
-            EditTreatmentViewModel model = new()
-            {
-               Name =treatment.Name,
-               Price = treatment.Price,
-             
-            };
-
-            return View(model);
+            return View(treatment);
         }
 
         [HttpPost]
@@ -88,20 +60,13 @@ namespace HospitalManagmentApp.Controllers
                 return View(model);
             }
 
-            var treatment = await context
-                .Treatments
-                .FindAsync(id);
+            var treatment = await treatmentService.UpdateTreatmentAsync(id, model);
 
             if (treatment == null)
             {
                 return BadRequest();
             }
 
-           treatment.Name = model.Name;
-            treatment.Price= model.Price;
-
-
-            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
         }
@@ -109,43 +74,27 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var treatment = await context
-                .Treatments
-                .FindAsync(id);
+            var treatment = await treatmentService.GetDeleteTreatmentViewModelAsync(id);
 
             if (treatment == null)
             {
                 return BadRequest();
             }
-
-            var model = new DeleteTreatmentViewModel
-            {
-                Name=treatment.Name,
-                TreatmentId=id,
-
-            };
-
-            return View(model);
-
+                        
+            return View(treatment);
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteTreatmentViewModel model, Guid id)
         {
-            var treatment = await context
-                .Treatments
-                .Where(d => d.Id == id)
-                .Where(d => d.IsDeleted == false)
-                .FirstOrDefaultAsync();
+            var treatment = await treatmentService.DeleteTreatmentAsync(id);
 
             if (treatment == null)
             {
                 return BadRequest();
             }
-
-            treatment.IsDeleted = true;
-            await context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
     }
