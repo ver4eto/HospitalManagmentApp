@@ -1,11 +1,17 @@
 ﻿using HospitalManagment.ViewModels.Treatment;
 using HospitalManagmentApp.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Web.Mvc;
+using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 
 namespace HospitalManagmentApp.Controllers
 {
-    public class TreatmentController : Controller
+    [Authorize]
+    public class TreatmentController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ITreatmentService treatmentService;
         public TreatmentController( ITreatmentService treatmentService)

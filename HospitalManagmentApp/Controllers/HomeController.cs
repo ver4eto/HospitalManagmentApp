@@ -23,6 +23,21 @@ namespace HospitalManagmentApp.Controllers
             return View();
         }
 
+
+        public IActionResult Error(int? statusCode = null)
+        {
+            if (statusCode.HasValue)
+            {
+                if (statusCode == 404)
+                {
+                    return View("NotFound"); // Return a custom 404 page
+                }
+            }
+
+            return View();
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -1,11 +1,13 @@
 ﻿using HospitalManagment.ViewModels.Doctor;
 using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Controllers
 {
+    [Authorize]
     public class DoctorController : Controller
     {
        
