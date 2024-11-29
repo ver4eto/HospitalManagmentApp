@@ -90,7 +90,10 @@ using (var scope = app.Services.CreateScope())
             var user = new ApplicationUser
             {
                 Email = email,
-                UserName = email
+                UserName = email,
+                UserType=roleName,
+               
+               
             };
 
             var result = await userManager.CreateAsync(user, password);

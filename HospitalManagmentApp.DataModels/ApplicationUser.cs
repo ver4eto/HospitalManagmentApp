@@ -6,9 +6,9 @@ namespace HospitalManagmentApp.DataModels
 {
     public class ApplicationUser : IdentityUser
     {
-        
-        
-        public string UserType { get; set; } = null!; 
+
+
+        public string UserType { get; set; } = "User";
 
       
         public ICollection<Doctor> Doctors { get; set; } = new HashSet<Doctor>();
