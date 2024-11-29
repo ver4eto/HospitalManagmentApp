@@ -67,21 +67,64 @@ using(var scope = app.Services.CreateScope())
         }
     }
 }
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string email = "admin@abv.bg";
+    string password = "Test123*";
+    string roleName = "Admin";
+
+    try
+    {
+        // Ensure the role exists
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+
+        // Ensure the admin user exists
+        if (await userManager.FindByEmailAsync(email) == null)
+        {
+            var user = new ApplicationUser
+            {
+                Email = email,
+                UserName = email
+            };
+
+            var result = await userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, roleName);
+            }
+            else
+            {
+                throw new Exception($"Failed to create admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error seeding admin user: {ex.Message}");
+    }
+}
 
 //using (var scope = app.Services.CreateScope())
 //{
-//    var userManager=scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+//    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
 //    string email = "admin@abv.bg";
 //    string password = "Test123*";
 
-//   if(await userManager.FindByEmailAsync(email) == null)
+//    if (await userManager.FindByEmailAsync(email) == null)
 //    {
 //        var user = new ApplicationUser();
 //        user.Email = email;
 //        user.UserName = email;
 
-//       await userManager.CreateAsync(user, password);
+//        await userManager.CreateAsync(user, password);
 
 //        await userManager.AddToRoleAsync(user, "Admin");
 //    }
