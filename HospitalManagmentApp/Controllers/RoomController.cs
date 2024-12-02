@@ -1,12 +1,11 @@
 ﻿using HospitalManagment.ViewModels.Room;
-using HospitalManagmentApp.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Manager, Nurse, Doctor")]
     public class RoomController : Controller
     {
         private IRoomService roomService;

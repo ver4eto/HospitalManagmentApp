@@ -57,7 +57,7 @@ using(var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    var roles = new[] { "Admin", "Manager", "Doctor", "Nurse", "Patient" };
+    var roles = new[] { "Admin", "Manager", "Doctor", "Nurse", "Patient","User" };
 
     foreach (var role in roles)
     {
@@ -114,24 +114,53 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-//    string email = "admin@abv.bg";
-//    string password = "Test123*";
+    //// Ensure roles exist
+    //string[] roles = { "Admin", "Doctor", "Nurse", "Manager", "Patient" };
+    //foreach (var role in roles)
+    //{
+    //    if (!await roleManager.RoleExistsAsync(role))
+    //    {
+    //        await roleManager.CreateAsync(new IdentityRole(role));
+    //    }
+    //}
 
-//    if (await userManager.FindByEmailAsync(email) == null)
-//    {
-//        var user = new ApplicationUser();
-//        user.Email = email;
-//        user.UserName = email;
+    // Assign roles to existing users
+    var usersToAssign = new List<(string Email, string Role)>
+    {
+        ("smith@abv.bg", "Doctor"),
+        ("ivanovst@abv.bg", "Manager"),
+        ("petrovlazar@abv.bg", "Patient"),
+        
+        ("jhonson@abv.bg", "Doctor"),
+        ("jhondoe@abv.bg","Doctor"),
+        ("petrovp@abv.bg","Doctor"),
+        ("petrovai@abv.bg","Doctor"),
+        ("miller@abv.bg","Nurse"),
+        ("davissophia@abv.bg","Nurse"),
+        ("brown@abv.bg","Nurse"),
+        ("williams@abv.bg","Nurse"),
+        ("taylor@abv.bg","Nurse"),
+        ("petrovskaem@abv.bg","Nurse"),
+        ("petrovlazar@abv.bg","Patient"),
+        ("ivanovivan@abv.bg","Patient"),
+        ("petrovavanya@abv.bg","Patient"),
+        ("stefanovp@abv.bg","Patient"),
+        ("sokolovs@abv.bg","Patient")
+    };
 
-//        await userManager.CreateAsync(user, password);
-
-//        await userManager.AddToRoleAsync(user, "Admin");
-//    }
-//}
-
+    foreach (var (email, role) in usersToAssign)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        if (user != null && !await userManager.IsInRoleAsync(user, role))
+        {
+            await userManager.AddToRoleAsync(user, role);
+        }
+    }
+}
 
 await app.RunAsync();

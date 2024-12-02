@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Manager")]
     public class DoctorController : Controller
     {
        
@@ -25,6 +25,7 @@ namespace HospitalManagmentApp.Controllers
             return View(doctors);
         }
 
+        
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -32,6 +33,7 @@ namespace HospitalManagmentApp.Controllers
             return View(doctor);
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> Create(AddDoctorViewModel model)
         {
@@ -44,6 +46,7 @@ namespace HospitalManagmentApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+       
         [HttpGet]
         public async Task<IActionResult> Menage(Guid id)
         {
@@ -57,6 +60,7 @@ namespace HospitalManagmentApp.Controllers
             return View(model);
         }
 
+        
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -66,6 +70,7 @@ namespace HospitalManagmentApp.Controllers
             return View(model);
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> Edit(EditDoctorViewModel model,Guid id)
         {
@@ -96,6 +101,7 @@ namespace HospitalManagmentApp.Controllers
 
         }
 
+       
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -121,7 +127,7 @@ namespace HospitalManagmentApp.Controllers
 
         }
 
-
+       
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteDoctorViewModel model, Guid id)
         {
@@ -147,6 +153,7 @@ namespace HospitalManagmentApp.Controllers
             return View(model);
         }
 
+        
         [HttpPost]
         public async Task< IActionResult> AddDoctorToDepartment(AddDoctorToDepartmentViewModel model,Guid depId)
         {

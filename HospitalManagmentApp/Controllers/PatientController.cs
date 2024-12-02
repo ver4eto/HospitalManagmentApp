@@ -1,5 +1,4 @@
 ﻿using HospitalManagment.ViewModels.Patient;
-using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +10,7 @@ using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 
 namespace HospitalManagmentApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Doctor, Nurse, Manager")]
     public class PatientController : Controller
     {
         private readonly UserManager <ApplicationUser> userManager;
