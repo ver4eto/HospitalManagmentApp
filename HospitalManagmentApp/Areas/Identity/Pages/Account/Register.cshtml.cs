@@ -15,24 +15,21 @@ namespace HospitalManagmentApp.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IUserStore<ApplicationUser> _userStore;
-        //private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly IUserStore<ApplicationUser> _userStore;       
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
-
+        
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
-            SignInManager<ApplicationUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            SignInManager<ApplicationUser> signInManager,         
+            ILogger<RegisterModel> logger)
+           
         {
             _userManager = userManager;
             _userStore = userStore;
-            //_emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+         
         }
 
         /// <summary>
@@ -102,7 +99,7 @@ namespace HospitalManagmentApp.Areas.Identity.Pages.Account
                 user.Email=Input.Email;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+               
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -154,14 +151,6 @@ namespace HospitalManagmentApp.Areas.Identity.Pages.Account
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
-
-        //private IUserEmailStore<IdentityUser> GetEmailStore()
-        //{
-        //    if (!_userManager.SupportsUserEmail)
-        //    {
-        //        throw new NotSupportedException("The default UI requires a user store with email support.");
-        //    }
-        //    return (IUserEmailStore<IdentityUser>)_userStore;
-        //}
+        
     }
 }

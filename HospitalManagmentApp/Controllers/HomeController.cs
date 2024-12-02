@@ -15,9 +15,33 @@ namespace HospitalManagmentApp.Controllers
 
         public IActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                // Redirect to Login page if the user is not authenticated
+                return RedirectToAction("Welcome");
+            }
+
+            // If the user is authenticated, show the homepage
+            return View();
+           
+        }
+        public IActionResult Welcome()
+        {
+            // A special page for unauthenticated users to choose between Login and Register
             return View();
         }
 
+        //public IActionResult RedirectToLogin()
+        //{
+        //    var returnUrl = Url.Content("~/");
+        //    return RedirectToPage("/Account/Login", new { returnUrl });
+        //}
+
+        //public IActionResult RedirectToRegister()
+        //{
+        //    var returnUrl = Url.Content("~/");
+        //    return RedirectToPage("/Account/Register", new { returnUrl });
+        //}
         public IActionResult Privacy()
         {
             return View();

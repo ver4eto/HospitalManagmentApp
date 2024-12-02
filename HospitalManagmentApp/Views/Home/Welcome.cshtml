@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+
+    var returnUrl = Url.Content("~/"); // Redirect to home after login/register
+}
+
+<h1>Welcome</h1>
+<p>Please log in or register to continue.</p>
+
+<a href="/Identity/Account/Login?returnUrl=@returnUrl" class="btn btn-primary">Login</a>
+<a href="/Identity/Account/Register?returnUrl=@returnUrl" class="btn btn-secondary">Register</a>
