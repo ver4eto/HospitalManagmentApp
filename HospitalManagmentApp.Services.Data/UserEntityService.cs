@@ -16,6 +16,7 @@ namespace HospitalManagmentApp.Services.Data
             this.userManager = userManager;
             this.context = context;
         }
+
         public async Task<string> CreateApplicationUserAsync(string email, string password, string role)
         {
             var user = new ApplicationUser
@@ -39,7 +40,6 @@ namespace HospitalManagmentApp.Services.Data
             user.UserType=role;
             return user.Id; // Return the created user's ID
         }
-              
 
     }
 }

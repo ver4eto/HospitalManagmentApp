@@ -89,7 +89,7 @@ namespace HospitalManagmentApp.Areas.Identity.Pages.Account
             
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null,string role ="User")
         {
             returnUrl ??= Url.Content("~/");
            
@@ -124,7 +124,12 @@ namespace HospitalManagmentApp.Areas.Identity.Pages.Account
                     //}
                     //else
                     //{
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                    if (!string.IsNullOrEmpty(role))
+                    {
+                        await _userManager.AddToRoleAsync(user, role);
+                    }
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     //}
                 }

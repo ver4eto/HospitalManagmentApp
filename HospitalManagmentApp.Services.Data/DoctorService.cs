@@ -29,6 +29,7 @@ namespace HospitalManagmentApp.Services.Data
             {
                 var isUserCreated = await userEntityService.CreateApplicationUserAsync(model.EmailAddress, model.Password, "Doctor");
 
+
                 doctor.Id = new Guid(isUserCreated);
                 doctor.FirstName = model.FirstName;
                 doctor.LastName = model.LastName;
