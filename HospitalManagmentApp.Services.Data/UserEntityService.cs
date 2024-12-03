@@ -3,6 +3,7 @@ using HospitalManagmentApp.Data;
 using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Services.Data
 {
@@ -23,7 +24,8 @@ namespace HospitalManagmentApp.Services.Data
             {
                 UserName = email,
                 Email = email,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                UserType=role
             };
 
             var result = await userManager.CreateAsync(user, password);
@@ -40,6 +42,13 @@ namespace HospitalManagmentApp.Services.Data
             user.UserType=role;
             return user.Id; // Return the created user's ID
         }
+
+        //public async Task<bool> IsUserDoctorAsync(string userId)
+        //{
+        //    string? user =  this.user
+        //    bool IsUserDoctor =await this.userManager.GetUserIdAsync(user);
+        //    return IsUserDoctor;
+        //}
 
     }
 }

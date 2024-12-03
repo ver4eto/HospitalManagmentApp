@@ -45,5 +45,9 @@ namespace HospitalManagment.ViewModels.Patient
         public Guid RoomId { get; set; }
 
         public List<SelectListItem> Rooms { get; set; } = new List<SelectListItem>();
+
+        public Guid SelectedDoctorId { get; set; } 
+        public List<SelectListItem> Doctors { get; set; } = new List<SelectListItem>();
+       
     }
 }

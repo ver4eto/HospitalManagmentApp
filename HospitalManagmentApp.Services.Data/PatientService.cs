@@ -2,34 +2,86 @@
 using HospitalManagment.ViewModels.Patient;
 using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Security.Claims;
+using static HospitalManagmentApp.Common.EntityValidationConstants;
+using static HospitalManagmentApp.Common.ExceptionErrorMessages;
+using Patient = HospitalManagmentApp.DataModels.Patient;
+using Department = HospitalManagmentApp.DataModels.Department;
+using Room = HospitalManagmentApp.DataModels.Room;
+using Doctor = HospitalManagmentApp.DataModels.Doctor;
 using System.Web.Mvc;
-//using SelectListItem = System.Web.WebPages.Html;
+using Microsoft.AspNetCore.Identity;
 
 namespace HospitalManagmentApp.Services.Data
 {
     public class PatientService : IPatientService
     {
         private readonly IRepository<Patient, Guid> patientRepo;
+        private readonly IRepository<Doctor, Guid> doctorRepo;
         private readonly IRepository<Department, Guid> departmentRepo;
         private readonly IRepository<Room, Guid> roomRepo;
         private readonly UserEntityService userEntityService;
-        public PatientService(IRepository<Patient, Guid> patientRepo, IRepository<Department, Guid> departmenttRepo, IRepository<Room, Guid> roomRepo, UserEntityService userEntityService)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IRepository<PatientDoctor, object> patientDoctorRepo;
+
+        public PatientService(IRepository<Patient, Guid> patientRepo, IRepository<Department, Guid> departmenttRepo, IRepository<Room, Guid> roomRepo, UserEntityService userEntityService, IHttpContextAccessor httpContextAccessor, IRepository<PatientDoctor, object> patientDoctorRepo, IRepository<Doctor, Guid> doctorRepo)
         {
             this.patientRepo = patientRepo;
             this.departmentRepo = departmenttRepo;
             this.roomRepo = roomRepo;
             this.userEntityService = userEntityService;
+            this.httpContextAccessor = httpContextAccessor;
+            this.patientDoctorRepo = patientDoctorRepo;
+            this.doctorRepo = doctorRepo;
         }
 
+        public async Task<AddPatientViewModel> PrepareAddPatientViewModelAsync()
+        {
+            var departments = await GetDepartments();
+
+            AddPatientViewModel model = new AddPatientViewModel()
+            {
+                Departments = departments,
+                Rooms = new List<System.Web.Mvc.SelectListItem>(),
+                //Doctors = await GetDoctors()
+            };
+
+            var userId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isUserADoctor = httpContextAccessor.HttpContext?.User.IsInRole("Doctor") ?? false;
+
+            if (isUserADoctor)
+            {
+                Guid doctorGuid = new Guid(userId);
+
+                //var doctor = await doctorRepo.GetByIdAsync(doctorGuid);
+                model.SelectedDoctorId = doctorGuid;
+            }
+            else
+            {
+
+                model.Doctors = await GetDoctors();
+            }
+            return model;
+        }
         //TODO Refactor so it can be added with USerId
         public async Task<bool> AddPatientAsync(AddPatientViewModel model)
         {
             var patientUserId = await userEntityService.CreateApplicationUserAsync(model.EmailAddress, model.Password, "Patient");
 
+            var userId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new InvalidOperationException("The current user is not logged in.");
+            }
+
+
             var patient = new Patient
             {
-                Id=new Guid(patientUserId),
+                Id = new Guid(patientUserId),
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 EmailAddress = model.EmailAddress,
@@ -42,26 +94,50 @@ namespace HospitalManagmentApp.Services.Data
                 UserId = patientUserId,
             };
 
+           
+
             var room = await roomRepo.GetByIdAsync(model.RoomId);
             if (room != null)
-            { 
+            {
                 room.HasFreeBeds = false;
                 await patientRepo.AddAsync(patient);
+
+                Guid userIdGuid = new Guid(userId);
+
+                PatientDoctor patientDoctor = await this.patientDoctorRepo
+                    .FirstOrDefaultAsync(pd => pd.PatientId == patient.Id &&
+                    pd.DoctorId == model.SelectedDoctorId);
+
+                if (patientDoctor == null)
+                {
+                    patientDoctor = new PatientDoctor()
+                    {
+                        PatientId = patient.Id,
+                        DoctorId = model.SelectedDoctorId,
+                    };
+
+                    await patientDoctorRepo.AddAsync(patientDoctor);
+
+                }
+                else
+                {
+                    throw new InvalidOperationException(string.Format(DoctorHasAlreadySuchPatientInList, patientDoctor.Doctor.LastName, patient.FirstName, patient.LastName));
+                }
                 return true;
             }
 
             return false;
-            
+
         }
 
         public async Task<DischargePatientViewModel?> GetDischargePatientViewModel(Guid id)
         {
             var patient = await patientRepo.GetByIdAsync(id);
             DischargePatientViewModel? dischargePatientViewModel = new DischargePatientViewModel();
-            if(patient != null)
+            if (patient != null)
             {
                 dischargePatientViewModel.Id = id;
-                dischargePatientViewModel.Name=$"{patient.FirstName} {patient.LastName}";
+                dischargePatientViewModel.Name = $"{patient.FirstName} {patient.LastName}";
             }
             return dischargePatientViewModel;
         }
@@ -122,15 +198,7 @@ namespace HospitalManagmentApp.Services.Data
             return true;
         }
 
-        public async Task<AddPatientViewModel> PrepareAddPatientViewModelAsync()
-        {
-            var departments = await GetDepartments();
-            return new AddPatientViewModel
-            {
-                Departments = departments,
-                Rooms = new List<SelectListItem>()
-            };
-        }
+ 
 
         private static string HasMedicalInsurance(bool hasMedicalInsurance) =>
             hasMedicalInsurance ? "Yes" : "No";
@@ -138,14 +206,26 @@ namespace HospitalManagmentApp.Services.Data
         private async Task<IEnumerable<Department>> GetDepartments() =>
             await departmentRepo.GetAllAsync();
 
+        private async Task<List<SelectListItem>> GetDoctors()
+        {
+            var doctors = await doctorRepo.GetAllAttcahed()
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.LastName,
+                }).ToListAsync();
+
+            return doctors;
+        }
+
         public async Task<bool> DischargePatientAsync(DischargePatientViewModel model, Guid id)
         {
             var patient = await patientRepo.GetAllAttcahed()
                 .Where(p => p.Id == id)
                 .Where(d => d.IsDeleted == false)
                 .FirstOrDefaultAsync();
-                
-            if(patient == null) { return false; }
+
+            if (patient == null) { return false; }
 
             await patientRepo.UpdateAsync(patient);
             return true;
@@ -153,7 +233,7 @@ namespace HospitalManagmentApp.Services.Data
 
         public async Task<List<PatientIndexViewModel>> Menage()
         {
-            var patients= await patientRepo.GetAllAttcahed()
+            var patients = await patientRepo.GetAllAttcahed()
                 .Where(p => p.IsDeleted == false)
                 .Select(p => new PatientIndexViewModel()
                 {
@@ -173,12 +253,12 @@ namespace HospitalManagmentApp.Services.Data
             return patients;
         }
 
-        public async Task<List<SelectListItem>> GetFreeRoomsAsync(Guid departmentId)
+        public async Task<List<System.Web.Mvc.SelectListItem>> GetFreeRoomsAsync(Guid departmentId)
         {
             // Fetch free rooms based on the given department ID
             var freeRooms = await roomRepo.GetAllAttcahed()
                 .Where(r => r.DepartmnetId == departmentId && r.HasFreeBeds)
-                .Select(r => new SelectListItem
+                .Select(r => new System.Web.Mvc.SelectListItem
                 {
                     Value = r.Id.ToString(),
                     Text = r.RoomNumber.ToString()
@@ -187,24 +267,26 @@ namespace HospitalManagmentApp.Services.Data
 
             if (!freeRooms.Any())
             {
-                return new List<SelectListItem> { new SelectListItem { Text = "No free rooms available", Value = "" } };
+                return new List<System.Web.Mvc.SelectListItem> { new System.Web.Mvc.SelectListItem { Text = "No free rooms available", Value = "" } };
             }
 
             return freeRooms;
         }
 
-        public async Task<List<SelectListItem>> GetFreeRoomsOnMoveAsync(Guid departmentId)
+        public async Task<List<System.Web.Mvc.SelectListItem>> GetFreeRoomsOnMoveAsync(Guid departmentId)
         {
             var freeRooms = await roomRepo.GetAllAttcahed()
                 .Where(r => r.DepartmnetId == departmentId && !r.Patients.Any())
-                .Select(r => new SelectListItem {
+                .Select(r => new System.Web.Mvc.SelectListItem
+                {
                     Value = r.Id.ToString(),
-                    Text = r.RoomNumber.ToString() })
+                    Text = r.RoomNumber.ToString()
+                })
                 .ToListAsync();
 
             if (!freeRooms.Any())
             {
-                return new List<SelectListItem> { new SelectListItem{ Text = "No free rooms available", Value="" } };
+                return new List<System.Web.Mvc.SelectListItem> { new System.Web.Mvc.SelectListItem { Text = "No free rooms available", Value = "" } };
             }
 
             return freeRooms;

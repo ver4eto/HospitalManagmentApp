@@ -1,6 +1,7 @@
 ﻿using HospitalManagment.Infrastructure.Repositories.Contracts;
 using HospitalManagmentApp.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace HospitalManagment.Infrastructure.Repositories
 {
@@ -119,5 +120,22 @@ namespace HospitalManagment.Infrastructure.Repositories
            
         }
 
+        public TType FirstOrDefault(Func<TType, bool> predicate)
+        {
+            TType entity = this.dbSet
+                .FirstOrDefault(predicate);
+
+            return entity;
+        }
+
+        public async Task<TType> FirstOrDefaultAsync(Expression<Func<TType, bool>> predicate)
+        {
+            TType entity = await this.dbSet
+                .FirstOrDefaultAsync(predicate);
+
+            return entity;
+        }
+
+       
     }
 }

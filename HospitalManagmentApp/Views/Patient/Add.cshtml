@@ -1,4 +1,5 @@
 ﻿@using HospitalManagment.ViewModels.Patient
+@using System.Security.Claims
 @model AddPatientViewModel
 
 <div class="container mt-5">
@@ -78,6 +79,24 @@
             <span asp-validation-for="RoomId" class="text-danger"></span>
         </div>
 
+        @if(!User.IsInRole("Doctor")){
+        <div class="form-group">
+            <label for="SelectedDoctorId">Assign a Doctor</label>
+            <select asp-for="SelectedDoctorId" class="form-control">
+                <option value="">Select a Doctor</option>
+                @foreach (var doctor in Model.Doctors)
+
+                {
+                    <option value="@doctor.Value">@doctor.Text</option>
+                }
+            </select>
+        </div>
+        }
+        @if(User.IsInRole("Doctor"))
+        {
+@*             <input type="hidden" asp-for="SelectedDoctorId" value=@User./> *@
+            <input type="hidden" name="SelectedDoctorId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+        }
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary mt-3">Add New Patient</button>
         <a asp-action="Index" class="btn btn-secondary mt-3 ml-2">Cancel</a>

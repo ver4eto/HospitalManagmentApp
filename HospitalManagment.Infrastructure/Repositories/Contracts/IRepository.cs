@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,5 +29,7 @@ namespace HospitalManagment.Infrastructure.Repositories.Contracts
         bool Delete(TId id);
         Task<bool> DeleteAsync(TId id);
 
+        TType FirstOrDefault(Func<TType, bool> predicate);
+        Task< TType> FirstOrDefaultAsync(Expression<Func<TType, bool>> predicate);
     }
 }

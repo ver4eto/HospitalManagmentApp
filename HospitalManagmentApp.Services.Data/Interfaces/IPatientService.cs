@@ -1,5 +1,6 @@
 ﻿using HospitalManagment.ViewModels.Patient;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace HospitalManagmentApp.Services.Data.Interfaces
 {
@@ -13,7 +14,7 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
         Task <DischargePatientViewModel?> GetDischargePatientViewModel(Guid id);
         Task <bool> DischargePatientAsync(DischargePatientViewModel model,Guid id);
         Task<List<PatientIndexViewModel>> Menage();
-        Task<List<SelectListItem>> GetFreeRoomsAsync(Guid departmentId);
-        Task<List<SelectListItem>> GetFreeRoomsOnMoveAsync(Guid departmentId);
+        Task<List<System.Web.Mvc.SelectListItem>> GetFreeRoomsAsync(Guid departmentId);
+        Task<List<System.Web.Mvc.SelectListItem>> GetFreeRoomsOnMoveAsync(Guid departmentId);
     }
 }
