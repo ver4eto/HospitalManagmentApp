@@ -16,5 +16,6 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
         Task<List<PatientIndexViewModel>> Menage();
         Task<List<System.Web.Mvc.SelectListItem>> GetFreeRoomsAsync(Guid departmentId);
         Task<List<System.Web.Mvc.SelectListItem>> GetFreeRoomsOnMoveAsync(Guid departmentId);
+        Task<PatientMedicalInfoViewModel?> SeePatientMedicalInfo(Guid patientId);
     }
 }

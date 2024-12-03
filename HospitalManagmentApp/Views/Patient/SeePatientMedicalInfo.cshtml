@@ -1,0 +1,53 @@
+﻿@using HospitalManagment.ViewModels.Patient;
+@model PatientMedicalInfoViewModel
+
+@{
+    ViewData["Title"] = "Patient Medical Information";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Patient Medical Information</h2>
+    <hr />
+
+    <!-- Patient Information -->
+    <div class="card my-4">
+        <div class="card-body">
+            <h4 class="card-title">Basic Information</h4>
+            <p><strong>First Name:</strong> @Model.FirstName</p>
+            <p><strong>Last Name:</strong> @Model.LastName</p>
+            <p><strong>Department:</strong> @Model.DepartmentName</p>
+           
+        </div>
+    </div>
+
+    <!-- Treatments -->
+    <div class="card my-4">
+        <div class="card-body">
+            <h4 class="card-title">Treatments</h4>
+            @if (Model.Treatments != null && Model.Treatments.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var treatment in Model.Treatments)
+                    {
+                        <li class="list-group-item">@treatment</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No treatments available.</p>
+            }
+        </div>
+    </div>
+
+    <!-- Change Treatments Button -->
+    @if (User.IsInRole("Doctor") || User.IsInRole("Nurse"))
+
+    {
+        <div class="text-center mt-4">
+            <a asp-controller="Treatment" asp-action="ChangeTreatments" asp-route-patientId="@Model.PatientId" class="btn btn-primary">
+                Change Treatments
+            </a>
+        </div>
+    }
+</div>

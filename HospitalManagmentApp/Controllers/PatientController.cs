@@ -4,6 +4,7 @@ using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+//using System.Web.Mvc;
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
@@ -138,6 +139,16 @@ namespace HospitalManagmentApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
+        [HttpGet]
+        public async Task<IActionResult> SeePatientMedicalInfo(Guid id)
+        {
+            var patientMedicalInfo=await patientService.SeePatientMedicalInfo(id);
+
+            if (patientMedicalInfo == null)
+            {
+                return NotFound();
+            }
+            return View(patientMedicalInfo);
+        }
     }
 }

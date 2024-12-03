@@ -23,6 +23,12 @@
                     <p class="card-text">Department: @patient.Department</p>
                     <p class="card-text">RoomNumber: @patient.Room</p>
 
+                    <div class="text-center mt-3">
+                        <a asp-controller="Patient" asp-action="SeePatientMedicalInfo" asp-route-patientId="@patient.Id" class="btn btn-primary">
+                            View Medical Info
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>

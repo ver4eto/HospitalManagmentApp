@@ -6,14 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Security.Claims;
+using System.Web.Mvc;
 using static HospitalManagmentApp.Common.EntityValidationConstants;
 using static HospitalManagmentApp.Common.ExceptionErrorMessages;
-using Patient = HospitalManagmentApp.DataModels.Patient;
 using Department = HospitalManagmentApp.DataModels.Department;
-using Room = HospitalManagmentApp.DataModels.Room;
 using Doctor = HospitalManagmentApp.DataModels.Doctor;
-using System.Web.Mvc;
-using Microsoft.AspNetCore.Identity;
+using Patient = HospitalManagmentApp.DataModels.Patient;
+using Room = HospitalManagmentApp.DataModels.Room;
 
 namespace HospitalManagmentApp.Services.Data
 {
@@ -38,6 +37,23 @@ namespace HospitalManagmentApp.Services.Data
             this.doctorRepo = doctorRepo;
         }
 
+        public async Task<List<PatientIndexViewModel>> GetAllPatientsAsync()
+        {
+            return await patientRepo.GetAllAttcahed()
+                 .Where(p => !p.IsDeleted)
+                 .Select(p => new PatientIndexViewModel
+                 {
+                     Name = $"{p.FirstName} {p.LastName}",
+                     EGN = p.EGN,
+                     PhoneNumber = p.PhoneNumber,
+                     Address = p.Address,
+                     Department = p.Department.Name,
+                     Room = p.Room.RoomNumber,
+                     HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
+                     EmailAddress = p.EmailAddress
+                 })
+                 .ToListAsync();
+        }
         public async Task<AddPatientViewModel> PrepareAddPatientViewModelAsync()
         {
             var departments = await GetDepartments();
@@ -66,7 +82,7 @@ namespace HospitalManagmentApp.Services.Data
             }
             return model;
         }
-        //TODO Refactor so it can be added with USerId
+     
         public async Task<bool> AddPatientAsync(AddPatientViewModel model)
         {
             var patientUserId = await userEntityService.CreateApplicationUserAsync(model.EmailAddress, model.Password, "Patient");
@@ -141,25 +157,19 @@ namespace HospitalManagmentApp.Services.Data
             }
             return dischargePatientViewModel;
         }
-
-        public async Task<List<PatientIndexViewModel>> GetAllPatientsAsync()
+        public async Task<bool> DischargePatientAsync(DischargePatientViewModel model, Guid id)
         {
-            return await patientRepo.GetAllAttcahed()
-                 .Where(p => !p.IsDeleted)
-                 .Select(p => new PatientIndexViewModel
-                 {
-                     Name = $"{p.FirstName} {p.LastName}",
-                     EGN = p.EGN,
-                     PhoneNumber = p.PhoneNumber,
-                     Address = p.Address,
-                     Department = p.Department.Name,
-                     Room = p.Room.RoomNumber,
-                     HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
-                     EmailAddress = p.EmailAddress
-                 })
-                 .ToListAsync();
-        }
+            var patient = await patientRepo.GetAllAttcahed()
+                .Where(p => p.Id == id)
+                .Where(d => d.IsDeleted == false)
+                .FirstOrDefaultAsync();
 
+            if (patient == null) { return false; }
+
+            await patientRepo.UpdateAsync(patient);
+            return true;
+        }
+           
         public async Task<MovePatientToDepartmentViewModel?> GetMovePatientModelAsync(Guid id)
         {
             var patient = await patientRepo.GetAllAttcahed()
@@ -198,39 +208,6 @@ namespace HospitalManagmentApp.Services.Data
             return true;
         }
 
- 
-
-        private static string HasMedicalInsurance(bool hasMedicalInsurance) =>
-            hasMedicalInsurance ? "Yes" : "No";
-
-        private async Task<IEnumerable<Department>> GetDepartments() =>
-            await departmentRepo.GetAllAsync();
-
-        private async Task<List<SelectListItem>> GetDoctors()
-        {
-            var doctors = await doctorRepo.GetAllAttcahed()
-                .Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.LastName,
-                }).ToListAsync();
-
-            return doctors;
-        }
-
-        public async Task<bool> DischargePatientAsync(DischargePatientViewModel model, Guid id)
-        {
-            var patient = await patientRepo.GetAllAttcahed()
-                .Where(p => p.Id == id)
-                .Where(d => d.IsDeleted == false)
-                .FirstOrDefaultAsync();
-
-            if (patient == null) { return false; }
-
-            await patientRepo.UpdateAsync(patient);
-            return true;
-        }
-
         public async Task<List<PatientIndexViewModel>> Menage()
         {
             var patients = await patientRepo.GetAllAttcahed()
@@ -252,6 +229,49 @@ namespace HospitalManagmentApp.Services.Data
 
             return patients;
         }
+
+        public async Task<PatientMedicalInfoViewModel?> SeePatientMedicalInfo(Guid patientId)
+        {
+            var model=new PatientMedicalInfoViewModel();
+
+            var patient = await patientRepo.GetAllAttcahed()
+        .Include(p => p.Department)              
+        .Include(p => p.PatientTreatments) // Assuming Treatments is a related entity
+        .FirstOrDefaultAsync(p => p.Id == patientId);
+
+            if (patient != null)
+            {
+                model = new PatientMedicalInfoViewModel()
+                {
+                    PatientId = patientId,
+                    FirstName = patient.FirstName,
+                    LastName = patient.LastName,
+                    DepartmentName = patient.Department?.Name,
+                    Treatments = patient.PatientTreatments.Where(pt => pt.PatientId == patientId).Select(t => t.Treatment.Name).ToList(),
+                };
+            }
+
+            return model;
+        }
+        private static string HasMedicalInsurance(bool hasMedicalInsurance) =>
+            hasMedicalInsurance ? "Yes" : "No";
+
+        private async Task<IEnumerable<Department>> GetDepartments() =>
+            await departmentRepo.GetAllAsync();
+
+        private async Task<List<SelectListItem>> GetDoctors()
+        {
+            var doctors = await doctorRepo.GetAllAttcahed()
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.LastName,
+                }).ToListAsync();
+
+            return doctors;
+        }
+
+      
 
         public async Task<List<System.Web.Mvc.SelectListItem>> GetFreeRoomsAsync(Guid departmentId)
         {
