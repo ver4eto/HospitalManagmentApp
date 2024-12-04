@@ -145,5 +145,7 @@ namespace HospitalManagment.Infrastructure.Repositories
         {
             return await dbSet.AnyAsync(predicate);
         }
+
+       
     }
 }

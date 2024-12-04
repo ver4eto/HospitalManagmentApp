@@ -29,7 +29,7 @@ namespace HospitalManagment.Infrastructure.Repositories.Contracts
         TType FirstOrDefault(Func<TType, bool> predicate);
         Task< TType> FirstOrDefaultAsync(Expression<Func<TType, bool>> predicate);
 
-        Task<bool> Any(Expression<Func<TType, bool>> predicate);
+        bool Any(Expression<Func<TType, bool>> predicate);
         Task<bool> AnyAsync(Expression<Func<TType, bool>> predicate);
 
     }
