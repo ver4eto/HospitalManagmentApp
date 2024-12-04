@@ -136,6 +136,14 @@ namespace HospitalManagment.Infrastructure.Repositories
             return entity;
         }
 
-       
+        public bool Any(Expression<Func<TType, bool>> predicate)
+        {
+            return dbSet.Any(predicate);
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<TType, bool>> predicate)
+        {
+            return await dbSet.AnyAsync(predicate);
+        }
     }
 }

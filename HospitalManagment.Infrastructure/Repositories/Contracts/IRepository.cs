@@ -13,8 +13,6 @@ namespace HospitalManagment.Infrastructure.Repositories.Contracts
 
         IEnumerable<TType> GetAll();
 
-         
-
         IQueryable<TType> GetAllAttcahed();
 
         Task<TType> GetByIdAsync(TId id);
@@ -23,7 +21,6 @@ namespace HospitalManagment.Infrastructure.Repositories.Contracts
 
         void Add(TType item);
         Task AddAsync(TType entity);
-
         bool Update(TType entity);
         Task <bool>UpdateAsync(TType entity);
         bool Delete(TId id);
@@ -31,5 +28,9 @@ namespace HospitalManagment.Infrastructure.Repositories.Contracts
 
         TType FirstOrDefault(Func<TType, bool> predicate);
         Task< TType> FirstOrDefaultAsync(Expression<Func<TType, bool>> predicate);
+
+        Task<bool> Any(Expression<Func<TType, bool>> predicate);
+        Task<bool> AnyAsync(Expression<Func<TType, bool>> predicate);
+
     }
 }
