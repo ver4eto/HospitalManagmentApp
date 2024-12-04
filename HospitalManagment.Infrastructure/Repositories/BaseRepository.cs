@@ -29,30 +29,20 @@ namespace HospitalManagment.Infrastructure.Repositories
 
         }
 
-        public bool Delete(TId id)
+        public bool Delete(TType entity)
         {
-            TType entity=this.GetById(id);
-            if(entity==null) return false;
-
             this.dbSet.Remove(entity);
             this.dbContext.SaveChanges();
 
             return true;
         }
 
-        public async Task<bool> DeleteAsync(TId id)
+        public async Task<bool> DeleteAsync(TType entity)
         {
-            TType entity = await this.GetByIdAsync(id);
-            if (entity == null)
-            {
-                return false;
-            }
-
-           this.dbSet.Remove(entity);
+            this.dbSet.Remove(entity);
             await this.dbContext.SaveChangesAsync();
 
             return true;
-
         }
         public IEnumerable<TType> GetAll()
         {
@@ -85,14 +75,14 @@ namespace HospitalManagment.Infrastructure.Repositories
 
         }
 
-       
+
         public async Task<bool> UpdateAsync(TType entity)
         {
             try
             {
                 this.dbSet.Attach(entity);
                 this.dbContext.Entry(entity).State = EntityState.Modified;
-               await this.dbContext.SaveChangesAsync();
+                await this.dbContext.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
@@ -115,9 +105,9 @@ namespace HospitalManagment.Infrastructure.Repositories
             catch (Exception ex)
             {
 
-               return false;
+                return false;
             }
-           
+
         }
 
         public TType FirstOrDefault(Func<TType, bool> predicate)
@@ -146,6 +136,8 @@ namespace HospitalManagment.Infrastructure.Repositories
             return await dbSet.AnyAsync(predicate);
         }
 
-       
     }
+
+
 }
+
