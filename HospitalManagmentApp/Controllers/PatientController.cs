@@ -205,5 +205,41 @@ namespace HospitalManagmentApp.Controllers
 
             
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeTreatments(Guid patientId)
+        {
+           var model=await patientService.GetChangeTreatmentViewModel(patientId);
+
+            if (model == null)
+            {
+                return NotFound("Patient not found.");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeTreatments(ChangeTreatmentsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model); // Re-display the form if the model is invalid
+            }
+
+            var result= await patientService.ChangeTreatmentsAsync(model);
+            if (result == true)
+            {
+
+                TempData["SuccessMessage"] = "Treatments updated successfully.";
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                // Set error message in TempData
+                TempData["ErrorMessage"] = "Failed to update treatments. Please try again.";
+                return RedirectToAction("ChangeTreatments", new { patientId = model.PatientId });
+            }
+        }
     }
 }

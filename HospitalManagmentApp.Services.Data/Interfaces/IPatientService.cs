@@ -22,5 +22,7 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
 
         Task<AddTreatmentToPatientViewModel> GetAddTreatmentToPatientViewModel(Guid id);
         Task<bool> AddTreatmentToPatientAsync(AddTreatmentToPatientViewModel model);
+        Task<ChangeTreatmentsViewModel> GetChangeTreatmentViewModel(Guid patientId);
+        Task <bool> ChangeTreatmentsAsync(ChangeTreatmentsViewModel model);
     }
 }
