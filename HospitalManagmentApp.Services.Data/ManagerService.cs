@@ -4,6 +4,7 @@ using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using HospitalManagmentApp.Views.Manager;
 using Microsoft.EntityFrameworkCore;
+using static HospitalManagment.ViewModels.Manager.ManagerPatientsReportViewModel;
 
 namespace HospitalManagmentApp.Services.Data
 {
@@ -27,23 +28,13 @@ namespace HospitalManagmentApp.Services.Data
 
         public async Task<ManagerIndexViewModel> GetIndexManagerViewModel()
         {
-            var patients = await patientsRepo.GetAllAttcahed()
-                .Where(p => p.IsDeleted == false)
-                .ToListAsync();
+            var patients =await GetAllPatients();
 
-            var nurses = await nursesRepo.GetAllAttcahed()
-                .Where(n => n.IsDeleted == false)
-                .ToListAsync();
+            var nurses =await GetAllNurses();
 
-            var departments = await departmentsRepo.GetAllAttcahed()
-                .Where(d => d.IsDeleted == false)
-                .ToListAsync();
+            var departments = await GetAllDepartments();
 
-            var doctors = await doctorsRepo.GetAllAttcahed()
-                .Where(d => d.IsDeleted == false)
-                .ToListAsync();
-
-            // var departmentsDetails = new List<DepartmentDetailsViewModel>();
+            var doctors = await GetAllDoctors();
 
             foreach (var department in departments)
             {
@@ -55,45 +46,11 @@ namespace HospitalManagmentApp.Services.Data
                 var treatmentCosts = patientsInDepartment.Sum(p => p.PatientTreatments.Sum(t => t.Treatment.Price));
                 var salaries = doctorsInDepartment.Sum(d => d.Salary) + nursesInDepartment.Sum(n => n.Salary);
                 var totalExpenses = treatmentCosts + salaries;
-
-                //// var departmentDetails = new DepartmentDetailsViewModel
-                // {
-                //     DepartmentName = department.Name,
-                //     PatientCount = patientsInDepartment.Count,
-                //     TotalExpenses = totalExpenses,
-                //     Patients = patientsInDepartment.Select(p => new PatientDetailsViewModel
-                //     {
-                //         PatientId = p.Id,
-                //         Name = $"{p.FirstName} {p.LastName}",
-                //         TreatmentCosts = p.PatientTreatments.Sum(t => t.Treatment.Price)
-                //     }).ToList()
-                /// };
-
-                // departmentsDetails.Add(departmentDetails);
             }
 
-            //var model = new ManagerIndexViewModel
-            //{
-            //    PatientsOverview = new SectorOverviewViewModel
-            //    {
-            //        Name = "Patients",
-            //        Count = patients.Count()
-            //    },
-            //    NursesOverview = new SectorOverviewViewModel
-            //    {
-            //        Name = "Nurses",
-            //        Count = nurses.Count()
-            //    },
-            //    DepartmentsOverview = new SectorOverviewViewModel
-            //    {
-            //        Name = "Departments",
-            //        Count = departments.Count()
-            //    },
-            //    Departments = departmentsDetails
-            //};
             return new ManagerIndexViewModel();
-        }
 
+        }
         public async Task<ManagerDepartmentReportsViewModel> GetDepartmentReportsViewModel()
         {
             var departments = await departmentsRepo.GetAllAttcahed()
@@ -111,7 +68,7 @@ namespace HospitalManagmentApp.Services.Data
             var patients = await patientsRepo.GetAllAttcahed()
                 .Where(p => p.IsDeleted == false)
                 .Include(p => p.PatientTreatments)
-                .ThenInclude(pt=>pt.Treatment)
+                .ThenInclude(pt => pt.Treatment)
                 .ToListAsync();
 
             var rooms = await roomRepo.GetAllAttcahed()
@@ -153,6 +110,112 @@ namespace HospitalManagmentApp.Services.Data
             return model;
         }
 
+        public async Task<ManagerDoctorsReportsViewModel> GetDoctorsReportViewModel()
+        {
+            var doctors = await doctorsRepo.GetAllAttcahed()
+                .Where(d => d.IsDeleted == false)
+                .ToListAsync();
 
+            var patients = await patientsRepo.GetAllAttcahed()
+                .Where(p => p.IsDeleted == false)
+                .ToListAsync();
+
+            // Aggregate data
+            var model = new ManagerDoctorsReportsViewModel
+            {
+                TotalDoctors = doctors.Count,
+                TotalPatients = patients.Count,
+                TotalExpenses = doctors.Sum(d => d.Salary).ToString("f2"),
+                AverageSalary = (doctors.Sum(d => d.Salary) / patients.Count).ToString("f2")
+            };
+
+            return model;
+        }
+
+        public async Task<ManagerPatientsReportViewModel> GetPatientsReportViewModel()
+        {
+            List<Department> departments = await GetAllDepartments();
+            List<Patient> patients = await GetAllPatients();
+
+            // Aggregate data
+            var departmentPatients = departments.Select(department =>
+            {
+                var patientCount = patients.Count(p => p.DepartmentId == department.Id);
+
+                return new DepartmentPatientsViewModel
+                {
+                    DepartmentId = department.Id,
+                    DepartmentName = department.Name,
+                    PatientCount = patientCount
+                };
+            }).ToList();
+
+            var totalPatients = departmentPatients.Sum(dp => dp.PatientCount);
+            var averagePatientsPerDepartment = departments.Any()
+                ? (double)totalPatients / departments.Count
+                : 0;
+
+            var model = new ManagerPatientsReportViewModel
+            {
+                TotalPatients = totalPatients,
+                AveragePatientsPerDepartment = averagePatientsPerDepartment.ToString("f2"),
+                Departments = departmentPatients
+            };
+
+            return model;
+        }
+
+        public async Task<ManagerGeneralReportViewModel> GetGeneralReportViewModel()
+        {
+            List<Nurse> nurses = await GetAllNurses();
+
+            var doctors = await GetAllDoctors();
+
+            // Calculate totals
+            var totalEmployees = nurses.Count + doctors.Count;
+            var totalExpenses = nurses.Sum(n => n.Salary) + doctors.Sum(d => d.Salary);
+            var averageExpensePerEmployee = totalEmployees > 0 ? totalExpenses / totalEmployees : 0;
+
+            // Create the view model
+            var model = new ManagerGeneralReportViewModel
+            {
+                TotalEmployees = totalEmployees,
+                TotalExpenses = totalExpenses.ToString("f2"),
+                AverageExpensePerEmployee = averageExpensePerEmployee.ToString("f2")
+            };
+
+            return model;
+        }
+
+        private async Task<List<Doctor>> GetAllDoctors()
+        {
+            return await doctorsRepo.GetAllAttcahed()
+                            .Where(d => d.IsDeleted == false)
+                            .ToListAsync();
+        }
+
+        private async Task<List<Nurse>> GetAllNurses()
+        {
+            // Fetch data
+            return await nursesRepo.GetAllAttcahed()
+                .Where(n => n.IsDeleted == false)
+                .ToListAsync();
+        }
+
+        private async Task<List<Department>> GetAllDepartments()
+        {
+
+            // Fetch data
+            return await departmentsRepo.GetAllAttcahed()
+                .Where(d => d.IsDeleted == false)
+                .ToListAsync();
+        }
+
+        private async Task<List<Patient>> GetAllPatients()
+        {
+            return await patientsRepo.GetAllAttcahed()
+                .Where(p => p.IsDeleted == false)
+                .ToListAsync();
+        }
     }
 }

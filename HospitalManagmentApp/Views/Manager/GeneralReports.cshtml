@@ -1,0 +1,38 @@
+﻿@using HospitalManagment.ViewModels.Manager;
+@model ManagerGeneralReportViewModel
+
+<h1 class="text-center">General Reports</h1>
+
+<div class="container mt-5">
+    <!-- Total Employees -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Total Employees</h5>
+                    <p class="card-text display-4">@Model.TotalEmployees</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Expenses -->
+        <div class="col-md-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Total Expenses</h5>
+                    <p class="card-text display-4">@Model.TotalExpenses</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Average Expense per Employee -->
+        <div class="col-md-4">
+            <div class="card text-white bg-danger">
+                <div class="card-body">
+                    <h5 class="card-title">Average Expense per Employee</h5>
+                    <p class="card-text display-4">@Model.AverageExpensePerEmployee</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

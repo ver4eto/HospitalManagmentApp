@@ -105,26 +105,8 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            //var doctor = await context
-            //    .Doctors
-            //    .FindAsync(id);
-
-            //if(doctor == null)
-            //{
-            //    return BadRequest();
-            //}
-
-            //var model = new DeleteDoctorViewModel
-            //{
-            //    Id = id,
-            //    FirstName = doctor.FirstName,
-            //    LastName = doctor.LastName,
-            //    DepartmentName = doctor.Department.Name,
-            //    Specialty = doctor.Specialty,
-            //};
             var model= await this.doctorService.GetDeleteDoctorViewModel(id);
             return View(model);
-
         }
 
        

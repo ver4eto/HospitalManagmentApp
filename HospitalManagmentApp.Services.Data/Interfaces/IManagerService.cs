@@ -7,5 +7,8 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
     {
         Task<ManagerIndexViewModel> GetIndexManagerViewModel();
         Task<ManagerDepartmentReportsViewModel> GetDepartmentReportsViewModel();
+        Task<ManagerDoctorsReportsViewModel> GetDoctorsReportViewModel();
+        Task<ManagerPatientsReportViewModel> GetPatientsReportViewModel();
+        Task<ManagerGeneralReportViewModel> GetGeneralReportViewModel();
     }
 }

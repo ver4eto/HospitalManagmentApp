@@ -8,8 +8,8 @@
 
     <div class="form-group">
         <label>Select Nurse</label>
-        <select asp-for="SelectedNurseId" class="form-control" id="doctorSelect">
-            <option value="">-- Select a Doctor --</option>
+        <select asp-for="SelectedNurseId" class="form-control" id="nurseSelect">
+            <option value="">-- Select a Nurse --</option>
             @foreach (var nurse in Model.Nurses)
             {
                 <option value="@nurse.Id">@nurse.FirstName  <strong>@nurse.LastName</strong></option>
@@ -26,8 +26,8 @@
 
 @section Scripts {
     <script>
-        // Show the button when a doctor is selected
-        document.getElementById("doctorSelect").addEventListener("change", function () {
+        
+        document.getElementById("nurseSelect").addEventListener("change", function () {
             var addButton = document.getElementById("addButton");
             if (this.value) {
                 addButton.style.display = "inline-block";

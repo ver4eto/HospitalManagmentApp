@@ -14,7 +14,7 @@ namespace HospitalManagmentApp.Controllers
         {
             this.managerService = managerService;
         }
-        public  IActionResult Index()
+        public IActionResult Index()
         {
             var model = new ManagerIndexViewModel
             {
@@ -48,10 +48,50 @@ namespace HospitalManagmentApp.Controllers
             // return View(result);
         }
 
+        [HttpGet]
         public async Task<IActionResult> DepartmentsReports()
         {
-            var model=await managerService.GetDepartmentReportsViewModel();
+            var model = await managerService.GetDepartmentReportsViewModel();
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DoctorsReports()
+        {
+            // Fetch data
+            var model = await managerService.GetDoctorsReportViewModel();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PatientsReports()
+        {
+            var model = await managerService.GetPatientsReportViewModel();
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GeneralReports()
+        {
+           var model=await managerService.GetGeneralReportViewModel();
+
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult EmployeeManage()
+        {
+            // Optionally, you can populate a view model here if needed
+            return View("EmployeeManage"); // Ensure the view name matches the file
+        }
+
+        [HttpGet]
+        public IActionResult FacilitiesManage()
+        {
+            // Optionally, you can populate a view model here if needed
+            return View("FacilitiesManage"); // Ensure the view name matches the file
+        }
+
+
     }
 }

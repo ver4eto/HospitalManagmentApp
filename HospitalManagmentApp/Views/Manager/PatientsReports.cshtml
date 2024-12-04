@@ -1,0 +1,58 @@
+﻿@using HospitalManagment.ViewModels.Manager
+@model ManagerPatientsReportViewModel
+
+<style>
+    .department-title {
+        color: darkblue;
+        text-decoration: underline;
+        font-weight: bold
+    }
+</style>
+
+<h1 class="text-center">Patients Reports</h1>
+
+<div class="container mt-5">
+   
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Total Patients</h5>
+                    <p class="card-text display-4">@Model.TotalPatients</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Average Patients per Department</h5>
+                    <p class="card-text display-4">@Model.AveragePatientsPerDepartment</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <h2 class="mt-4">Patients by Department</h2>
+    <div class="row">
+        @foreach (var department in Model.Departments)
+
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title department-title">@department.DepartmentName</h4>
+                        <p class="card-text"><strong>Patient Count:</strong> @department.PatientCount</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+        @if (!Model.Departments.Any())
+
+        {
+            <p class="text-muted">No departments found.</p>
+        }
+    </div>
+
