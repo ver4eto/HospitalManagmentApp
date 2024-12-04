@@ -40,10 +40,15 @@
         </div>
     </div>
 
-    <!-- Change Treatments Button -->
+ 
     @if (User.IsInRole("Doctor") || User.IsInRole("Nurse"))
 
     {
+        <div class="text-center mt-4">
+            <a asp-controller="Patient" asp-action="AddTreatmentToPatient" asp-route-patientId="@Model.PatientId" class="btn btn-primary">
+                Add Treatments to patients
+            </a>
+        </div>
         <div class="text-center mt-4">
             <a asp-controller="Treatment" asp-action="ChangeTreatments" asp-route-patientId="@Model.PatientId" class="btn btn-primary">
                 Change Treatments

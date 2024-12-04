@@ -4,10 +4,17 @@ using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Web.Mvc;
+using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
+
+
+//using System.Web.Mvc;
+
 //using System.Web.Mvc;
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace HospitalManagmentApp.Controllers
 {
@@ -25,6 +32,8 @@ namespace HospitalManagmentApp.Controllers
         public async Task<IActionResult> Index()
         {
             var patients = await patientService.GetAllPatientsAsync();
+
+            ViewBag.SuccessMessage = TempData["SuccessMessage"];
 
             return View(patients);
         }
@@ -47,6 +56,7 @@ namespace HospitalManagmentApp.Controllers
 
 
         [HttpPost]
+        
         public async Task<IActionResult> Add(AddPatientViewModel model)
         {
             if (!ModelState.IsValid)
@@ -140,15 +150,60 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SeePatientMedicalInfo(Guid id)
+        public async Task<IActionResult> SeePatientMedicalInfo(Guid patientId)
         {
-            var patientMedicalInfo=await patientService.SeePatientMedicalInfo(id);
+            var patientMedicalInfo=await patientService.SeePatientMedicalInfo(patientId);
 
             if (patientMedicalInfo == null)
             {
                 return NotFound();
             }
             return View(patientMedicalInfo);
+        }
+
+        [HttpGet]
+        [Route("Patient/AddTreatmentToPatient")]
+        public async Task<IActionResult> AddTreatmentToPatient(Guid patientId)
+        {
+           
+            var patient = await patientService.GetAddTreatmentToPatientViewModel(patientId);
+
+            if (patient == null)
+            {
+                return NotFound("Patient not found.");
+            }
+
+            return View(patient);
+        }
+
+        [HttpPost]
+        [Route("Patient/AddTreatmentToPatientAsync")]
+        public async Task<IActionResult> AddTreatmentToPatientAsync(AddTreatmentToPatientViewModel model)
+        {
+            
+            if (!ModelState.IsValid)
+            {               
+                return View( model);
+            }
+
+            // Save changes to the database
+           var result = await patientService.AddTreatmentToPatientAsync(model);
+            if (result == true)
+            {
+                TempData["SuccessMessage"] = "Treatment was successfully added to the patient.";
+
+                // Redirect to the Index action
+                return RedirectToAction("Index");
+                //return RedirectToAction(nameof(AddTreatmentToPatient),new { patientId=model.PatientId});
+            }
+
+            else
+            {
+                ModelState.AddModelError("", "Failed to add treatment.");
+                return View(model);
+            }
+
+            
         }
     }
 }

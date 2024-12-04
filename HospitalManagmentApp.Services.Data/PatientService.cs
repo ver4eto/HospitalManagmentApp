@@ -13,6 +13,7 @@ using Department = HospitalManagmentApp.DataModels.Department;
 using Doctor = HospitalManagmentApp.DataModels.Doctor;
 using Patient = HospitalManagmentApp.DataModels.Patient;
 using Room = HospitalManagmentApp.DataModels.Room;
+using Treatment = HospitalManagmentApp.DataModels.Treatment;
 
 namespace HospitalManagmentApp.Services.Data
 {
@@ -25,8 +26,10 @@ namespace HospitalManagmentApp.Services.Data
         private readonly UserEntityService userEntityService;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IRepository<PatientDoctor, object> patientDoctorRepo;
+        private readonly IRepository<Treatment, Guid> treatmentRepo;
+        private readonly IRepository<PatientTreatment, object> patientTreatmentRepo;
 
-        public PatientService(IRepository<Patient, Guid> patientRepo, IRepository<Department, Guid> departmenttRepo, IRepository<Room, Guid> roomRepo, UserEntityService userEntityService, IHttpContextAccessor httpContextAccessor, IRepository<PatientDoctor, object> patientDoctorRepo, IRepository<Doctor, Guid> doctorRepo)
+        public PatientService(IRepository<Patient, Guid> patientRepo, IRepository<Department, Guid> departmenttRepo, IRepository<Room, Guid> roomRepo, UserEntityService userEntityService, IHttpContextAccessor httpContextAccessor, IRepository<PatientDoctor, object> patientDoctorRepo, IRepository<Doctor, Guid> doctorRepo, IRepository<Treatment, Guid> treatmentRepo, IRepository<PatientTreatment, object> patientTreatmentRepo)
         {
             this.patientRepo = patientRepo;
             this.departmentRepo = departmenttRepo;
@@ -35,6 +38,8 @@ namespace HospitalManagmentApp.Services.Data
             this.httpContextAccessor = httpContextAccessor;
             this.patientDoctorRepo = patientDoctorRepo;
             this.doctorRepo = doctorRepo;
+            this.treatmentRepo = treatmentRepo;
+            this.patientTreatmentRepo = patientTreatmentRepo;
         }
 
         public async Task<List<PatientIndexViewModel>> GetAllPatientsAsync()
@@ -43,6 +48,7 @@ namespace HospitalManagmentApp.Services.Data
                  .Where(p => !p.IsDeleted)
                  .Select(p => new PatientIndexViewModel
                  {
+                     Id = p.Id,
                      Name = $"{p.FirstName} {p.LastName}",
                      EGN = p.EGN,
                      PhoneNumber = p.PhoneNumber,
@@ -82,7 +88,7 @@ namespace HospitalManagmentApp.Services.Data
             }
             return model;
         }
-     
+
         public async Task<bool> AddPatientAsync(AddPatientViewModel model)
         {
             var patientUserId = await userEntityService.CreateApplicationUserAsync(model.EmailAddress, model.Password, "Patient");
@@ -110,7 +116,7 @@ namespace HospitalManagmentApp.Services.Data
                 UserId = patientUserId,
             };
 
-           
+
 
             var room = await roomRepo.GetByIdAsync(model.RoomId);
             if (room != null)
@@ -169,7 +175,7 @@ namespace HospitalManagmentApp.Services.Data
             await patientRepo.UpdateAsync(patient);
             return true;
         }
-           
+
         public async Task<MovePatientToDepartmentViewModel?> GetMovePatientModelAsync(Guid id)
         {
             var patient = await patientRepo.GetAllAttcahed()
@@ -232,11 +238,12 @@ namespace HospitalManagmentApp.Services.Data
 
         public async Task<PatientMedicalInfoViewModel?> SeePatientMedicalInfo(Guid patientId)
         {
-            var model=new PatientMedicalInfoViewModel();
+            var model = new PatientMedicalInfoViewModel();
 
             var patient = await patientRepo.GetAllAttcahed()
-        .Include(p => p.Department)              
-        .Include(p => p.PatientTreatments) // Assuming Treatments is a related entity
+        .Include(p => p.Department)
+        .Include(p => p.PatientTreatments)
+        .ThenInclude(t => t.Treatment)
         .FirstOrDefaultAsync(p => p.Id == patientId);
 
             if (patient != null)
@@ -246,8 +253,12 @@ namespace HospitalManagmentApp.Services.Data
                     PatientId = patientId,
                     FirstName = patient.FirstName,
                     LastName = patient.LastName,
-                    DepartmentName = patient.Department?.Name,
-                    Treatments = patient.PatientTreatments.Where(pt => pt.PatientId == patientId).Select(t => t.Treatment.Name).ToList(),
+                    DepartmentName = patient.Department.Name,
+                    Treatments = patient.PatientTreatments
+                        .Where(pt => pt.PatientId == patientId && pt.Treatment != null)
+                        .Select(t => t.Treatment.Name)
+                        .DefaultIfEmpty("No treatments available")
+                        .ToList(),
                 };
             }
 
@@ -270,10 +281,7 @@ namespace HospitalManagmentApp.Services.Data
 
             return doctors;
         }
-
-      
-
-        public async Task<List<System.Web.Mvc.SelectListItem>> GetFreeRoomsAsync(Guid departmentId)
+        public async Task<List<SelectListItem>> GetFreeRoomsAsync(Guid departmentId)
         {
             // Fetch free rooms based on the given department ID
             var freeRooms = await roomRepo.GetAllAttcahed()
@@ -293,7 +301,7 @@ namespace HospitalManagmentApp.Services.Data
             return freeRooms;
         }
 
-        public async Task<List<System.Web.Mvc.SelectListItem>> GetFreeRoomsOnMoveAsync(Guid departmentId)
+        public async Task<List<SelectListItem>> GetFreeRoomsOnMoveAsync(Guid departmentId)
         {
             var freeRooms = await roomRepo.GetAllAttcahed()
                 .Where(r => r.DepartmnetId == departmentId && !r.Patients.Any())
@@ -312,5 +320,78 @@ namespace HospitalManagmentApp.Services.Data
             return freeRooms;
         }
 
+       
+        public async Task<AddTreatmentToPatientViewModel> GetAddTreatmentToPatientViewModel(Guid patientId)
+        {
+            var model = new AddTreatmentToPatientViewModel();
+
+            var patient = await patientRepo.GetAllAttcahed()
+                            .Include(p => p.Department)
+                            .Include(p => p.PatientTreatments)
+                            .ThenInclude(pt => pt.Treatment)
+                            .FirstOrDefaultAsync(p => p.Id == patientId);
+
+            if (patient != null)
+            {
+                var treatments = await treatmentRepo.GetAllAsync();
+
+                var assignedTreatmentIds = patient.PatientTreatments
+               .Select(pt => pt.TreatmentId)
+               .ToHashSet();
+
+                var availableTreatments = treatments
+            .Where(t => !assignedTreatmentIds.Contains(t.Id))
+            .ToList();
+
+                var treatmentOptions = availableTreatments.Select(t => new SelectListItem
+                {
+                    Value = t.Id.ToString(),
+                    Text = t.Name
+                }).ToList();
+
+                model = new AddTreatmentToPatientViewModel
+                {
+                    PatientId = patient.Id,
+                    FirstName = patient.FirstName,
+                    LastName = patient.LastName,
+                    DepartmentName = patient.Department?.Name ?? "No department assigned",
+                    AvailableTreatments = treatmentOptions,
+                };
+            }
+
+            return model;
+        }
+
+        public async Task<bool> AddTreatmentToPatientAsync(AddTreatmentToPatientViewModel model)
+        {
+            var patient = await patientRepo.GetByIdAsync(model.PatientId);
+            if (patient == null)
+            {
+                return false;
+            }
+
+            var patientTreatments = await patientTreatmentRepo.GetAllAttcahed()
+                                         .Where(pt => pt.PatientId == patient.Id)
+                                         .ToListAsync();
+
+            // Use the patientTreatments to create a HashSet of TreatmentIds
+            var existingTreatmentIds = new HashSet<Guid>(patientTreatments.Select(pt => pt.TreatmentId));
+
+
+            foreach (var treatmentId in model.SelectedTreatmentIds)
+            {
+                if (!existingTreatmentIds.Contains(treatmentId)) // Check if not already assigned
+                {
+                    var treatmentAssignment = new PatientTreatment
+                    {
+                        PatientId = model.PatientId,
+                        TreatmentId = treatmentId
+                    };
+
+                    await patientTreatmentRepo.AddAsync(treatmentAssignment);
+                }
+            }
+            return true;
+        }
     }
 }
