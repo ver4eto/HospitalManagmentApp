@@ -1,0 +1,41 @@
+﻿@using HospitalManagmentApp.Views.Manager
+@model ManagerDepartmentReportsViewModel
+
+<h1 class="text-center">Department Reports</h1>
+
+<div class="container mt-5">
+    <h2>Total Statistics</h2>
+    <ul class="list-group mb-4">
+        <li class="list-group-item">Total Doctors: @Model.TotalDoctors</li>
+        <li class="list-group-item">Total Nurses: @Model.TotalNurses</li>
+        <li class="list-group-item">Total Patients: @Model.TotalPatients</li>
+        <li class="list-group-item">Total Rooms: @Model.TotalRooms</li>
+        <li class="list-group-item">Total Expenses: @Model.TotalExpenses.ToString("f2")</li>
+    </ul>
+
+    <h2>Department Details</h2>
+    <div class="accordion" id="departmentAccordion">
+        @foreach (var department in Model.Departments)
+
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-@department.DepartmentId">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@department.DepartmentId" aria-expanded="false" aria-controls="collapse-@department.DepartmentId">
+                        @department.DepartmentName
+                    </button>
+                </h2>
+                <div id="collapse-@department.DepartmentId" class="accordion-collapse collapse" aria-labelledby="heading-@department.DepartmentId" data-bs-parent="#departmentAccordion">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">Doctors: @department.DoctorCount</li>
+                            <li class="list-group-item">Nurses: @department.NurseCount</li>
+                            <li class="list-group-item">Patients: @department.PatientCount</li>
+                            <li class="list-group-item">Rooms: @department.RoomCount</li>
+                            <li class="list-group-item">Expenses: @department.TotalExpenses.ToString("f2")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

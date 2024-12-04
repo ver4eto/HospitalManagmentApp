@@ -8,8 +8,18 @@
 
         <!-- Doctor Dropdown -->
         @if (User.IsInRole("Manager"))
-
         {
+                <div class="dropdown mt-4">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="managerDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Manager Actions
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="managerDropdown">
+                        <li><a class="dropdown-item" asp-controller="Manager" asp-action="Index">Dashboard</a></li>
+                        <li><a class="dropdown-item" asp-controller="Manager" asp-action="Departments">Departments Overview</a></li>
+                        <li><a class="dropdown-item" asp-controller="Manager" asp-action="Reports">Generate Reports</a></li>
+                    </ul>
+                </div>
+            
             <div class="col-md-2">
 
                 <div class="dropdown">
