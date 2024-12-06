@@ -41,11 +41,16 @@ AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+    app.UseExceptionHandler("/Error/500"); // Handles unhandled exceptions
+    app.UseStatusCodePagesWithReExecute("/Error/{0}"); // Handles 404 and other status codes
+    app.UseHsts();
+    //app.UseMigrationsEndPoint();
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");    
+    //app.UseExceptionHandler("/Error/500");
+    //app.UseStatusCodePagesWithReExecute("/Error/{0}");
+   app.UseExceptionHandler("/Home/Error");    
     app.UseHsts();
 }
 
@@ -55,9 +60,12 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.Use((context, next) =>
 {
-    if(context.User.Identity?.IsAuthenticated == true && context.Request.Path == "/")
+    if (context.User.Identity?.IsAuthenticated == true && context.Request.Path == "/")
     {
         if (context.User.IsInRole("Admin"))
         {
@@ -67,8 +75,6 @@ app.Use((context, next) =>
     }
     return next();
 });
-app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

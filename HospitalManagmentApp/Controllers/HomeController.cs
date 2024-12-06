@@ -31,17 +31,7 @@ namespace HospitalManagmentApp.Controllers
             return View();
         }
 
-        //public IActionResult RedirectToLogin()
-        //{
-        //    var returnUrl = Url.Content("~/");
-        //    return RedirectToPage("/Account/Login", new { returnUrl });
-        //}
-
-        //public IActionResult RedirectToRegister()
-        //{
-        //    var returnUrl = Url.Content("~/");
-        //    return RedirectToPage("/Account/Register", new { returnUrl });
-        //}
+     
         public IActionResult Privacy()
         {
             return View();
@@ -55,6 +45,11 @@ namespace HospitalManagmentApp.Controllers
                 if (statusCode == 404)
                 {
                     return View("NotFound"); // Return a custom 404 page
+                }
+
+                if(statusCode == 500)
+                {
+                    return View("Error500");
                 }
             }
 
