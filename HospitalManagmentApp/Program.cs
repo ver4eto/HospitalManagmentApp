@@ -55,7 +55,23 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+app.Use((context, next) =>
+{
+    if(context.User.Identity?.IsAuthenticated == true && context.Request.Path == "/")
+    {
+        if (context.User.IsInRole("Admin"))
+        {
+            context.Response.Redirect("Admin/Home/Index");
+            return Task.CompletedTask;
+        }
+    }
+    return next();
+});
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
@@ -102,7 +118,6 @@ using (var scope = app.Services.CreateScope())
                 UserName = email,
                 UserType=roleName,
                
-               
             };
 
             var result = await userManager.CreateAsync(user, password);
@@ -128,17 +143,7 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    //// Ensure roles exist
-    //string[] roles = { "Admin", "Doctor", "Nurse", "Manager", "Patient" };
-    //foreach (var role in roles)
-    //{
-    //    if (!await roleManager.RoleExistsAsync(role))
-    //    {
-    //        await roleManager.CreateAsync(new IdentityRole(role));
-    //    }
-    //}
-
-    // Assign roles to existing users
+   
     var usersToAssign = new List<(string Email, string Role)>
     {
         ("smith@abv.bg", "Doctor"),
