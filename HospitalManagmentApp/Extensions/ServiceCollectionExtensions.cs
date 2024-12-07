@@ -15,45 +15,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services;
         }
-        public static IServiceCollection AddRepositories(this IServiceCollection services/*, Assembly modelsAssembly*/)
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            //// TODO: Re-write the implementation in such way that the user must create a single class for every repository
-            //Type[] typesToExclude = new Type[] { typeof(ApplicationUser) };
-            //Type[] modelTypes = modelsAssembly
-            //    .GetTypes()
-            //    .Where(t => !t.IsAbstract && !t.IsInterface &&
-            //                !t.Name.ToLower().EndsWith("attribute"))
-            //    .ToArray();
-
-            //foreach (Type type in modelTypes)
-            //{
-            //    if (!typesToExclude.Contains(type))
-            //    {
-            //        Type repositoryInterface = typeof(IRepository<,>);
-            //        Type repositoryInstanceType = typeof(BaseRepository<,>);
-            //        PropertyInfo? idPropInfo = type
-            //            .GetProperties()
-            //            .Where(p => p.Name.ToLower() == "id")
-            //            .SingleOrDefault();
-
-            //        Type[] constructArgs = new Type[2];
-            //        constructArgs[0] = type;
-
-            //        if (idPropInfo == null)
-            //        {
-            //            constructArgs[1] = typeof(object);
-            //        }
-            //        else
-            //        {
-            //            constructArgs[1] = idPropInfo.PropertyType;
-            //        }
-
-            //        repositoryInterface = repositoryInterface.MakeGenericType(constructArgs);
-            //        repositoryInstanceType = repositoryInstanceType.MakeGenericType(constructArgs);
-
-            //        services.AddScoped(repositoryInterface, repositoryInstanceType);
-            //    }
-            //}
+           
             services.AddScoped(typeof(IRepository<Doctor, Guid>), typeof(BaseRepository<Doctor, Guid>));
             services.AddScoped(typeof(IRepository<Manager, Guid>), typeof(BaseRepository<Manager, Guid>));
             services.AddScoped(typeof(IRepository<Nurse, Guid>), typeof(BaseRepository<Nurse, Guid>));
@@ -97,21 +61,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     .AddEntityFrameworkStores<HMDbContext>()
                     .AddDefaultTokenProviders();
 
-            //     services.AddIdentity<ApplicationUser, IdentityRole>()
-            //.AddEntityFrameworkStores<HMDbContext>()
-            //.AddDefaultTokenProviders();
-
-            //     services
-            //             .AddDefaultIdentity<ApplicationUser>(options =>
-            //             {
-            //                 options.SignIn.RequireConfirmedAccount = false;
-            //                 options.Password.RequireNonAlphanumeric = false;
-            //                 options.Password.RequireDigit = false;
-            //                 options.Password.RequireUppercase = false;
-            //                 options.Password.RequiredLength = 6;
-            //             })
-            //             .AddEntityFrameworkStores<HMDbContext>();
-
+           
             return services;
         }
     }
