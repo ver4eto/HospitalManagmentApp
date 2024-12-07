@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Manager, Admin, Nurse, Doctor")]
     public class DepartmentController : Controller
     {
         

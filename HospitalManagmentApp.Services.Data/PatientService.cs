@@ -431,16 +431,28 @@ namespace HospitalManagmentApp.Services.Data
         
         public async Task<bool> ChangeTreatmentsAsync(ChangeTreatmentsViewModel model)
         {
-            // Fetch the patient for validation
-            var patient = await patientRepo.GetByIdAsync(model.PatientId);
+            
+            var patient = await patientRepo.GetAllAttcahed()
+                .Where(p => p.Id == model.PatientId)
+               .Include(p => p.PatientTreatments)
+               .ThenInclude(pt => pt.Treatment)
+               .FirstOrDefaultAsync();
+          
             if (patient == null)
             {
                 return false;
             }
-
+            
            
             if (model.NewTreatmentIds != null && model.NewTreatmentIds.Any())
             {
+                foreach (var treatment in model.NewTreatmentIds)
+                {
+                    if(await this.treatmentRepo.GetByIdAsync(treatment) == null)
+                    {
+                        return false;
+                    }
+                }
                 foreach (var treatmentId in model.NewTreatmentIds)
                 {
                     var isAlreadyAssigned = await patientTreatmentRepo.AnyAsync(pt =>
@@ -458,14 +470,17 @@ namespace HospitalManagmentApp.Services.Data
                     }
                 }
             }
-            else
-            {
-                return false;
-            }
-
+           
             
             if (model.RemovedTreatmentIds != null && model.RemovedTreatmentIds.Any())
             {
+                foreach (var treatment in model.RemovedTreatmentIds)
+                {
+                    if (await this.treatmentRepo.GetByIdAsync(treatment) == null)
+                    {
+                        return false;
+                    }
+                }
                 foreach (var treatmentId in model.RemovedTreatmentIds)
                 {
                     var patientTreatment = await patientTreatmentRepo.FirstOrDefaultAsync(pt =>
@@ -477,12 +492,7 @@ namespace HospitalManagmentApp.Services.Data
                     }
                 }
             }
-            else
-            {
-                return false;
-            }
-
-
+            
             return true;
         }
 

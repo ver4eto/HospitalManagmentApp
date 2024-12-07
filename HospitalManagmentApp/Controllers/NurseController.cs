@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Controllers
 {
-    [Authorize(Roles ="Manager")]
+    [Authorize(Roles = "Manager,Admin")]
     public class NurseController : Controller
     {
      

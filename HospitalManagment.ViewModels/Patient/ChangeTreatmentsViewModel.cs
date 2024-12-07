@@ -7,9 +7,9 @@ namespace HospitalManagment.ViewModels.Patient
     public class ChangeTreatmentsViewModel
     {
         public Guid PatientId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string DepartmentName { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string DepartmentName { get; set; } = null!;
 
         public List<SelectListItem> AssignedTreatments { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> AvailableTreatments { get; set; } = new List<SelectListItem>();

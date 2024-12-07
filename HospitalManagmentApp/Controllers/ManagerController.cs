@@ -2,10 +2,12 @@
 using HospitalManagmentApp.Services.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using HospitalManagmentApp.Views.Manager;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Controllers
 {
+    [Authorize(Roles ="Manager, Admin")]
     public class ManagerController : Controller
     {
         private readonly IManagerService managerService;

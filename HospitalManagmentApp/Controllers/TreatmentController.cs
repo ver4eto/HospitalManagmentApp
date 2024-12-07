@@ -7,7 +7,7 @@ using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 
 namespace HospitalManagmentApp.Controllers
 {
-    [Authorize(Roles ="Doctor,Nurse")]
+    [Authorize(Roles ="Doctor,Nurse, Admin")]
     public class TreatmentController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ITreatmentService treatmentService;

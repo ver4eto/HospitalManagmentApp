@@ -7,8 +7,7 @@
     <div class="row justify-content-center gap-3">
 
         <!-- Manager Actions -->
-        @if (User.IsInRole("Manager"))
-
+        @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
         {
             <div class="col-lg-3 col-md-4">
                 <div class="box shadow">

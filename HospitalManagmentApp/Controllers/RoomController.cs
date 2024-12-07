@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagmentApp.Controllers
 {
-    [Authorize(Roles ="Manager, Nurse, Doctor")]
+    [Authorize(Roles ="Manager, Nurse, Doctor, Admin")]
     public class RoomController : Controller
     {
         private IRoomService roomService;

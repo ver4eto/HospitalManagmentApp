@@ -13,7 +13,7 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace HospitalManagmentApp.Controllers
 {
-    [Authorize(Roles ="Doctor, Nurse, Manager")]
+    [Authorize(Roles ="Doctor, Nurse, Manager,Admin")]
     public class PatientController : Controller
     {
         private readonly UserManager <ApplicationUser> userManager;
@@ -222,7 +222,7 @@ namespace HospitalManagmentApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model); // Re-display the form if the model is invalid
+                return View(model); 
             }
 
             var result= await patientService.ChangeTreatmentsAsync(model);
