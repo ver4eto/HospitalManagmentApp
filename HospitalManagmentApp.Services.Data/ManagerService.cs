@@ -15,14 +15,16 @@ namespace HospitalManagmentApp.Services.Data
         private readonly IRepository<Doctor, Guid> doctorsRepo;
         private readonly IRepository<Department, Guid> departmentsRepo;
         private readonly IRepository<Room, Guid> roomRepo;
+        private readonly IRepository<Manager, Guid> managerRepo;
 
-        public ManagerService(IRepository<Patient, Guid> patients, IRepository<Nurse, Guid> nurses, IRepository<Doctor, Guid> doctors, IRepository<Department, Guid> departmentsRepo, IRepository<Room, Guid> roomRepo)
+        public ManagerService(IRepository<Patient, Guid> patients, IRepository<Nurse, Guid> nurses, IRepository<Doctor, Guid> doctors, IRepository<Department, Guid> departmentsRepo, IRepository<Room, Guid> roomRepo, IRepository<Manager, Guid> managerRepo)
         {
             this.patientsRepo = patients;
             this.nursesRepo = nurses;
             this.doctorsRepo = doctors;
             this.departmentsRepo = departmentsRepo;
             this.roomRepo = roomRepo;
+            this.managerRepo = managerRepo;
         }
 
 
@@ -187,6 +189,7 @@ namespace HospitalManagmentApp.Services.Data
             return model;
         }
 
+        
         private async Task<List<Doctor>> GetAllDoctors()
         {
             return await doctorsRepo.GetAllAttcahed()
@@ -216,6 +219,15 @@ namespace HospitalManagmentApp.Services.Data
             return await patientsRepo.GetAllAttcahed()
                 .Where(p => p.IsDeleted == false)
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Manager>> GetAllManagersASync()
+        {
+            var managers = await managerRepo.GetAllAttcahed()
+                .Where(m=>m.IsDeleted==false)
+                .ToListAsync();
+
+            return managers;
         }
     }
 }

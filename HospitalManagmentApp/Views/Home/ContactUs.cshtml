@@ -1,0 +1,65 @@
+﻿@using HospitalManagment.ViewModels.Home
+@model IEnumerable<MangersViewModel>
+@{
+    ViewData["Title"] = "Contact Us";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Us</title>
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key=@(ViewBag.GoogleMapsApiKey)&callback=initMap"></script>
+
+
+    <style>
+        #map {
+            height: 400px;
+            width: 100%; 
+        }
+        .contact-info {
+            margin-top: 20px;
+        }
+        .contact-info h2 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact Us</h1>
+    <div id="map"></div>
+   
+    <div class="contact-info">
+        <h2> Hospital " Sofia Hospital" </h2>
+        <p><strong>Name:</strong> City Hospital</p>
+        <p><strong>Address:</strong> 23  Mur Street, Sofia</p>
+        <p><strong>Phone:</strong> (887) 123-4567</p>
+        <h3>Managers</h3>
+        <ul>
+            @foreach (var manager in Model)
+            {
+                <li>
+                    <strong>@manager.Name</strong>  Phone: @manager.Phone
+                </li>
+            }
+        </ul>
+    </div>
+
+    <script>
+        function initMap() {
+                       
+            const hospitalLocation = { lat: 42.6643214808331, lng: 23.28142179295175 }; // Example coordinates (San Francisco)
+                       
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: hospitalLocation,
+            });
+                       
+            const marker = new google.maps.Marker({
+                position: hospitalLocation,
+                map: map,
+                title: "City Hospital",
+            });
+        }
+    </script>
+</body>
+</html>

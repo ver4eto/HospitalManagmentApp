@@ -1,7 +1,4 @@
-﻿using HospitalManagmentApp.DataModels;
-using Microsoft.AspNetCore.Mvc;
-
-namespace HospitalManagmentApp.Services.Data.Interfaces
+﻿namespace HospitalManagmentApp.Services.Data.Interfaces
 {
     public interface IUserEntityService
     {

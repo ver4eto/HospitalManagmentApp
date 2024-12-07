@@ -1,37 +1,64 @@
+using HospitalManagment.ViewModels.Home;
+using HospitalManagmentApp.Data;
 using HospitalManagmentApp.Models;
+using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace HospitalManagmentApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly IConfiguration configuration;
+        private readonly IManagerService managerService;
+        private readonly HMDbContext context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IManagerService managerService, HMDbContext context)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.configuration = configuration;
+            this.managerService = managerService;
+            this.context = context;
         }
 
         public IActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)
             {
-                // Redirect to Login page if the user is not authenticated
+                
                 return RedirectToAction("Welcome");
             }
 
-            // If the user is authenticated, show the homepage
+            
             return View();
            
         }
         public IActionResult Welcome()
         {
-            // A special page for unauthenticated users to choose between Login and Register
+           
             return View();
         }
 
-     
+        public  ActionResult ContactUs()
+        {
+            var googleMapsApiKey = configuration["GoogleApiKeys:MapsApiKey"];
+            ViewBag.GoogleMapsApiKey = googleMapsApiKey;
+
+            var managers= this.managerService.GetAllManagersASync() 
+                .Result.Select(m=>new MangersViewModel
+                {
+                    Name=m.FullName,
+                    Phone=m.PhoneNumber,
+                }).ToList();
+
+            
+            return View(managers);
+        }
+
+
+
         public IActionResult Privacy()
         {
             return View();
