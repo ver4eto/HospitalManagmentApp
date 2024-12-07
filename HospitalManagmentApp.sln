@@ -13,17 +13,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagmentApp.DataMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagment.ViewModels", "HospitalManagment.ViewModels\HospitalManagment.ViewModels.csproj", "{6C3CDA4F-820C-4FFB-AB98-0F1A59179D51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagment.Infrastructure", "HospitalManagment.Infrastructure\HospitalManagment.Infrastructure.csproj", "{55B63D05-B3E1-4161-B39B-8442D5D6DB66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagment.Infrastructure", "HospitalManagment.Infrastructure\HospitalManagment.Infrastructure.csproj", "{55B63D05-B3E1-4161-B39B-8442D5D6DB66}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{B484EBB5-2DEA-42CE-94EF-9C225DAC6A48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagmentApp.Services.Data", "HospitalManagmentApp.Services.Data\HospitalManagmentApp.Services.Data.csproj", "{76D2DC82-A4B7-475C-8080-FB84828C2D68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagmentApp.Services.Data", "HospitalManagmentApp.Services.Data\HospitalManagmentApp.Services.Data.csproj", "{76D2DC82-A4B7-475C-8080-FB84828C2D68}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{621BCC71-5A0E-4950-AAB2-6742AB11891F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{6AC92D29-95CB-4615-A95F-E1B636C488EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagmentApp.Services.Mapping", "HospitalManagmentApp.Services.AutoMapper\HospitalManagmentApp.Services.Mapping.csproj", "{C3A81208-7E7E-48DF-9B50-297EA511F838}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalManagmentApp.Services.Mapping", "HospitalManagmentApp.Services.AutoMapper\HospitalManagmentApp.Services.Mapping.csproj", "{C3A81208-7E7E-48DF-9B50-297EA511F838}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagementApp.Test", "HospitalManagementApp.Test\HospitalManagementApp.Test.csproj", "{174E3F92-C9E3-4E72-A171-33540616017F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{C3A81208-7E7E-48DF-9B50-297EA511F838}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3A81208-7E7E-48DF-9B50-297EA511F838}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3A81208-7E7E-48DF-9B50-297EA511F838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{174E3F92-C9E3-4E72-A171-33540616017F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{174E3F92-C9E3-4E72-A171-33540616017F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{174E3F92-C9E3-4E72-A171-33540616017F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{174E3F92-C9E3-4E72-A171-33540616017F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

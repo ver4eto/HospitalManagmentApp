@@ -18,7 +18,7 @@ namespace HospitalManagmentApp.Services.Data
         }
         public async Task<bool> AddRoomAsync(AddRoomViewModel model)
         {
-            if (await IsRoomNumberUniqueInDepartmentAsync(model.DepartmnetId, model.RoomNumber))
+            if (await IsRoomNumberUniqueInDepartmentAsync(model.DepartmnetId, model.RoomNumber) == false)
             {
                 return false; // Room number already exists in the department
             }
@@ -53,7 +53,7 @@ namespace HospitalManagmentApp.Services.Data
 
         public async Task<AddRoomViewModel> GetAddRoomViewModelAsync(Guid departmentId)
         {
-            var department = await roomRepository.GetByIdAsync(departmentId);
+            var department = await departmentRepository.GetByIdAsync(departmentId);
 
             if (department == null)
             {
@@ -63,7 +63,7 @@ namespace HospitalManagmentApp.Services.Data
             return new AddRoomViewModel
             {
                 DepartmnetId = departmentId,
-                DepartmentName = department.Department.Name,
+                DepartmentName = department.Name,
             };
         }
 
