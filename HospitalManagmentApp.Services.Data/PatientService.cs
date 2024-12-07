@@ -172,6 +172,8 @@ namespace HospitalManagmentApp.Services.Data
 
             if (patient == null) { return false; }
 
+            patient.IsDeleted = true;
+
             await patientRepo.UpdateAsync(patient);
             return true;
         }
