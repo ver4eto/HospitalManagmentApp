@@ -20,3 +20,24 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Navigation Bar */
+.navbar-custom {
+    background-color: #00BFFF;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .navbar-custom .navbar-brand {
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .navbar-custom .nav-link {
+        color: white;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+        .navbar-custom .nav-link:hover {
+            color: #FFFAF0; /* Slightly lighter color on hover */
+        }
