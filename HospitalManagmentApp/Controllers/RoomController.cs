@@ -35,6 +35,7 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddRoomViewModel model)
         {
             if (!ModelState.IsValid)
@@ -65,6 +66,7 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditRoomViewModel model, Guid id)
         {
             if (!ModelState.IsValid)
@@ -79,7 +81,7 @@ namespace HospitalManagmentApp.Controllers
             {
                 ModelState.AddModelError(string.Empty, "No such room exists in the current department.");
                 return View(model);
-                //return BadRequest();
+              
             }                       
 
             
@@ -102,6 +104,7 @@ namespace HospitalManagmentApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(DeleteRoomViewModel model, Guid id)
         {
             var success = await roomService.DeleteRoomAsync(id);

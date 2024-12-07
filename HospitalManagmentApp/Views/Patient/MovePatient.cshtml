@@ -5,16 +5,16 @@
     <h2 class="text-center">Move Patient</h2>
 
     <form asp-action="MovePatient" method="post" class="mt-4">
-        <!-- Patient ID (hidden) -->
+        @Html.AntiForgeryToken()
         <input type="hidden" asp-for="PatientId" />
 
-        <!-- Patient Name (Readonly) -->
+     
         <div class="form-group">
             <label asp-for="Name" class="control-label" style="font-weight: bold;">Patient Name</label>
             <input asp-for="Name" class="form-control" readonly />
         </div>
 
-        <!-- Patient Age (Readonly) -->
+       
         <div class="form-group">
             <label asp-for="EGN" class="control-label" style="font-weight: bold;">Patient EGN</label>
             <input asp-for="EGN" class="form-control" readonly />
@@ -30,7 +30,7 @@
         </div>
 
 
-        <!-- Department Dropdown -->
+      
         <div class="form-group">
             <label asp-for="NewDepartmentId" class="control-label" style="font-weight: bold;">Select Department</label>
             <select asp-for="NewDepartmentId" class="form-control" id="departmentDropdown" asp-items="@(new SelectList(Model.Departments, "Id", "Name"))">
@@ -39,7 +39,7 @@
             <span asp-validation-for="NewDepartmentId" class="text-danger"></span>
         </div>
 
-        <!-- Room Dropdown -->
+       
         <div class="form-group">
             <label asp-for="NewRoomId" class="control-label" style="font-weight: bold;">Select Room</label>
             <select asp-for="NewRoomId" class="form-control" id="roomDropdown">
@@ -48,7 +48,7 @@
             <span asp-validation-for="NewRoomId" class="text-danger"></span>
         </div>
 
-        <!-- Submit Button -->
+  
         <button type="submit" class="btn btn-primary mt-3">Move Patient</button>
         <a asp-action="Index" class="btn btn-secondary mt-3 ml-2">Cancel</a>
     </form>
@@ -61,11 +61,11 @@
                 var departmentId = $(this).val();
                 var roomDropdown = $('#roomDropdown');
 
-                // Clear existing room options
+              
                 roomDropdown.empty().append('<option value="">-- Select a Room --</option>');
 
                 if (departmentId) {
-                    // Fetch available rooms for the selected department via AJAX
+                  
                     $.get('/Patient/GetFreeRoomsOnMove', { departmentId: departmentId }, function (data) {
                         data.forEach(function (room) {
                             roomDropdown.append($('<option>', { value: room.value, text: room.text }));

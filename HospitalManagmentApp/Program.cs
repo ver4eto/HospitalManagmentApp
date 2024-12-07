@@ -5,21 +5,26 @@ using HospitalManagmentApp.Services.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using HospitalManagmentApp.Services.Mapping;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
+
 builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/Account/Login"; // Default Login Page
-    options.AccessDeniedPath = "/Account/AccessDenied"; // Default Access Denied Page
-    options.LogoutPath = "/Account/Logout"; // Default Logout Page
+    options.LoginPath = "/Account/Login"; 
+    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.LogoutPath = "/Account/Logout"; 
 });
 
 //TODO extension method

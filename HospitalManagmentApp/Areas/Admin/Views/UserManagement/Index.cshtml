@@ -25,6 +25,7 @@
                     </td>
                     <td>
                         <form method="post" asp-action="AssignRoleToUser" asp-controller="UserManagement" asp-area="Admin" class="d-inline">
+                            @Html.AntiForgeryToken()
                             <input type="hidden" name="userId" value="@user.Id" />
                             <select name="role" class="form-select d-inline w-auto">
                                 <option value="Admin">Admin</option>

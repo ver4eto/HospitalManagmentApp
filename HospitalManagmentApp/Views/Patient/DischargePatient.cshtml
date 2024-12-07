@@ -5,31 +5,28 @@
     <h2 class="text-center">Discharge Patient</h2>
 
     <form asp-action="DischargePatient" method="post" class="mt-4">
-        <!-- Patient ID (hidden) -->
+        @Html.AntiForgeryToken()
         <input type="hidden" asp-for="Id" />
 
-        <!-- Patient Name (Readonly) -->
+      
         <div class="form-group">
             <label asp-for="Name" class="control-label" style="font-weight: bold;">Patient Name</label>
             <input asp-for="Name" class="form-control" readonly />
         </div>
 
-        <!-- Patient ID (Readonly) -->
+      
         <div class="form-group">
             <label asp-for="Id" class="control-label" style="font-weight: bold;">Patient ID</label>
             <input asp-for="Id" class="form-control" readonly />
         </div>
 
-        <!-- Submit Button -->
+       
         <form asp-action="DischargePatient" method="post">
             <input type="hidden" asp-for="Id" />
 
             <button type="submit" class="btn btn-danger">Discharge patient?</button>
             <a asp-controller="Patient" asp-action="Manage" class="btn btn-secondary ml-2">Cancel</a>
         </form>
-       @*  <div class="form-group text-center mt-4">
-            <button type="submit" class="btn btn-danger">Discharge Patient</button>
-            <a asp-action="Index" class="btn btn-secondary ml-2">Cancel</a>
-        </div> *@
+    
     </form>
 </div>

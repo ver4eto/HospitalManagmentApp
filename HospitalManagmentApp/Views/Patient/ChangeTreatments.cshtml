@@ -5,6 +5,7 @@
 <p>Department: @Model.DepartmentName</p>
 
 <form asp-action="ChangeTreatments" method="post">
+    @Html.AntiForgeryToken()
     <input type="hidden" asp-for="PatientId" />
     <input type="hidden" asp-for="FirstName" />
     <input type="hidden" asp-for="LastName" />

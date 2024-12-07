@@ -36,6 +36,7 @@ namespace HospitalManagmentApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignRoleToUser(string userId, string role)
         {
            
@@ -48,6 +49,7 @@ namespace HospitalManagmentApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveRole(string userId, string role)
         {
             var user = await userManager.FindByIdAsync(userId);
@@ -60,6 +62,7 @@ namespace HospitalManagmentApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteUser(string userId)
         {
             var user = await userManager.FindByIdAsync(userId);

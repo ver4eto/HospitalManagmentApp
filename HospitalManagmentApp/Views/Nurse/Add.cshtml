@@ -9,6 +9,7 @@
     <h2 class="text-center">Add New Nurse</h2>
 
     <form asp-action="Add" method="post" class="mt-4">
+        @Html.AntiForgeryToken()
         <div class="form-group">
             <label asp-for="FirstName" class="control-label" p style="font-weight: bold;">First Name</label>
             <input asp-for="FirstName" class="form-control" aria-required="true" />

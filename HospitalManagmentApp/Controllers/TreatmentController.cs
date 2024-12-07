@@ -30,6 +30,7 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddTreatmentViewModel model)
         {
             if (!ModelState.IsValid)
@@ -51,6 +52,7 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditTreatmentViewModel model, Guid id)
         {
             if (!ModelState.IsValid)
@@ -84,6 +86,7 @@ namespace HospitalManagmentApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(DeleteTreatmentViewModel model, Guid id)
         {
             var treatment = await treatmentService.DeleteTreatmentAsync(id);

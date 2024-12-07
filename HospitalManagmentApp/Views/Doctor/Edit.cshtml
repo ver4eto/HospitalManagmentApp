@@ -8,6 +8,7 @@
     <h2 class="text-center">Edit Doctor Details</h2>
 
     <form asp-action="Edit" method="post" class="mt-4">
+        @Html.AntiForgeryToken()
         <input type="hidden" asp-for="Id" />
 
         <div class="form-group">
@@ -49,6 +50,7 @@
         </div>
 
         <input type="hidden" asp-for="@Model.Id" />
+        @Html.AntiForgeryToken()
         <div class="mb-2">
             <input class="btn btn-warning btn-dark-text w-100 py-2 fw-bold rounded" type="submit" value="Save Changes" />
         </div>

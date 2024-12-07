@@ -1,16 +1,11 @@
 ﻿using HospitalManagment.ViewModels.Patient;
 using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Mvc;
 using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
 
 
-//using System.Web.Mvc;
-
-//using System.Web.Mvc;
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
@@ -56,7 +51,7 @@ namespace HospitalManagmentApp.Controllers
 
 
         [HttpPost]
-        
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddPatientViewModel model)
         {
             if (!ModelState.IsValid)
@@ -103,6 +98,7 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> MovePatient(MovePatientToDepartmentViewModel model)
         {
             if (!ModelState.IsValid)
@@ -137,6 +133,7 @@ namespace HospitalManagmentApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DischargePatient(DischargePatientViewModel model, Guid id)
         {
             var patientIsDischarged = await patientService.DischargePatientAsync(model,id);
@@ -178,6 +175,7 @@ namespace HospitalManagmentApp.Controllers
 
         [HttpPost]
         [Route("Patient/AddTreatmentToPatientAsync")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddTreatmentToPatientAsync(AddTreatmentToPatientViewModel model)
         {
             
@@ -219,6 +217,7 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeTreatments(ChangeTreatmentsViewModel model)
         {
             if (!ModelState.IsValid)
@@ -236,7 +235,7 @@ namespace HospitalManagmentApp.Controllers
 
             else
             {
-                // Set error message in TempData
+               
                 TempData["ErrorMessage"] = "Failed to update treatments. Please try again.";
                 return RedirectToAction("ChangeTreatments", new { patientId = model.PatientId });
             }

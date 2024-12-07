@@ -36,11 +36,12 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddNurseViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                //model.Departments = await nurseService.
+                
                 return View(model);
             }
 
@@ -63,6 +64,7 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditNurseViewModel model, Guid id)
         {
             if (!ModelState.IsValid)
@@ -98,6 +100,7 @@ namespace HospitalManagmentApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(DeleteNurseViewModel model, Guid id)
         {
             var nurse = await nurseService.DeleteNurseAsync(id);
@@ -126,6 +129,7 @@ namespace HospitalManagmentApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNurseToDepartment(AddNurseToDepartmentViewModel model, Guid depId)
         {
 

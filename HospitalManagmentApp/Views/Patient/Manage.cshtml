@@ -26,12 +26,7 @@
                         <button type="submit" class="btn btn-danger btn-sm">Discharge</button>
                     </form>
 
-                    @* <form asp-action="MovePatient" method="get" class="d-inline">
-                        <input type="hidden" name="patientId" value="@patient.Id" />
-                        <button type="submit" class="btn btn-danger btn-sm">Move Patient to other department</button>
-                    </form>
- *@
-                    <!-- Move Patient to Another Department Button -->
+                   
                     <a asp-action="MovePatient" asp-route-id="@patient.Id" class="btn btn-primary btn-sm ml-2">
                         Move to Another Department
                     </a>

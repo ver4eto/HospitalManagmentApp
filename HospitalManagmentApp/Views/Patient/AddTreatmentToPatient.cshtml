@@ -9,7 +9,7 @@
     <h2 class="text-center">Assign Treatments to Patient</h2>
     <hr />
 
-    <!-- Patient Information -->
+   
     <div class="card my-4">
         <div class="card-body">
             <h4 class="card-title">Patient Details</h4>
@@ -19,8 +19,9 @@
         </div>
     </div>
 
-    <!-- Assign Treatments Form -->
+  
     <form asp-action="AddTreatmentToPatientAsync" asp-controller="Patient" method="post">
+        @Html.AntiForgeryToken()
         
         <input type="hidden" asp-for="PatientId" />
         <input type="hidden" asp-for="DepartmentName" />
@@ -31,9 +32,6 @@
             <label for="Treatments" style="font-weight: bold;">Available Treatments</label>
             <select asp-for="SelectedTreatmentIds" class="form-control" multiple size="10">
                 @foreach (var treatment in Model.AvailableTreatments)
-
-
-
                 {
                     <option value="@treatment.Value">@treatment.Text</option>
                 }

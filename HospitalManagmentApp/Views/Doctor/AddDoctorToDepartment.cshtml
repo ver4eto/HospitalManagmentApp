@@ -4,6 +4,7 @@
 <h2>Add Doctor to Department: @Model.DepartmentName</h2>
 
 <form asp-action="AddDoctorToDepartment" method="post">
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.DepartmentId)
 
     <div class="form-group">

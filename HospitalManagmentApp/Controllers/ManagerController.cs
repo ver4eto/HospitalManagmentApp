@@ -81,15 +81,15 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public IActionResult EmployeeManage()
         {
-            // Optionally, you can populate a view model here if needed
-            return View("EmployeeManage"); // Ensure the view name matches the file
+            
+            return View("EmployeeManage"); 
         }
 
         [HttpGet]
         public IActionResult FacilitiesManage()
         {
-            // Optionally, you can populate a view model here if needed
-            return View("FacilitiesManage"); // Ensure the view name matches the file
+           
+            return View("FacilitiesManage"); 
         }
 
 
