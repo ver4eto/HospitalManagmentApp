@@ -128,7 +128,7 @@ namespace HospitalManagmentApp.Services.Data
                 TotalDoctors = doctors.Count,
                 TotalPatients = patients.Count,
                 TotalExpenses = doctors.Sum(d => d.Salary).ToString("f2"),
-                AverageSalary = (doctors.Sum(d => d.Salary) / patients.Count).ToString("f2")
+                AverageSalary = (patients.Count > 0 ? doctors.Sum(d => d.Salary) / patients.Count : 0).ToString("f2")
             };
 
             return model;
