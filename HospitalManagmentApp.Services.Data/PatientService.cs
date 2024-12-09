@@ -45,20 +45,20 @@ namespace HospitalManagmentApp.Services.Data
         public async Task<List<PatientIndexViewModel>> GetAllPatientsAsync()
         {
             return await patientRepo.GetAllAttcahed()
-                 .Where(p => !p.IsDeleted)
-                 .Select(p => new PatientIndexViewModel
-                 {
-                     Id = p.Id,
-                     Name = $"{p.FirstName} {p.LastName}",
-                     EGN = p.EGN,
-                     PhoneNumber = p.PhoneNumber,
-                     Address = p.Address,
-                     Department = p.Department.Name,
-                     Room = p.Room.RoomNumber,
-                     HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
-                     EmailAddress = p.EmailAddress
-                 })
-                 .ToListAsync();
+         .Where(p => !p.IsDeleted)
+         .Select(p => new PatientIndexViewModel
+         {
+             Id = p.Id,
+             Name = $"{p.FirstName} {p.LastName}",
+             EGN = p.EGN,
+             PhoneNumber = p.PhoneNumber,
+             Address = p.Address,
+             Department = p.Department != null ? p.Department.Name : "Unknown",
+             Room = p.Room != null ? p.Room.RoomNumber : 0,
+             HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
+             EmailAddress = p.EmailAddress
+         })
+         .ToListAsync();
         }
         public async Task<AddPatientViewModel> PrepareAddPatientViewModelAsync()
         {
@@ -72,14 +72,20 @@ namespace HospitalManagmentApp.Services.Data
             };
 
             var userId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+           
+            if (userId == null)
+            {
+                throw new Exception("UserId is null! HttpContext or User is not properly set.");
+            }
             var isUserADoctor = httpContextAccessor.HttpContext?.User.IsInRole("Doctor") ?? false;
 
             if (isUserADoctor)
             {
-                Guid doctorGuid = new Guid(userId);
-
-                //var doctor = await doctorRepo.GetByIdAsync(doctorGuid);
-                model.SelectedDoctorId = doctorGuid;
+                if (!string.IsNullOrWhiteSpace(userId) && Guid.TryParse(userId, out var doctorGuid))
+                {
+                    model.SelectedDoctorId = doctorGuid;
+                }
             }
             else
             {
@@ -156,12 +162,16 @@ namespace HospitalManagmentApp.Services.Data
         {
             var patient = await patientRepo.GetByIdAsync(id);
             DischargePatientViewModel? dischargePatientViewModel = new DischargePatientViewModel();
-            if (patient != null)
+            if (patient == null)
             {
-                dischargePatientViewModel.Id = id;
-                dischargePatientViewModel.Name = $"{patient.FirstName} {patient.LastName}";
+                return null; // Return null if patient does not exist
             }
-            return dischargePatientViewModel;
+            return new DischargePatientViewModel
+            {
+                Id = id,
+                Name = $"{patient.FirstName} {patient.LastName}"
+            };
+
         }
         public async Task<bool> DischargePatientAsync(DischargePatientViewModel model, Guid id)
         {
@@ -227,8 +237,8 @@ namespace HospitalManagmentApp.Services.Data
                     EGN = p.EGN,
                     PhoneNumber = p.PhoneNumber,
                     Address = p.Address,
-                    Department = p.Department.Name,
-                    Room = p.Room.RoomNumber,
+                    Department = p.Department != null ? p.Department.Name : "N/A", // Handle null Department
+                    Room = p.Room != null ? p.Room.RoomNumber : 0,
                     HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
                     EmailAddress = p.EmailAddress,
 
