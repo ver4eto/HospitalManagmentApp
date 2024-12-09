@@ -105,15 +105,12 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task GetAllNursesAsync_ReturnsEmptyList_WhenNoNursesExist()
         {
-            // Arrange
             var emptyNurses = new List<Nurse>();
             var mockNursesQueryable = emptyNurses.AsQueryable().BuildMock();
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNursesQueryable);
 
-            // Act
             var result = await _nurseService.GetAllNursesAsync();
 
-            // Assert
             Assert.IsNotNull(result, "The result should not be null even when no nurses exist.");
             Assert.IsEmpty(result, "The result should be an empty list when no nurses exist.");
         }
@@ -121,7 +118,6 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task GetAllNursesAsync_ExcludesDeletedNurses()
         {
-            // Arrange
             var nurses = new List<Nurse>
         {
             new Nurse
@@ -145,10 +141,8 @@ namespace HospitalManagmentApp.Tests
             var mockNursesQueryable = nurses.AsQueryable().BuildMock();
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNursesQueryable);
 
-            // Act
             var result = await _nurseService.GetAllNursesAsync();
 
-            // Assert
             Assert.IsNotNull(result, "The result should not be null when nurses exist.");
             Assert.AreEqual(1, result.Count, "The result should contain only non-deleted nurses.");
             Assert.AreEqual("Alice", result.First().FirstName, "The first nurse's first name should match.");
@@ -158,20 +152,17 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task GetAddNurseViewModelAsync_ReturnsViewModel_WithDepartments()
         {
-            // Arrange
             var departments = new List<Department>
         {
             new Department { Id = Guid.NewGuid(), Name = "Cardiology" },
             new Department { Id = Guid.NewGuid(), Name = "Neurology" }
         };
 
-            // Mock department repository to return departments
+            // department repository to return departments
             _departmentRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(departments);
 
-            // Act
             var result = await _nurseService.GetAddNurseViewModelAsync();
 
-            // Assert
             Assert.IsNotNull(result, "The result should not be null.");
             Assert.IsNotNull(result.Departments, "The Departments property should not be null.");
             Assert.AreEqual(2, result.Departments.Count(), "The number of departments should match.");
@@ -181,16 +172,13 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task GetAddNurseViewModelAsync_ReturnsEmptyDepartments_WhenNoDepartmentsExist()
         {
-            // Arrange
             var emptyDepartments = new List<Department>();
 
-            // Mock department repository to return an empty list
+            // department repository to return an empty list
             _departmentRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(emptyDepartments);
 
-            // Act
             var result = await _nurseService.GetAddNurseViewModelAsync();
 
-            // Assert
             Assert.IsNotNull(result, "The result should not be null.");
             Assert.IsNotNull(result.Departments, "The Departments property should not be null.");
             Assert.IsEmpty(result.Departments, "The Departments property should be empty when no departments exist.");
@@ -199,7 +187,6 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task AddNurseAsync_ReturnsTrue_WhenNurseIsSuccessfullyAdded()
         {
-            // Arrange
             var nurseUserId = Guid.NewGuid().ToString();
             var nurseModel = new AddNurseViewModel
             {
@@ -231,10 +218,8 @@ namespace HospitalManagmentApp.Tests
             // Inject all dependencies
             var nurseService = new NurseService(nurseRepoMock.Object, departmentRepoMock.Object, userEntityServiceMock.Object);
 
-            // Act
             var result = await nurseService.AddNurseAsync(nurseModel);
 
-            // Assert
             Assert.IsTrue(result, "AddNurseAsync should return true when the nurse is successfully added.");
             userEntityServiceMock.Verify(s => s.CreateApplicationUserAsync(
                 nurseModel.EmailAddress,
@@ -269,10 +254,8 @@ namespace HospitalManagmentApp.Tests
                     "Nurse"))
                 .ThrowsAsync(new Exception("User creation failed."));
 
-            // Act
             var result = await _nurseService.AddNurseAsync(nurseModel);
 
-            // Assert
             Assert.IsFalse(result, "AddNurseAsync should return false when user creation fails.");
             _userEntityService.Verify(s => s.CreateApplicationUserAsync(
                 nurseModel.EmailAddress,
@@ -286,17 +269,14 @@ namespace HospitalManagmentApp.Tests
         {
             AddNurseViewModel nullModel = null;
 
-            // Act
             var result = await _nurseService.AddNurseAsync(nullModel);
 
-            // Assert
             Assert.IsFalse(result, "AddNurseAsync should return false when the model is null.");
         }
 
         [Test]
         public async Task GetEditNurseViewModelAsync_ReturnsViewModel_WhenNurseExists()
         {
-            // Arrange
             var nurse = _nurseData.First();
             var nurseId = nurse.Id;
 
@@ -306,10 +286,8 @@ namespace HospitalManagmentApp.Tests
             _departmentRepo.Setup(r => r.GetAllAsync())
                 .ReturnsAsync(_departmentData);
 
-            // Act
             var result = await _nurseService.GetEditNurseViewModelAsync(nurseId);
 
-            // Assert
             Assert.IsNotNull(result, "The result should not be null when the nurse exists.");
             Assert.AreEqual(nurse.Id, result.Id, "The nurse ID should match.");
             Assert.AreEqual(nurse.FirstName, result.FirstName, "The first name should match.");
@@ -323,39 +301,32 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task GetEditNurseViewModelAsync_ReturnsNull_WhenNurseDoesNotExist()
         {
-            // Arrange
             var nonexistentNurseId = Guid.NewGuid();
 
             _nurseRepo.Setup(r => r.GetAllAttcahed())
                 .Returns(_nurseData.AsQueryable().BuildMock());
 
-            // Act
             var result = await _nurseService.GetEditNurseViewModelAsync(nonexistentNurseId);
 
-            // Assert
             Assert.IsNull(result, "The result should be null when the nurse does not exist.");
         }
 
         [Test]
         public async Task GetEditNurseViewModelAsync_ReturnsNull_WhenNurseIsDeleted()
         {
-            // Arrange
             var deletedNurse = _nurseData.First(n => n.IsDeleted);
 
             _nurseRepo.Setup(r => r.GetAllAttcahed())
                 .Returns(_nurseData.AsQueryable().BuildMock());
-
-            // Act
+            
             var result = await _nurseService.GetEditNurseViewModelAsync(deletedNurse.Id);
 
-            // Assert
             Assert.IsNull(result, "The result should be null when the nurse is deleted.");
         }
 
         [Test]
         public async Task UpdateNurseAsync_ReturnsTrue_WhenNurseIsSuccessfullyUpdated()
         {
-            // Arrange
             var nurseId = Guid.NewGuid();
             var nurse = new Nurse
             {
@@ -379,10 +350,8 @@ namespace HospitalManagmentApp.Tests
             _nurseRepo.Setup(r => r.GetByIdAsync(nurseId)).ReturnsAsync(nurse);
             _nurseRepo.Setup(r => r.UpdateAsync(It.IsAny<Nurse>())).Returns(Task.FromResult(true));
 
-            // Act
             var result = await _nurseService.UpdateNurseAsync(nurseId, editModel);
 
-            // Assert
             Assert.IsTrue(result, "UpdateNurseAsync should return true when the nurse is successfully updated.");
             _nurseRepo.Verify(r => r.GetByIdAsync(nurseId), Times.Once);
             _nurseRepo.Verify(r => r.UpdateAsync(It.Is<Nurse>(n =>
@@ -396,7 +365,7 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task UpdateNurseAsync_ReturnsFalse_WhenNurseDoesNotExist()
         {
-            // Arrange
+            
             var nurseId = Guid.NewGuid();
             var editModel = new EditNurseViewModel
             {
@@ -409,10 +378,8 @@ namespace HospitalManagmentApp.Tests
 
             _nurseRepo.Setup(r => r.GetByIdAsync(nurseId)).ReturnsAsync((Nurse)null);
 
-            // Act
             var result = await _nurseService.UpdateNurseAsync(nurseId, editModel);
 
-            // Assert
             Assert.IsFalse(result, "UpdateNurseAsync should return false when the nurse does not exist.");
             _nurseRepo.Verify(r => r.GetByIdAsync(nurseId), Times.Once);
             _nurseRepo.Verify(r => r.UpdateAsync(It.IsAny<Nurse>()), Times.Never);
@@ -421,7 +388,6 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task GetDeleteNurseViewModelAsync_ReturnsViewModel_WhenNurseExists()
         {
-            // Arrange
             var nurseId = Guid.NewGuid();
             var department = new Department
             {
@@ -442,10 +408,8 @@ namespace HospitalManagmentApp.Tests
 
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNurses);
 
-            // Act
             var result = await _nurseService.GetDeleteNurseViewModelAsync(nurseId);
 
-            // Assert
             Assert.IsNotNull(result, "The result should not be null when the nurse exists.");
             Assert.AreEqual(nurseId, result.Id, "The nurse ID should match.");
             Assert.AreEqual("John", result.FirstName, "The nurse's first name should match.");
@@ -456,23 +420,19 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task GetDeleteNurseViewModelAsync_ReturnsNull_WhenNurseDoesNotExist()
         {
-            // Arrange
             var nurseId = Guid.NewGuid();
             var nurses = new Nurse[0].AsQueryable();
             var mockNurses = nurses.BuildMock();
 
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNurses);
 
-            // Act
             var result = await _nurseService.GetDeleteNurseViewModelAsync(nurseId);
 
-            // Assert
             Assert.IsNull(result, "The result should be null when the nurse does not exist.");
         }
         [Test]
         public async Task DeleteNurseAsync_ReturnsTrue_WhenNurseIsSuccessfullyDeleted()
         {
-            // Arrange
             var nurseId = Guid.NewGuid();
             var nurse = new Nurse
             {
@@ -486,10 +446,8 @@ namespace HospitalManagmentApp.Tests
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNurses);
             _nurseRepo.Setup(r => r.UpdateAsync(It.IsAny<Nurse>())).Returns(Task.FromResult(true));
 
-            // Act
             var result = await _nurseService.DeleteNurseAsync(nurseId);
 
-            // Assert
             Assert.IsTrue(result, "DeleteNurseAsync should return true when the nurse is successfully deleted.");
             _nurseRepo.Verify(r => r.UpdateAsync(It.Is<Nurse>(n => n.Id == nurseId && n.IsDeleted)), Times.Once);
         }
@@ -497,17 +455,12 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task DeleteNurseAsync_ReturnsFalse_WhenNurseDoesNotExist()
         {
-            // Arrange
             var nurseId = Guid.NewGuid();
             var nurses = new Nurse[0].AsQueryable();
             var mockNurses = nurses.BuildMock();
 
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNurses);
-
-            // Act
             var result = await _nurseService.DeleteNurseAsync(nurseId);
-
-            // Assert
             Assert.IsFalse(result, "DeleteNurseAsync should return false when the nurse does not exist.");
             _nurseRepo.Verify(r => r.UpdateAsync(It.IsAny<Nurse>()), Times.Never);
         }
@@ -515,7 +468,7 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task GetAddNurseToDepartmentViewModelAsync_ReturnsViewModel_WhenDepartmentExists()
         {
-            // Arrange
+          
             var departmentId = Guid.NewGuid();
             var department = new Department
             {
@@ -534,10 +487,10 @@ namespace HospitalManagmentApp.Tests
             _departmentRepo.Setup(r => r.GetByIdAsync(departmentId)).ReturnsAsync(department);
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNurses);
 
-            // Act
+         
             var result = await _nurseService.GetAddNurseToDepartmentViewModelAsync(departmentId);
 
-            // Assert
+          
             Assert.IsNotNull(result, "The result should not be null when the department exists.");
             Assert.AreEqual(departmentId, result.DepartmentId, "The department ID should match.");
             Assert.AreEqual("Neurology", result.DepartmentName, "The department name should match.");
@@ -547,15 +500,15 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task GetAddNurseToDepartmentViewModelAsync_ReturnsNull_WhenDepartmentDoesNotExist()
         {
-            // Arrange
+          
             var departmentId = Guid.NewGuid();
 
             _departmentRepo.Setup(r => r.GetByIdAsync(departmentId)).ReturnsAsync((Department)null);
 
-            // Act
+           
             var result = await _nurseService.GetAddNurseToDepartmentViewModelAsync(departmentId);
 
-            // Assert
+         
             Assert.IsNull(result, "The result should be null when the department does not exist.");
             _departmentRepo.Verify(r => r.GetByIdAsync(departmentId), Times.Once);
             _nurseRepo.Verify(r => r.GetAllAttcahed(), Times.Never, "Nurse repository should not be called if department does not exist.");
@@ -564,7 +517,7 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task AddNurseToDepartmentAsync_ReturnsTrue_WhenNurseExists()
         {
-            // Arrange
+           
             var departmentId = Guid.NewGuid();
             var nurseId = Guid.NewGuid();
             var nurse = new Nurse
@@ -578,10 +531,10 @@ namespace HospitalManagmentApp.Tests
             _nurseRepo.Setup(r => r.GetByIdAsync(nurseId)).ReturnsAsync(nurse);
             _nurseRepo.Setup(r => r.UpdateAsync(nurse)).Returns(Task.FromResult(true));
 
-            // Act
+          
             var result = await _nurseService.AddNurseToDepartmentAsync(departmentId, nurseId);
 
-            // Assert
+            
             Assert.IsTrue(result, "AddNurseToDepartmentAsync should return true when the nurse exists and is updated.");
             Assert.AreEqual(departmentId, nurse.DepartmentId, "The nurse's department ID should be updated.");
             _nurseRepo.Verify(r => r.GetByIdAsync(nurseId), Times.Once);
@@ -591,14 +544,13 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task AddNurseToDepartmentAsync_ReturnsFalse_WhenNurseDoesNotExist()
         {
-            // Arrange
+            
             var nurseId = Guid.NewGuid();
             _nurseRepo.Setup(r => r.GetByIdAsync(nurseId)).ReturnsAsync((Nurse)null);
 
-            // Act
+            
             var result = await _nurseService.AddNurseToDepartmentAsync(Guid.NewGuid(), nurseId);
 
-            // Assert
             Assert.IsFalse(result, "AddNurseToDepartmentAsync should return false when the nurse does not exist.");
             _nurseRepo.Verify(r => r.GetByIdAsync(nurseId), Times.Once);
             _nurseRepo.Verify(r => r.UpdateAsync(It.IsAny<Nurse>()), Times.Never);
