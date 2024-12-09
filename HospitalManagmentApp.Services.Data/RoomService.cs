@@ -142,6 +142,11 @@ namespace HospitalManagmentApp.Services.Data
             
             var department = await departmentRepository.GetByIdAsync(departmentId);
 
+            if(department == null)
+            {
+                
+                return false;
+            }
             if (department.Rooms.Any(d => d.RoomNumber == roomNumber))
             {
                 return false;
