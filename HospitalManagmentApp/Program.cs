@@ -36,7 +36,7 @@ builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<ITreatmentService, TreatmentService>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
-builder.Services.AddScoped<UserEntityService>();
+builder.Services.AddScoped<IUserEntityService, UserEntityService>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();

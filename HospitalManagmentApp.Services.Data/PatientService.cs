@@ -23,13 +23,13 @@ namespace HospitalManagmentApp.Services.Data
         private readonly IRepository<Doctor, Guid> doctorRepo;
         private readonly IRepository<Department, Guid> departmentRepo;
         private readonly IRepository<Room, Guid> roomRepo;
-        private readonly UserEntityService userEntityService;
+        private readonly IUserEntityService userEntityService;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IRepository<PatientDoctor, object> patientDoctorRepo;
         private readonly IRepository<Treatment, Guid> treatmentRepo;
         private readonly IRepository<PatientTreatment, object> patientTreatmentRepo;
 
-        public PatientService(IRepository<Patient, Guid> patientRepo, IRepository<Department, Guid> departmenttRepo, IRepository<Room, Guid> roomRepo, UserEntityService userEntityService, IHttpContextAccessor httpContextAccessor, IRepository<PatientDoctor, object> patientDoctorRepo, IRepository<Doctor, Guid> doctorRepo, IRepository<Treatment, Guid> treatmentRepo, IRepository<PatientTreatment, object> patientTreatmentRepo)
+        public PatientService(IRepository<Patient, Guid> patientRepo, IRepository<Department, Guid> departmenttRepo, IRepository<Room, Guid> roomRepo, IUserEntityService userEntityService, IHttpContextAccessor httpContextAccessor, IRepository<PatientDoctor, object> patientDoctorRepo, IRepository<Doctor, Guid> doctorRepo, IRepository<Treatment, Guid> treatmentRepo, IRepository<PatientTreatment, object> patientTreatmentRepo)
         {
             this.patientRepo = patientRepo;
             this.departmentRepo = departmenttRepo;
