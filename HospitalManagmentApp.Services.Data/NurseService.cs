@@ -10,9 +10,9 @@ namespace HospitalManagmentApp.Services.Data
     {
         private readonly IRepository<Nurse, Guid> nurseRepository;
         private readonly IRepository<Department, Guid> departmentRepository;
-        private readonly UserEntityService userEntityService;
+        private readonly IUserEntityService userEntityService;
 
-        public NurseService(IRepository<Nurse, Guid> nurseRepository, IRepository<Department, Guid> departmentRepository, UserEntityService userEntityService)
+        public NurseService(IRepository<Nurse, Guid> nurseRepository, IRepository<Department, Guid> departmentRepository, IUserEntityService userEntityService)
         {
             this.nurseRepository = nurseRepository; 
             this.departmentRepository = departmentRepository;
@@ -42,8 +42,13 @@ namespace HospitalManagmentApp.Services.Data
 
         public async Task<bool> AddNurseAsync(AddNurseViewModel model)
         {
-            //try
-            //{
+            try
+            {
+                if (model == null)
+                {
+                    throw new ArgumentNullException(nameof(model), "The model cannot be null.");
+                }
+
                 var nurseUserId = await userEntityService.CreateApplicationUserAsync(model.EmailAddress, model.Password, "Nurse");
 
                 var nurse = new Nurse
@@ -60,13 +65,12 @@ namespace HospitalManagmentApp.Services.Data
                 await nurseRepository.AddAsync(nurse);
 
                 return true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    return false;
-            //}
-            
+            }
+            catch (Exception)
+            {
+                
+                return false;
+            }
         }
 
         public async Task<EditNurseViewModel> GetEditNurseViewModelAsync(Guid id)
