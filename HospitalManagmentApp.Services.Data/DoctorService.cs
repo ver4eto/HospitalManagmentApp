@@ -14,9 +14,9 @@ namespace HospitalManagmentApp.Services.Data
     {
         private IRepository<Doctor, Guid> doctorsRepository;
         private IRepository<Department, Guid> departmentRepository;
-        public readonly UserEntityService userEntityService;
+        public readonly IUserEntityService userEntityService;
 
-        public DoctorService(IRepository<Doctor, Guid> repository,IRepository<Department,Guid> departmentRepo, UserEntityService userEntityService)
+        public DoctorService(IRepository<Doctor, Guid> repository, IRepository<Department, Guid> departmentRepo, IUserEntityService userEntityService)
         {
             this.doctorsRepository = repository;
             this.departmentRepository = departmentRepo;
@@ -35,10 +35,10 @@ namespace HospitalManagmentApp.Services.Data
                 doctor.LastName = model.LastName;
                 doctor.EmailAddress = model.EmailAddress;
                 doctor.Salary = model.Salary;
-                doctor.DepartmentId=model.DepartmentId;
+                doctor.DepartmentId = model.DepartmentId;
                 doctor.UserId = isUserCreated;
                 doctor.Specialty = model.Specialty;
-              
+
                 await this.doctorsRepository.AddAsync(doctor);
             }
             catch (Exception ex)
@@ -46,18 +46,16 @@ namespace HospitalManagmentApp.Services.Data
 
                 throw;
             }
-           
+
 
         }
 
-       
-        public async Task<bool> DeleteDoctorAsync(DeleteDoctorViewModel model,Guid id)
+
+        public async Task<bool> DeleteDoctorAsync(DeleteDoctorViewModel model, Guid id)
         {
             var doctor = await doctorsRepository.GetAllAttcahed()
                 .Where(d => d.Id == id && d.IsDeleted == false)
                 .FirstOrDefaultAsync();
-
-       
 
             if (doctor == null) return false;
 
@@ -69,11 +67,26 @@ namespace HospitalManagmentApp.Services.Data
 
         public async Task<bool> EditDoctorAsync(EditDoctorViewModel model)
         {
-            Doctor doctor=AutoMapperConfig.MapperInstance
-                .Map<EditDoctorViewModel,Doctor>(model);
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model), "Model cannot be null.");
+            }
 
-            bool result = await this.doctorsRepository .UpdateAsync(doctor);
-            return result;
+            var doctor = await doctorsRepository.GetByIdAsync(model.Id);
+
+            if (doctor == null)
+            {
+                return false; // Doctor not found
+            }
+
+            doctor.FirstName = model.FirstName;
+            doctor.LastName = model.LastName;
+            doctor.Specialty = model.Specialty;
+            doctor.EmailAddress = model.EmailAddress;
+            doctor.Salary = model.Salary;
+            doctor.DepartmentId = model.DepartmentId;
+
+            return await doctorsRepository.UpdateAsync(doctor);
         }
 
         public async Task<bool> GetAddDoctorToDepartmentAsync(AddDoctorToDepartmentViewModel model, Guid depId)
@@ -111,13 +124,13 @@ namespace HospitalManagmentApp.Services.Data
                 throw new ArgumentException("Department not found");
             }
 
-           
+
             var doctors = await doctorsRepository.GetAllAttcahed()
                 .Where(d => !d.IsDeleted && d.DepartmentId != department.Id)
                 .ToListAsync();
 
-           
-            model= new AddDoctorToDepartmentViewModel
+
+            model = new AddDoctorToDepartmentViewModel
             {
                 DepartmentId = department.Id,
                 DepartmentName = department.Name,
@@ -131,7 +144,7 @@ namespace HospitalManagmentApp.Services.Data
         public async Task<AddDoctorViewModel> GetAddDoctorViewModel()
         {
             AddDoctorViewModel model = new AddDoctorViewModel();
-            model.Departents =await GetDepartments();
+            model.Departents = await GetDepartments();
             return model;
         }
 
@@ -149,26 +162,26 @@ namespace HospitalManagmentApp.Services.Data
                 return model;
             }
 
-            //model = new()
-            //{
-            //    Id = doctor.Id,
-            //    FirstName = doctor.FirstName,
-            //    LastName = doctor.LastName,
-            //    Specialty = doctor.Specialty,
+            model = new()
+            {
+                Id = doctor.Id,
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                Specialty = doctor.Specialty,
 
-            //};
-            AutoMapperConfig.MapperInstance.Map(model, doctor);
+            };
+
 
             return model;
         }
 
-        
+
 
         public async Task<EditDoctorViewModel?> GetEditDoctorViewModel(Guid id)
         {
-            EditDoctorViewModel? model=null;
+            EditDoctorViewModel? model = null;
 
-            var doctor = await doctorsRepository.GetAllAttcahed()                
+            var doctor = await doctorsRepository.GetAllAttcahed()
                 .Where(d => d.Id == id && d.IsDeleted == false)
                 .Include(d => d.Department)
                 .FirstOrDefaultAsync();
@@ -178,7 +191,7 @@ namespace HospitalManagmentApp.Services.Data
                 return model;
             }
 
-                 model = new()
+            model = new()
             {
                 Id = doctor.Id,
                 FirstName = doctor.FirstName,
@@ -188,7 +201,7 @@ namespace HospitalManagmentApp.Services.Data
                 Salary = doctor.Salary,
                 DepartmentId = doctor.Department.Id,
                 Departments = await GetDepartments(),
-                UserId=doctor.EmailAddress, //Todo: update with userclaims!!!!
+                UserId = doctor.EmailAddress, //Todo: update with userclaims!!!!
             };
 
             return model;
@@ -196,13 +209,34 @@ namespace HospitalManagmentApp.Services.Data
 
         public async Task<IEnumerable<DoctorIndexViewModel>> IndexGetAllDoctorsAsync()
         {
-            var doctors = await this.doctorsRepository
-               .GetAllAttcahed()
-               .Where(d => d.IsDeleted == false)
-               .To<DoctorIndexViewModel>(AutoMapperConfig.MapperInstance.ConfigurationProvider)
-               .ToArrayAsync();
+            try
+            {
+                var doctors = await this.doctorsRepository
+       .GetAllAttcahed()
+       .Where(d => !d.IsDeleted)
+       .Select(d => new DoctorIndexViewModel
+       {
+           Id = d.Id,
+           FirstName = d.FirstName,
+           LastName = d.LastName,
+           DepartmentName = d.Department.Name,
+           Specialty = d.Specialty
+       })
+       .ToArrayAsync();
 
-            return doctors;
+                if (doctors == null || !doctors.Any())
+                {
+                    throw new NullReferenceException("No doctors available!");
+                }
+
+                return doctors;
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
         }
 
         public async Task<MenageDoctorViewModel?> MenageDoctor(Guid id)
@@ -211,7 +245,7 @@ namespace HospitalManagmentApp.Services.Data
 
             var doctor = await this.doctorsRepository.GetAllAttcahed()
             .Where(d => d.IsDeleted == false && d.Id == id)
-            .Include(d=>d.Department)
+            .Include(d => d.Department)
             .FirstOrDefaultAsync();
 
             if (doctor.IsDeleted == false)
@@ -227,7 +261,7 @@ namespace HospitalManagmentApp.Services.Data
                     DepartmentName = doctor.Department.Name,
                     UserId = doctor.UserId,
                 };
-                //AutoMapperConfig.MapperInstance.Map(doctor, model);
+                
             }
             return model;
         }
