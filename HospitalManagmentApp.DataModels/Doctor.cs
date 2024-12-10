@@ -14,13 +14,14 @@ namespace HospitalManagmentApp.DataModels
         public Guid Id { get; set; }
 
         [Required]
-        [Comment("Doctor`s First Name")]
-        [MaxLength(FirstNameMaxLenght)]
+        [Comment("Doctor`s Last Name")]
+        [MaxLength(LastNameMaxLenght)]
+        
         public string LastName { get; set; } = null!;
 
         [Required]
-        [MaxLength(LastNameMaxLenght)]
-        [Comment("Doctor`s Last Name")]
+        [MaxLength(FirstNameMaxLenght)]
+        [Comment("Doctor`s First Name")]
         public string FirstName { get; set; } = null!;
 
         [Required]
