@@ -159,8 +159,7 @@ using (var scope = app.Services.CreateScope())
     {
         ("smith@abv.bg", "Doctor"),
         ("ivanovst@abv.bg", "Manager"),
-        ("petrovlazar@abv.bg", "Patient"),
-        
+        ("petrovlazar@abv.bg", "Patient"),        
         ("jhonson@abv.bg", "Doctor"),
         ("jhondoe@abv.bg","Doctor"),
         ("petrovp@abv.bg","Doctor"),

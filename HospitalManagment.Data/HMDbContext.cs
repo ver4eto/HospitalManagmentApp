@@ -29,15 +29,18 @@ namespace HospitalManagmentApp.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new DepartmentConfiguration());
+            builder.ApplyConfiguration(new RoomConfiguration());
             builder.ApplyConfiguration(new DoctorConfiguration());
             builder.ApplyConfiguration(new NurseConfiguration());
-            builder.ApplyConfiguration(new RoomConfiguration());
+
             builder.ApplyConfiguration(new TreatmentConfiguration());
+            builder.ApplyConfiguration(new ManagerConfiguration());
             builder.ApplyConfiguration(new PatientConfiguration());
             builder.ApplyConfiguration(new PatientTreatmentConfiguration());
-            builder.ApplyConfiguration(new ManagerConfiguration());
-            builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new PatientDoctorConfiguration());
+
 
             base.OnModelCreating(builder);
         }
