@@ -1,0 +1,139 @@
+[
+  {
+    "LastName": "Smith",
+    "FirstName": "John",
+    "Specialty": "Cardiology",
+    "EmailAddress": "john.smith@example.com",
+    "Salary": 120000,
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId":  "d0f69870-c2a9-4c09-8b63-2c85f8a5b848"      
+    
+  },
+  {
+    "LastName": "Doe",
+    "FirstName": "Jane",
+    "Specialty": "Neurology",
+    "EmailAddress": "jane.doe@example.com",
+    "Salary": 110000,
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId": "f25c1f85-0e9f-4b47-9d34-4c3c24d5b148"
+  },
+  {
+    "LastName": "Brown",
+    "FirstName": "Charlie",
+    "Specialty": "Pediatrics",
+    "EmailAddress": "charlie.brown@example.com",
+    "Salary": 100000,
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId": "c9d2b70f-3bd1-4e69-8dc3-b255c65877f9"
+  },
+  {
+    "LastName": "Johnson",
+    "FirstName": "Alice",
+    "Specialty": "Dermatology",
+    "EmailAddress": "alice.johnson@example.com",
+    "Salary": 115000,
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "7f345e69-c7f9-4213-8752-8c48f25c6db7"
+  },
+  {
+    "LastName": "Williams",
+    "FirstName": "Emma",
+    "Specialty": "Oncology",
+    "EmailAddress": "emma.williams@example.com",
+    "Salary": 125000,
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId":"ac6b8e85-9dc4-4723-8483-63f5c0e8dc5f"
+  },
+  {
+    "LastName": "Taylor",
+    "FirstName": "Liam",
+    "Specialty": "Orthopedics",
+    "EmailAddress": "liam.taylor@example.com",
+    "Salary": 105000,
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId":  "5cb74c2d-27d5-46f1-9b8e-b912f0f850af"
+     
+  },
+  {
+    "LastName": "Davis",
+    "FirstName": "Sophia",
+    "Specialty": "Gastroenterology",
+    "EmailAddress": "sophia.davis@example.com",
+    "Salary": 115000,
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "732acf20-4f48-4094-9aaf-5a7c356d2736"
+  },
+  {
+    "LastName": "Martinez",
+    "FirstName": "Mason",
+    "Specialty": "Radiology",
+    "EmailAddress": "mason.martinez@example.com",
+    "Salary": 110000,
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId": "1bdf8419-94f4-474b-9519-2190e14cbdfd"
+  },
+  {
+    "LastName": "Lopez",
+    "FirstName": "Olivia",
+    "Specialty": "Psychiatry",
+    "EmailAddress": "olivia.lopez@example.com",
+    "Salary": 95000,
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId":  "e64f2b36-819c-44d1-b35e-c1b28739a44a"
+  },
+  {
+    "LastName": "Harris",
+    "FirstName": "James",
+    "Specialty": "Ophthalmology",
+    "EmailAddress": "james.harris@example.com",
+    "Salary": 102000,
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId":  "42f7bf60-e237-47a4-88d4-230c37b58022"
+  },
+  {
+    "LastName": "Clark",
+    "FirstName": "Isabella",
+    "Specialty": "Gynecology",
+    "EmailAddress": "isabella.clark@example.com",
+    "Salary": 107000,
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId":"8766d8a9-5fc8-4a70-a2b9-556849624017"
+  },
+  {
+    "LastName": "Robinson",
+    "FirstName": "Benjamin",
+    "Specialty": "Urology",
+    "EmailAddress": "benjamin.robinson@example.com",
+    "Salary": 97000,
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId": "77e2b2dc-1e3a-45f5-89ff-f4bf68180c68"
+  },
+  {
+    "LastName": "Walker",
+    "FirstName": "Charlotte",
+    "Specialty": "Anesthesiology",
+    "EmailAddress": "charlotte.walker@example.com",
+    "Salary": 121000,
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "341d9b80-46c1-4df0-a108-c3b569f4da70"
+  },
+  {
+    "LastName": "Allen",
+    "FirstName": "Alexander",
+    "Specialty": "Pathology",
+    "EmailAddress": "alexander.allen@example.com",
+    "Salary": 94000,
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId":"d174b7e0-ec36-4d6d-b6e3-08a7f18be3fc"
+  },
+  {
+    "LastName": "Young",
+    "FirstName": "Mia",
+    "Specialty": "Emergency Medicine",
+    "EmailAddress": "mia.young@example.com",
+    "Salary": 103000,
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId": "27e2f33c-5b3e-4e1e-b9b3-0b4a7b7680f7"
+  }
+]

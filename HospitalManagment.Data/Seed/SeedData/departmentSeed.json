@@ -1,0 +1,30 @@
+[
+  {
+    "Id": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "Name": "Neurology"
+  },
+  {
+    "Id": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "Name": "Surgery"
+  },
+  {
+    "Id": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "Name": "Internal Medicine"
+  },
+  {
+    "Id": "33f9018c-1b02-548d-b36e-dc232bc097a5",
+    "Name": "Cardiology"
+  },
+  {
+    "Id": "44dd58b3-854e-3298-804f-03411c2baaae",
+    "Name": "Pediatrics"
+  },
+  {
+    "Id": "55dd58b3-966e-4498-806f-05411c1bbccd",
+    "Name": "Orthopedics"
+  },
+  {
+    "Id": "66ff68b3-846e-5398-805f-06411c1bbdff",
+    "Name": "Oncology"
+  }
+]

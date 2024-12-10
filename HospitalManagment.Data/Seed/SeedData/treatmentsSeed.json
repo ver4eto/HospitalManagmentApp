@@ -1,0 +1,12 @@
+[
+  { "Id": "1e472cfa-5488-49f7-bc90-87bcd37b85c0", "Name": "Physical Therapy", "Price": 150.00 },
+  { "Id": "273f30d9-6c5f-49fa-84a7-734dbdc4a1d2", "Name": "MRI Scan", "Price": 500.00 },
+  { "Id": "bb26ac70-f9dc-426f-9c36-d6105537e909", "Name": "X-Ray", "Price": 200.00 },
+  { "Id": "39bf20f4-81c8-4cd6-9262-61184c8d6b9a", "Name": "Blood Test", "Price": 50.00 },
+  { "Id": "64e59e91-8492-41a1-a6b5-2e98f6b5f667", "Name": "Ultrasound", "Price": 300.00 },
+  { "Id": "3de0b7c4-e926-4fb3-9e65-8969e58f05e8", "Name": "Chemotherapy", "Price": 1000.00 },
+  { "Id": "f74814c8-19ef-4c2d-86d5-fd684fa67d33", "Name": "Vaccination", "Price": 20.00 },
+  { "Id": "9be8123a-762b-4cb3-9cb1-9bde227b9fb8", "Name": "Surgery", "Price": 2000.00 },
+  { "Id": "2899e3f2-8f89-4a5f-9083-64537f4cb3f4", "Name": "Dialysis", "Price": 800.00 },
+  { "Id": "2a24b3e3-93db-487d-8074-3e5a51217d8c", "Name": "CT Scan", "Price": 700.00 }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "FirstName": "Emma",
+    "LastName": "Smith",
+    "EmailAddress": "emma.smith@example.com",
+    "Salary": 45000.00,
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "b001bd24-5c2a-4f7a-b000-5f7bd233cd12"
+  },
+  {
+    "FirstName": "Olivia",
+    "LastName": "Brown",
+    "EmailAddress": "olivia.brown@example.com",
+    "Salary": 46000.00,
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId": "c002cd35-6d3b-5g8b-c001-6g8ce344de23"
+  },
+  {
+    "FirstName": "Sophia",
+    "LastName": "Davis",
+    "EmailAddress": "sophia.davis@example.com",
+    "Salary": 47000.00,
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId": "d003de46-7e4c-6h9c-d002-7h9df455ef34"
+  },
+  {
+    "FirstName": "Isabella",
+    "LastName": "Garcia",
+    "EmailAddress": "isabella.garcia@example.com",
+    "Salary": 48000.00,
+    "DepartmentId": "33f9018c-1b02-548d-b36e-dc232bc097a5",
+    "UserId": "e004ef57-8f5d-7i0d-e003-8i0eg566fg45"
+  },
+  {
+    "FirstName": "Mia",
+    "LastName": "Martinez",
+    "EmailAddress": "mia.martinez@example.com",
+    "Salary": 49000.00,
+    "DepartmentId": "44dd58b3-854e-3298-804f-03411c2baaae",
+    "UserId": "f005fg68-9g6e-8j1e-f004-9j1fh677gh56"
+  },
+  {
+    "FirstName": "Amelia",
+    "LastName": "Lopez",
+    "EmailAddress": "amelia.lopez@example.com",
+    "Salary": 50000.00,
+    "DepartmentId": "55dd58b3-966e-4498-806f-05411c1bbccd",
+    "UserId": "g006gh79-ah7f-9k2f-g005-ak2gi788hi67"
+  },
+  {
+    "FirstName": "Harper",
+    "LastName": "Gonzalez",
+    "EmailAddress": "harper.gonzalez@example.com",
+    "Salary": 51000.00,
+    "DepartmentId": "66ff68b3-846e-5398-805f-06411c1bbdff",
+    "UserId": "h007hi80-bi8g-ak3g-h006-bl3hj899ij78"
+  },
+  {
+    "FirstName": "Evelyn",
+    "LastName": "Wilson",
+    "EmailAddress": "evelyn.wilson@example.com",
+    "Salary": 52000.00,
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "i008ij91-cj9h-bl4h-i007-cm4ik9a0jk89"
+  },
+  {
+    "FirstName": "Avery",
+    "LastName": "Anderson",
+    "EmailAddress": "avery.anderson@example.com",
+    "Salary": 53000.00,
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId": "j009jk02-dk0i-cm5i-j008-dn5jlab1kl90"
+  },
+  {
+    "FirstName": "Ella",
+    "LastName": "Thomas",
+    "EmailAddress": "ella.thomas@example.com",
+    "Salary": 54000.00,
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId": "k00akl13-el1j-dn6j-k009-eo6kmb2lm01"
+  },
+  {
+    "FirstName": "Scarlett",
+    "LastName": "Hernandez",
+    "EmailAddress": "scarlett.hernandez@example.com",
+    "Salary": 55000.00,
+    "DepartmentId": "33f9018c-1b02-548d-b36e-dc232bc097a5",
+    "UserId": "l01blm24-fl2k-eo7k-l00a-fp7lnc3mn12"
+  },
+  {
+    "FirstName": "Grace",
+    "LastName": "Moore",
+    "EmailAddress": "grace.moore@example.com",
+    "Salary": 56000.00,
+    "DepartmentId": "44dd58b3-854e-3298-804f-03411c2baaae",
+    "UserId": "m02cmn35-gl3l-fp8l-m00b-gq8mod4no23"
+  },
+  {
+    "FirstName": "Aria",
+    "LastName": "White",
+    "EmailAddress": "aria.white@example.com",
+    "Salary": 57000.00,
+    "DepartmentId": "55dd58b3-966e-4498-806f-05411c1bbccd",
+    "UserId": "n03dno46-hm4m-gq9m-n00c-hr9npe5op34"
+  },
+  {
+    "FirstName": "Luna",
+    "LastName": "Harris",
+    "EmailAddress": "luna.harris@example.com",
+    "Salary": 58000.00,
+    "DepartmentId": "66ff68b3-846e-5398-805f-06411c1bbdff",
+    "UserId": "o04epo57-in5n-hr0n-o00d-is0oqf6pq45"
+  },
+  {
+    "FirstName": "Chloe",
+    "LastName": "Martin",
+    "EmailAddress": "chloe.martin@example.com",
+    "Salary": 59000.00,
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "p05fpq68-jo6o-is1o-p00e-jt1prg7qr56"
+  }
+]

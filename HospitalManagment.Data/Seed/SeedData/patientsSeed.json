@@ -1,0 +1,252 @@
+[
+  {
+    "FirstName": "James",
+    "LastName": "Anderson",
+    "EGN": "1234567890",
+    "EmailAddress": "james.anderson@example.com",
+    "Address": "123 Elm Street",
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "a001bd24-5c2a-4f7a-b000-5f7bd233cd12",
+    "RoomId": "r001"
+  },
+  {
+    "FirstName": "Mary",
+    "LastName": "Johnson",
+    "EGN": "2345678901",
+    "EmailAddress": "mary.johnson@example.com",
+    "Address": "456 Maple Avenue",
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId": "b002cd35-6d3b-5g8b-c001-6g8ce344de23",
+    "RoomId": "r002"
+  },
+  {
+    "FirstName": "Robert",
+    "LastName": "Williams",
+    "EGN": "3456789012",
+    "EmailAddress": "robert.williams@example.com",
+    "Address": "789 Oak Boulevard",
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId": "c003de46-7e4c-6h9c-d002-7h9df455ef34",
+    "RoomId": "r003"
+  },
+  {
+    "FirstName": "Patricia",
+    "LastName": "Brown",
+    "EGN": "4567890123",
+    "EmailAddress": "patricia.brown@example.com",
+    "Address": "321 Pine Lane",
+    "DepartmentId": "33f9018c-1b02-548d-b36e-dc232bc097a5",
+    "UserId": "d004ef57-8f5d-7i0d-e003-8i0eg566fg45",
+    "RoomId": "r004"
+  },
+  {
+    "FirstName": "John",
+    "LastName": "Davis",
+    "EGN": "5678901234",
+    "EmailAddress": "john.davis@example.com",
+    "Address": "654 Cedar Street",
+    "DepartmentId": "44dd58b3-854e-3298-804f-03411c2baaae",
+    "UserId": "e005fg68-9g6e-8j1e-f004-9j1fh677gh56",
+    "RoomId": "r005"
+  },
+  {
+    "FirstName": "Jennifer",
+    "LastName": "Miller",
+    "EGN": "6789012345",
+    "EmailAddress": "jennifer.miller@example.com",
+    "Address": "987 Birch Road",
+    "DepartmentId": "55dd58b3-966e-4498-806f-05411c1bbccd",
+    "UserId": "f006gh79-ah7f-9k2f-g005-ak2gi788hi67",
+    "RoomId": "r006"
+  },
+  {
+    "FirstName": "Michael",
+    "LastName": "Wilson",
+    "EGN": "7890123456",
+    "EmailAddress": "michael.wilson@example.com",
+    "Address": "159 Walnut Avenue",
+    "DepartmentId": "66ff68b3-846e-5398-805f-06411c1bbdff",
+    "UserId": "g007hi80-bi8g-ak3g-h006-bl3hj899ij78",
+    "RoomId": "r007"
+  },
+  {
+    "FirstName": "Elizabeth",
+    "LastName": "Moore",
+    "EGN": "8901234567",
+    "EmailAddress": "elizabeth.moore@example.com",
+    "Address": "753 Chestnut Circle",
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "h008ij91-cj9h-bl4h-i007-cm4ik9a0jk89",
+    "RoomId": "r008"
+  },
+  {
+    "FirstName": "David",
+    "LastName": "Taylor",
+    "EGN": "9012345678",
+    "EmailAddress": "david.taylor@example.com",
+    "Address": "951 Sycamore Drive",
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId": "i009jk02-dk0i-cm5i-j008-dn5jlab1kl90",
+    "RoomId": "r009"
+  },
+  {
+    "FirstName": "Susan",
+    "LastName": "Anderson",
+    "EGN": "0123456789",
+    "EmailAddress": "susan.anderson@example.com",
+    "Address": "123 Elm Court",
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId": "j00akl13-el1j-dn6j-k009-eo6kmb2lm01",
+    "RoomId": "r010"
+  },
+  {
+    "FirstName": "Christopher",
+    "LastName": "Thomas",
+    "EGN": "1112131415",
+    "EmailAddress": "christopher.thomas@example.com",
+    "Address": "321 Maple Drive",
+    "DepartmentId": "33f9018c-1b02-548d-b36e-dc232bc097a5",
+    "UserId": "k01blm24-fl2k-eo7k-l00a-fp7lnc3mn12",
+    "RoomId": "r011"
+  },
+  {
+    "FirstName": "Linda",
+    "LastName": "Martinez",
+    "EGN": "1617181920",
+    "EmailAddress": "linda.martinez@example.com",
+    "Address": "654 Oak Lane",
+    "DepartmentId": "44dd58b3-854e-3298-804f-03411c2baaae",
+    "UserId": "l02cmn35-gl3l-fp8l-m00b-gq8mod4no23",
+    "RoomId": "r012"
+  },
+  {
+    "FirstName": "Joseph",
+    "LastName": "Hernandez",
+    "EGN": "2122232425",
+    "EmailAddress": "joseph.hernandez@example.com",
+    "Address": "987 Pine Road",
+    "DepartmentId": "55dd58b3-966e-4498-806f-05411c1bbccd",
+    "UserId": "m03dno46-hm4m-gq9m-n00c-hr9npe5op34",
+    "RoomId": "r013"
+  },
+  {
+    "FirstName": "Barbara",
+    "LastName": "Lopez",
+    "EGN": "2627282930",
+    "EmailAddress": "barbara.lopez@example.com",
+    "Address": "159 Cedar Avenue",
+    "DepartmentId": "66ff68b3-846e-5398-805f-06411c1bbdff",
+    "UserId": "n04epo57-in5n-hr0n-o00d-is0oqf6pq45",
+    "RoomId": "r014"
+  },
+  {
+    "FirstName": "Daniel",
+    "LastName": "King",
+    "EGN": "3132333435",
+    "EmailAddress": "daniel.king@example.com",
+    "Address": "753 Walnut Circle",
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "o05fpq68-jo6o-is1o-p00e-jt1prg7qr56",
+    "RoomId": "r015"
+  },
+  {
+    "FirstName": "Jessica",
+    "LastName": "Perez",
+    "EGN": "3637383940",
+    "EmailAddress": "jessica.perez@example.com",
+    "Address": "951 Birch Street",
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId": "p06gqr79-ko7p-jt2p-q00f-ku2qsh8rs67",
+    "RoomId": "r016"
+  },
+  {
+    "FirstName": "Thomas",
+    "LastName": "Clark",
+    "EGN": "4142434445",
+    "EmailAddress": "thomas.clark@example.com",
+    "Address": "123 Elm Boulevard",
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId": "q07hrs80-lo8q-ku3q-r00g-lv3rti9st78",
+    "RoomId": "r017"
+  },
+  {
+    "FirstName": "Sarah",
+    "LastName": "Lewis",
+    "EGN": "4647484950",
+    "EmailAddress": "sarah.lewis@example.com",
+    "Address": "321 Maple Avenue",
+    "DepartmentId": "33f9018c-1b02-548d-b36e-dc232bc097a5",
+    "UserId": "r08ist91-mp9r-lv4r-s00h-mw4suj0tu89",
+    "RoomId": "r018"
+  },
+  {
+    "FirstName": "Paul",
+    "LastName": "Hall",
+    "EGN": "5152535455",
+    "EmailAddress": "paul.hall@example.com",
+    "Address": "654 Oak Circle",
+    "DepartmentId": "44dd58b3-854e-3298-804f-03411c2baaae",
+    "UserId": "s09juv02-nq0s-mw5s-t00i-nx5tkv1uv90",
+    "RoomId": "r019"
+  },
+  {
+    "FirstName": "Laura",
+    "LastName": "Young",
+    "EGN": "5657585960",
+    "EmailAddress": "laura.young@example.com",
+    "Address": "987 Pine Drive",
+    "DepartmentId": "55dd58b3-966e-4498-806f-05411c1bbccd",
+    "UserId": "t00kwx13-or1t-nx6t-u00j-oy6ulw2vw01",
+    "RoomId": "r020"
+  },
+  {
+    "FirstName": "Mark",
+    "LastName": "Allen",
+    "EGN": "6162636465",
+    "EmailAddress": "mark.allen@example.com",
+    "Address": "159 Cedar Lane",
+    "DepartmentId": "66ff68b3-846e-5398-805f-06411c1bbdff",
+    "UserId": "u01lvy24-ps2u-oy7u-v00k-pz7vmx3wx12",
+    "RoomId": "r021"
+  },
+  {
+    "FirstName": "Emily",
+    "LastName": "Scott",
+    "EGN": "6667686970",
+    "EmailAddress": "emily.scott@example.com",
+    "Address": "753 Walnut Avenue",
+    "DepartmentId": "af2f0ad4-ff86-4e51-ab19-630145898ec6",
+    "UserId": "v02mwx35-qt3v-pz8v-w00l-q08vnx4xy23",
+    "RoomId": "r022"
+  },
+  {
+    "FirstName": "Nancy",
+    "LastName": "Turner",
+    "EGN": "7172737475",
+    "EmailAddress": "nancy.turner@example.com",
+    "Address": "951 Birch Boulevard",
+    "DepartmentId": "70dd58b3-966e-4498-806f-04411c1bbbee",
+    "UserId": "w03nxy46-ru4w-q09w-x00m-r09wox5yz34",
+    "RoomId": "r023"
+  },
+  {
+    "FirstName": "Steven",
+    "LastName": "Adams",
+    "EGN": "7677787980",
+    "EmailAddress": "steven.adams@example.com",
+    "Address": "123 Elm Drive",
+    "DepartmentId": "43f9018c-2a02-448d-b26e-bc832bc097d3",
+    "UserId": "x04oyz57-su5x-r00x-y00n-s00xpy6za45",
+    "RoomId": "r024"
+  },
+  {
+    "FirstName": "Angela",
+    "LastName": "Walker",
+    "EGN": "8182838485",
+    "EmailAddress": "angela.walker@example.com",
+    "Address": "321 Maple Circle",
+    "DepartmentId": "33f9018c-1b02-548d-b36e-dc232bc097a5",
+    "UserId": "y05pza68-tv6y-s10y-z00o-t10yz07ab56",
+    "RoomId": "r025"
+  }
+]
