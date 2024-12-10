@@ -18,7 +18,7 @@ namespace HospitalManagmentApp.Data.Configuration
                 HasOne(r=>r.Department)
                 .WithMany(d=>d.Rooms)
                 .HasForeignKey(r=>r.DepartmnetId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(SeedRooms());
         }
@@ -28,6 +28,39 @@ namespace HospitalManagmentApp.Data.Configuration
             ICollection<Room> rooms=new HashSet<Room>();
             Room room;
 
+            room = new Room()
+            {
+                Id = new Guid("20ea1099-d9f7-4b73-a6d4-498ef5a04347"),
+                BedCount = 2,
+                RoomNumber = 701,
+                DepartmnetId = Guid.Parse("66ff68b3-846e-5398-805f-06411c1bbdff")
+
+            };
+
+            room = new Room()
+            {
+                Id = new Guid("ee35610a-04a9-4c46-a6ed-c71564336d1b"),
+                BedCount = 4,
+                RoomNumber = 702,
+                DepartmnetId = Guid.Parse("66ff68b3-846e-5398-805f-06411c1bbdff")
+
+            };
+            room = new Room()
+            {
+                Id = new Guid("20dcf42b-f8fe-444a-b17c-287b7cebe8e1"),
+                BedCount = 2,
+                RoomNumber = 703,
+                DepartmnetId = Guid.Parse("66ff68b3-846e-5398-805f-06411c1bbdff")
+
+            };
+            room = new Room()
+            {
+                Id = new Guid("994355a8-add4-4d49-a52f-f610e4cb6893"),
+                BedCount = 4,
+                RoomNumber = 704,
+                DepartmnetId = Guid.Parse("66ff68b3-846e-5398-805f-06411c1bbdff")
+
+            };
             room = new Room()
             {
                 Id=new Guid("6a746a43-8fe2-4b2f-b6a3-69104089e8ac"),

@@ -21,11 +21,10 @@ namespace HospitalManagmentApp.Data.Configuration
 
             
                 
-            builder
-                .HasData(SeedDepartments());
+            builder.HasData(SeedDepartments());
         }
 
-        private Department[] SeedDepartments()
+      private Department[] SeedDepartments()
         {
             ICollection<Department> departments=new HashSet<Department>();
             Department department;
@@ -59,6 +58,15 @@ namespace HospitalManagmentApp.Data.Configuration
                 Name = "Pediatrics"
 
             };
+            departments.Add(department);
+
+            department = new Department()
+            {
+                Id = new Guid("66ff68b3-846e-5398-805f-06411c1bbdff"),
+                Name = "Oncology"
+
+            };
+
             departments.Add(department);
 
             return departments.ToArray();

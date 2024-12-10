@@ -14,6 +14,22 @@ namespace HospitalManagmentApp.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
+            builder
+                .HasMany(u => u.Managers)
+                .WithOne(u => u.User)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder .HasMany(u => u.Doctors)
+                .WithOne(u => u.User)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(u => u.Nurses)
+                .WithOne(u => u.User)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(u => u.Patients)
+                .WithOne(u => u.User)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(SeedUsers());
         }
@@ -76,6 +92,37 @@ namespace HospitalManagmentApp.Data.Configuration
                     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
                     UserType="Doctor"
                 },
+                 new ApplicationUser
+                {
+                    Id = "c6e29719-7856-4b5f-b5da-84ed3a292877",
+                    UserName = "slaveykir@abv.bg",
+
+                    Email = "slaveykir@abv.bg",
+
+                    EmailConfirmed = true,
+                    PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+                    UserType="Doctor"
+                },
+                  new ApplicationUser
+ {
+     Id = "57e1941c-1412-4384-b819-d67a19204baf",
+     UserName = "angelovz@abv.bg",
+
+     Email = "angelovz@abv.bg",
+
+     EmailConfirmed = true,
+     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+     UserType="Doctor"
+ },
+                   new ApplicationUser
+ {
+     Id = "fddefbf4-e1a5-42a1-a64d-e0843640267c",
+     UserName = "atanasovao@abv.bg",
+     Email = "atanasovao@abv.bg",
+     EmailConfirmed = true,
+     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+     UserType="Doctor"
+ },
 
                  new ApplicationUser
         {
@@ -143,6 +190,24 @@ namespace HospitalManagmentApp.Data.Configuration
             PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
             UserType="Nurse"
         },
+        new ApplicationUser
+        {
+            Id = "7c032bc0-04e2-4111-bbfb-a59d46791529",
+            UserName = "taskovao@abv.bg",
+            Email = "taskovao@abv.bg",
+            EmailConfirmed = true,
+            PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+            UserType="Nurse"
+        },
+        new ApplicationUser
+        {
+            Id = "23fbee5b-fbe0-49a4-b312-6a5471f79dca",
+            UserName = "nikolovapa@abv.bg",
+            Email = "nikolovapa@abv.bg",
+            EmailConfirmed = true,
+            PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+            UserType="Nurse"
+        },
           new ApplicationUser
         {
             Id = "17e9933d-2a1b-467b-b6a2-79297246b8b3",
@@ -186,7 +251,108 @@ namespace HospitalManagmentApp.Data.Configuration
             EmailConfirmed = true,
             PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
             UserType="Patient"
-        }
+        },
+
+        new ApplicationUser
+        {
+            Id = "a001bd24-5c2a-4f7a-b000-5f7bd233cd12",
+            UserName = "james.anderson@example.com",
+
+            Email = "james.anderson@example.com",
+
+            EmailConfirmed = true,
+            PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+            UserType="Patient"
+        },
+        new ApplicationUser
+        {
+            Id = "134d8ce3-4c26-434a-90b4-f59ae5457a01",
+            UserName = "mary.johnson@example.com",
+
+            Email = "mary.johnson@example.com",
+
+            EmailConfirmed = true,
+            PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+            UserType="Patient"
+        },
+        new ApplicationUser
+        {
+            Id = "17139a72-76d4-4362-aa27-18a64cc8d285",
+            UserName = "robert.williams@example.com",
+
+            Email = "robert.williams@example.com",
+
+            EmailConfirmed = true,
+            PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+            UserType="Patient"
+        },
+        new ApplicationUser
+{
+    Id = "15050ff2-ed6c-475f-8831-f61d54a29175",
+    UserName = "patricia.brown@example.com",
+
+    Email = "patricia.brown@example.com",
+
+    EmailConfirmed = true,
+    PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+    UserType="Patient"
+},
+
+        new ApplicationUser
+{
+    Id = "76222e29-cbf5-4335-b2e4-fa6a77afeab1",
+    UserName = "jennifer.miller@example.com",
+
+    Email = "jennifer.miller@example.com",
+
+    EmailConfirmed = true,
+    PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+    UserType="Patient"
+},
+        new ApplicationUser
+{
+    Id = "3110d510-2d4d-4e84-9f69-84794965586d",
+    UserName = "michael.wilson@example.com",
+
+    Email = "michael.wilson@example.com",
+
+    EmailConfirmed = true,
+    PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+    UserType="Patient"
+},
+        new ApplicationUser
+{
+    Id = "d8d0d177-60a0-4925-b4ed-bb36aebb48c4",
+    UserName = "elizabeth.moore@example.com",
+
+    Email = "elizabeth.moore@example.com",
+
+    EmailConfirmed = true,
+    PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+    UserType="Patient"
+},
+        new ApplicationUser
+{
+    Id = "82c99b5d-6573-4514-81eb-183ace313419",
+    UserName = "david.taylor@example.com",
+
+    Email = "david.taylor@example.com",
+
+    EmailConfirmed = true,
+    PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+    UserType="Patient"
+},
+        new ApplicationUser
+{
+    Id = "a8d287e8-357a-40f3-893a-ed507ed6a85d",
+    UserName = "susan.anderson@example.com",
+
+    Email = "susan.anderson@example.com",
+
+    EmailConfirmed = true,
+    PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
+    UserType="Patient"
+},
             };
         }
     }

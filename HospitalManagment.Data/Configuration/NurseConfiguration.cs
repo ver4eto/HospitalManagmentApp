@@ -37,6 +37,11 @@ namespace HospitalManagmentApp.Data.Configuration
             nurse = new Nurse {Id=new Guid("3c8870b2-58cf-4341-8ea1-d024520563d0"), FirstName = "Olivia", LastName = "Taylor", Salary = 660 , DepartmentId = Guid.Parse("af2f0ad4-ff86-4e51-ab19-630145898ec6") , EmailAddress = "taylor@abv.bg",UserId= "3c8870b2-58cf-4341-8ea1-d024520563d0" };
             nurses.Add(nurse);
 
+            nurse = new Nurse { Id = new Guid("7c032bc0-04e2-4111-bbfb-a59d46791529"), FirstName = "Olga", LastName = "Taskova", Salary = 680, DepartmentId = Guid.Parse("66ff68b3-846e-5398-805f-06411c1bbdff"), EmailAddress = "taskovao@abv.bg", UserId = "7c032bc0-04e2-4111-bbfb-a59d46791529" };
+            nurses.Add(nurse);
+
+            nurse = new Nurse { Id = new Guid("23fbee5b-fbe0-49a4-b312-6a5471f79dca"), FirstName = "Paola", LastName = "Nikolova", Salary = 680, DepartmentId = Guid.Parse("66ff68b3-846e-5398-805f-06411c1bbdff"), EmailAddress = "nikolovapa@abv.bg", UserId = "23fbee5b-fbe0-49a4-b312-6a5471f79dca" };
+            nurses.Add(nurse);
 
             return nurses.ToArray();
         }

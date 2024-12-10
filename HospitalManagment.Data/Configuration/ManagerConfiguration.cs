@@ -24,11 +24,11 @@ namespace HospitalManagmentApp.Data.Configuration
                 (
                 new Manager()
                 {
-                    Id =new Guid ("06ea23a1-095e-475f-937e-cb3e34c4def2"),
-                    FullName="Stoian Ivanov",
-                    PhoneNumber="+359883456789",
-                    EmailAddress=  "ivanovst@abv.bg",
-                    UserId= "06ea23a1-095e-475f-937e-cb3e34c4def2"
+                    Id = new Guid("06ea23a1-095e-475f-937e-cb3e34c4def2"),
+                    FullName = "Stoian Ivanov",
+                    PhoneNumber = "+359883456789",
+                    EmailAddress = "ivanovst@abv.bg",
+                    UserId = "06ea23a1-095e-475f-937e-cb3e34c4def2"
                 }
                 );
         }
