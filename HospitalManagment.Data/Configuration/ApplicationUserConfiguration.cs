@@ -96,9 +96,9 @@ namespace HospitalManagmentApp.Data.Configuration
                 {
                     Id = "c6e29719-7856-4b5f-b5da-84ed3a292877",
                     UserName = "slaveykir@abv.bg",
-
+                    NormalizedUserName ="SLAVEYKIR@ABV.BG",
                     Email = "slaveykir@abv.bg",
-
+                    NormalizedEmail="SLAVEYKIR@ABV.BG",
                     EmailConfirmed = true,
                     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
                     UserType="Doctor"
@@ -107,9 +107,9 @@ namespace HospitalManagmentApp.Data.Configuration
  {
      Id = "57e1941c-1412-4384-b819-d67a19204baf",
      UserName = "angelovz@abv.bg",
-
+     NormalizedUserName= "ANGELOVZ@ABV.BG",
      Email = "angelovz@abv.bg",
-
+     NormalizedEmail="ANGELOVZ@ABV.BG",
      EmailConfirmed = true,
      PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
      UserType="Doctor"
@@ -118,7 +118,9 @@ namespace HospitalManagmentApp.Data.Configuration
  {
      Id = "fddefbf4-e1a5-42a1-a64d-e0843640267c",
      UserName = "atanasovao@abv.bg",
+     NormalizedUserName ="ATANASOVAO@ABV.BG",
      Email = "atanasovao@abv.bg",
+     NormalizedEmail="ATANASOVAO@ABV.BG",
      EmailConfirmed = true,
      PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
      UserType="Doctor"
@@ -194,7 +196,9 @@ namespace HospitalManagmentApp.Data.Configuration
         {
             Id = "7c032bc0-04e2-4111-bbfb-a59d46791529",
             UserName = "taskovao@abv.bg",
+            NormalizedUserName ="TASKOVAO@ABV.BG",
             Email = "taskovao@abv.bg",
+            NormalizedEmail ="TASKOVAO@ABV.BG",
             EmailConfirmed = true,
             PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
             UserType="Nurse"
@@ -203,7 +207,9 @@ namespace HospitalManagmentApp.Data.Configuration
         {
             Id = "23fbee5b-fbe0-49a4-b312-6a5471f79dca",
             UserName = "nikolovapa@abv.bg",
+            NormalizedUserName ="NIKOLOVAPA@ABV.BG",
             Email = "nikolovapa@abv.bg",
+            NormalizedEmail="NIKOLOVAPA@ABV.BG",
             EmailConfirmed = true,
             PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
             UserType="Nurse"
@@ -257,9 +263,9 @@ namespace HospitalManagmentApp.Data.Configuration
         {
             Id = "a001bd24-5c2a-4f7a-b000-5f7bd233cd12",
             UserName = "james.anderson@example.com",
-
+            NormalizedUserName="JAMES.ANDERSON@EXAMPLE.COM",
             Email = "james.anderson@example.com",
-
+            NormalizedEmail="JAMES.ANDERSON@EXAMPLE.COM",
             EmailConfirmed = true,
             PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
             UserType="Patient"
@@ -268,9 +274,9 @@ namespace HospitalManagmentApp.Data.Configuration
         {
             Id = "134d8ce3-4c26-434a-90b4-f59ae5457a01",
             UserName = "mary.johnson@example.com",
-
+            NormalizedUserName="MARY.JOHNSON@EXAMPLE.COM",
             Email = "mary.johnson@example.com",
-
+            NormalizedEmail="MARY.JOHNSON@EXAMPLE.COM",
             EmailConfirmed = true,
             PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
             UserType="Patient"
@@ -279,9 +285,9 @@ namespace HospitalManagmentApp.Data.Configuration
         {
             Id = "17139a72-76d4-4362-aa27-18a64cc8d285",
             UserName = "robert.williams@example.com",
-
+            NormalizedUserName="ROBERT.WILLIAMS@EXAMPLE.COM",
             Email = "robert.williams@example.com",
-
+            NormalizedEmail="ROBERT.WILLIAMS@EXAMPLE.COM",
             EmailConfirmed = true,
             PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
             UserType="Patient"
@@ -290,9 +296,9 @@ namespace HospitalManagmentApp.Data.Configuration
 {
     Id = "15050ff2-ed6c-475f-8831-f61d54a29175",
     UserName = "patricia.brown@example.com",
-
+    NormalizedUserName ="PATRICIA.BROWN@EXAMPLE.COM",
     Email = "patricia.brown@example.com",
-
+    NormalizedEmail ="PATRICIA.BROWN@EXAMPLE.COM",
     EmailConfirmed = true,
     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
     UserType="Patient"
@@ -302,9 +308,9 @@ namespace HospitalManagmentApp.Data.Configuration
 {
     Id = "76222e29-cbf5-4335-b2e4-fa6a77afeab1",
     UserName = "jennifer.miller@example.com",
-
+    NormalizedUserName="JENNIFER.MILLER@EXAMPLE.COM",
     Email = "jennifer.miller@example.com",
-
+    NormalizedEmail="JENNIFER.MILLER@EXAMPLE.COM",
     EmailConfirmed = true,
     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
     UserType="Patient"
@@ -313,9 +319,9 @@ namespace HospitalManagmentApp.Data.Configuration
 {
     Id = "3110d510-2d4d-4e84-9f69-84794965586d",
     UserName = "michael.wilson@example.com",
-
+    NormalizedUserName="MICHAEL.WILSON@EXAMPLE.COM",
     Email = "michael.wilson@example.com",
-
+    NormalizedEmail="MICHAEL.WILSON@EXAMPLE.COM",
     EmailConfirmed = true,
     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
     UserType="Patient"
@@ -324,9 +330,9 @@ namespace HospitalManagmentApp.Data.Configuration
 {
     Id = "d8d0d177-60a0-4925-b4ed-bb36aebb48c4",
     UserName = "elizabeth.moore@example.com",
-
+    NormalizedUserName= "ELIZABETH.MOORE@EXAMPLE.COM",
     Email = "elizabeth.moore@example.com",
-
+    NormalizedEmail="ELIZABETH.MOORE@EXAMPLE.COM",
     EmailConfirmed = true,
     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
     UserType="Patient"
@@ -335,9 +341,9 @@ namespace HospitalManagmentApp.Data.Configuration
 {
     Id = "82c99b5d-6573-4514-81eb-183ace313419",
     UserName = "david.taylor@example.com",
-
+    NormalizedUserName="DAVID.TAYLOR@EXAMPLE.COM",
     Email = "david.taylor@example.com",
-
+    NormalizedEmail ="DAVID.TAYLOR@EXAMPLE.COM",
     EmailConfirmed = true,
     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
     UserType="Patient"
@@ -346,9 +352,9 @@ namespace HospitalManagmentApp.Data.Configuration
 {
     Id = "a8d287e8-357a-40f3-893a-ed507ed6a85d",
     UserName = "susan.anderson@example.com",
-
+    NormalizedUserName="SUSAN.ANDERSON@EXAMPLE.COM",
     Email = "susan.anderson@example.com",
-
+    NormalizedEmail="SUSAN.ANDERSON@EXAMPLE.COM",
     EmailConfirmed = true,
     PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!"),
     UserType="Patient"
