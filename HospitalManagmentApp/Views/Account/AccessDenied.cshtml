@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<style>
+    /* Background Gradient */
+    body {
+        background: linear-gradient(135deg, #f3f4f6, #e0e0e0);
+        color: #333;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .access-denied-container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .access-denied-content {
+        max-width: 600px;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .access-denied-icon {
+        width: 100px;
+        margin-bottom: 20px;
+        animation: fadeInDown 1s ease-in-out;
+    }
+
+    .access-denied-content h1 {
+        font-size: 3rem;
+        color: #ff4b2b;
+        margin-bottom: 20px;
+        animation: fadeInDown 1s ease-in-out;
+    }
+
+    .access-denied-content p {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 30px;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .home-button {
+        font-size: 1rem;
+        padding: 10px 20px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .home-button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Fade-In Animations */
+    @@keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @@keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="access-denied-container">
+    <div class="access-denied-content">
+        <!-- Include the uploaded icon -->
+        <img src="~/images/access-denied.png" alt="Access Denied Icon" class="access-denied-icon" />
+        <h1>Access Denied</h1>
+        <p>Sorry, you do not have permission to access this page.</p>
+        <a href="/" class="home-button">Return to Home</a>
+    </div>
+</div>

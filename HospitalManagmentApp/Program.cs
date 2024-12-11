@@ -68,6 +68,8 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
 app.Use((context, next) =>
 {
     if (context.User.Identity?.IsAuthenticated == true && context.Request.Path == "/")
