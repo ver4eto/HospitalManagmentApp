@@ -27,12 +27,17 @@ namespace HospitalManagmentApp.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                
+               
                 return RedirectToAction("Welcome");
             }
 
+            bool isPatient = User.IsInRole("Patient"); // Replace with your role-check logic
             
-            return View();
+                ViewBag.ShowPatientBanner = isPatient;
+
+                return View();
+            
+            
            
         }
         public IActionResult Welcome()
@@ -71,12 +76,15 @@ namespace HospitalManagmentApp.Controllers
             {
                 if (statusCode == 404)
                 {
-                    return View("NotFound"); // Return a custom 404 page
+                    return View("404"); // Return a custom 404 page
                 }
-
-                if(statusCode == 500)
+                if (statusCode == 403)
                 {
-                    return View("Error500");
+                    return RedirectToAction("AccessDenied", "Account"); // Redirect to Access Denied
+                }
+                if (statusCode == 500)
+                {
+                    return View("500");
                 }
             }
 

@@ -1,5 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "Hospital Management System";
+    ViewData["Title"] = "Welcome to Our Hospital Management System!";
+}
+
+@if (ViewBag.ShowPatientBanner != null && (bool)ViewBag.ShowPatientBanner)
+{
+    <div class="alert alert-info text-center" role="alert">
+        <strong><h3>Please contact us for further information!</h3></strong>
+        <a asp-controller="Home" asp-action="ContactUs" class="alert-link">Contact Us</a>
+    </div>
 }
 
 <div class="container mt-5">
@@ -49,11 +57,11 @@
                     </ul>
                 </div>
             </div>
-        }
-
+        }       
         
-        
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Doctor") || User.IsInRole("Nurse"))
 
+                    {
         <!-- Patient -->
         <div class="col-lg-3 col-md-4">
             <div class="box shadow">
@@ -62,12 +70,10 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="patientDropdown">
                     <li><a class="dropdown-item" href="/Patient/Index">View Patients</a></li>
-                    @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Doctor") || User.IsInRole("Nurse"))
-
-                    {
+                    
                         <li><a class="dropdown-item" href="/Patient/Add">Add Patient</a></li>
                         <li><a class="dropdown-item" href="/Patient/Manage">Manage Patients</a></li>
-                    }
+                    
                 </ul>
             </div>
         </div>
@@ -80,15 +86,11 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="departmentDropdown">
                     
-                    @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Doctor") || User.IsInRole("Nurse"))
-
-
-
-                    {
+                    
                         <li><a class="dropdown-item" href="/Department/Index">View Departments</a></li>
                         <li> <a class="dropdown-item" href="/Department/Add">Add Department</a></li>
                        
-                    }
+                    
                 </ul>
             </div>
         </div>
@@ -112,17 +114,14 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="treatmentDropdown">
                     <li><a class="dropdown-item" href="/Treatment/Index">View Treatments</a></li>
-                    @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Doctor") || User.IsInRole("Nurse"))
-
-                    {
-                       
+                   
                         <li> <a class="dropdown-item" href="/Treatment/Add">Add Treatment</a></li>
                        
-                    }
+                    
                 </ul>
             </div>
         </div>
 
-
+                    }
     </div>
 </div>
