@@ -7,7 +7,48 @@
 
 <h2>All Doctors</h2>
 
+<form asp-action="Index" method="get" class="mb-4">
+
+    <div class="row">
+        <div class="col">
+            <input type="text"
+                   name="searchQuery"
+                   class="form-control"
+                   placeholder="Search by Name..."
+                   value="@ViewData["SearchQuery"]" />
+        </div>
+        <div class="col">
+            <input type="text"
+                   name="specialty"
+                   class="form-control"
+                   placeholder="Doctor`s specialty..."
+                   value="@ViewData["Specialty"]" />
+        </div>
+        <div class="col">
+            <input type="text"
+                   name="department"
+                   class="form-control"
+                   placeholder="Department"
+                   value="@ViewData["Department"]" />
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+
+</form>
+
+
+
+
 <div class="row">
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @ViewBag.Message
+        </div>
+    }
     @foreach (var doctor in Model)
     {
         <div class="col-md-4">

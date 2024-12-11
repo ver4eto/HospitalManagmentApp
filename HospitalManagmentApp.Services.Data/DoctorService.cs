@@ -207,34 +207,57 @@ namespace HospitalManagmentApp.Services.Data
             return model;
         }
 
-        public async Task<IEnumerable<DoctorIndexViewModel>> IndexGetAllDoctorsAsync()
+        public async Task<IEnumerable<DoctorIndexViewModel>> IndexGetAllDoctorsAsync(string? search, string? specialty, string? department)
         {
+
             try
             {
-                var doctors = await this.doctorsRepository
-       .GetAllAttcahed()
-       .Where(d => !d.IsDeleted)
-       .Select(d => new DoctorIndexViewModel
-       {
-           Id = d.Id,
-           FirstName = d.FirstName,
-           LastName = d.LastName,
-           DepartmentName = d.Department.Name,
-           Specialty = d.Specialty
-       })
-       .ToArrayAsync();
+                // Fetch doctors from the repository, applying the search condition if provided
+                var doctorsQuery = this.doctorsRepository
+                    .GetAllAttcahed()
+                    .Where(d => !d.IsDeleted);
 
-                if (doctors == null || !doctors.Any())
+                // Apply search filter if search input is provided
+                if (!string.IsNullOrWhiteSpace(search))
                 {
-                    throw new NullReferenceException("No doctors available!");
+                    var searchData = search.ToLower().Trim();
+                    doctorsQuery = doctorsQuery.Where(d =>
+                        d.FirstName.ToLower().Contains(searchData) ||
+                        d.LastName.ToLower().Contains(searchData));
+                   
                 }
+                if (!string.IsNullOrWhiteSpace(specialty))
+                {
+                    var specialtyFilter = specialty.ToLower().Trim();
+                    doctorsQuery = doctorsQuery.Where(d => d.Specialty.ToLower().Contains(specialtyFilter));
+                }
+
+                // Apply department filter if provided
+                if (!string.IsNullOrWhiteSpace(department))
+                {
+                    var departmentFilter = department.ToLower().Trim();
+                    doctorsQuery = doctorsQuery.Where(d => d.Department.Name.ToLower().Contains(departmentFilter));
+                }
+
+                // Project the data to the view model
+                var doctors = await doctorsQuery
+                    .Select(d => new DoctorIndexViewModel
+                    {
+                        Id = d.Id,
+                        FirstName = d.FirstName,
+                        LastName = d.LastName,
+                        DepartmentName = d.Department.Name,
+                        Specialty = d.Specialty
+                    })
+                    .ToArrayAsync();
+
 
                 return doctors;
             }
-            catch (NullReferenceException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                throw;
+                // Handle exceptions or log them as needed
+                throw new ApplicationException("An error occurred while fetching the doctors.", ex);
             }
 
         }

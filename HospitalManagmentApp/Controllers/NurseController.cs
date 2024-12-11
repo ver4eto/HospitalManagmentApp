@@ -5,6 +5,8 @@ using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using static HospitalManagmentApp.Common.EntityValidationConstants;
 
 namespace HospitalManagmentApp.Controllers
 {
@@ -20,10 +22,17 @@ namespace HospitalManagmentApp.Controllers
             this.userManager = userManager;
             this.nurseService = nurseService;
         }
-        public async Task< IActionResult> Index()
+        public async Task< IActionResult> Index(string? search, string? department)
         {
-            var nurses=await nurseService.GetAllNursesAsync();
+            var nurses=await nurseService.GetAllNursesAsync( search, department);
+            ViewData["SearchQuery"] = search;            
+            ViewData["Department"] = department;
 
+            if (!nurses.Any())
+            {
+                ViewBag.Message = "No nurses available.";
+                nurses= await nurseService.GetAllNursesAsync(search, department);
+            }
             return View(nurses);
         }
 

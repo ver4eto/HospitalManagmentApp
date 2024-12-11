@@ -4,7 +4,7 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
 {
     public interface INurseService
     {
-        Task<List<NurseIndexViewModel>> GetAllNursesAsync();
+        Task<List<NurseIndexViewModel>> GetAllNursesAsync(string ? search, string?department);
         Task<AddNurseViewModel> GetAddNurseViewModelAsync();
         Task<bool> AddNurseAsync(AddNurseViewModel model);
         Task<EditNurseViewModel> GetEditNurseViewModelAsync(Guid id);

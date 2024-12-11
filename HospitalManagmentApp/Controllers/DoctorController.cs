@@ -19,9 +19,20 @@ namespace HospitalManagmentApp.Controllers
             this.userManager = userManager;
             this.doctorService = doctorService;
         }
-        public async Task< IActionResult> Index()
+        public async Task< IActionResult> Index(string? search, string? specialty, string? department)
         {
-           IEnumerable<DoctorIndexViewModel> doctors= await this.doctorService.IndexGetAllDoctorsAsync();
+           IEnumerable<DoctorIndexViewModel> doctors= await this.doctorService.IndexGetAllDoctorsAsync(search,specialty,department);
+
+            ViewData["SearchQuery"]=search;
+            ViewData["Sepecialty"] = specialty;
+            ViewData["Department"]= department;
+
+            if (!doctors.Any())
+            {
+                ViewBag.Message = "No doctors available.";
+                doctors= await this.doctorService.IndexGetAllDoctorsAsync(null, null, null);
+            }
+
             return View(doctors);
         }
 

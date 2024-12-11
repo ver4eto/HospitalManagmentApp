@@ -18,18 +18,46 @@ namespace HospitalManagmentApp.Services.Data
             this.departmentRepository = departmentRepository;
             this.userEntityService = userEntityService;
         }
-        public async Task<List<NurseIndexViewModel>> GetAllNursesAsync()
+        public async Task<List<NurseIndexViewModel>> GetAllNursesAsync(string? search, string? department)
         {
-            return await nurseRepository.GetAllAttcahed()
-                .Where(n => !n.IsDeleted)
-                .Select(n => new NurseIndexViewModel
+            try
+            {
+                // Fetch nurses from the repository with base conditions
+                var nursesQuery = this.nurseRepository
+                    .GetAllAttcahed()
+                    .Where(n => !n.IsDeleted);
+
+                // Apply search filter if search input is provided
+                if (!string.IsNullOrWhiteSpace(search))
                 {
-                    Id = n.Id,
-                    FirstName = n.FirstName,
-                    LastName = n.LastName,
-                    Department = n.Department.Name
-                })
-                .ToListAsync();
+                    var searchData = search.ToLower().Trim();
+                    nursesQuery = nursesQuery.Where(n =>
+                        n.FirstName.ToLower().Contains(searchData) ||
+                        n.LastName.ToLower().Contains(searchData));
+                }
+                if (!string.IsNullOrWhiteSpace(department))
+                {
+                    var departmentFilter = department.ToLower().Trim();
+                    nursesQuery = nursesQuery.Where(d => d.Department.Name.ToLower().Contains(departmentFilter));
+                }
+                // Project the data to the view model
+                var nurses = await nursesQuery
+                    .Select(n => new NurseIndexViewModel
+                    {
+                        Id = n.Id,
+                        FirstName = n.FirstName,
+                        LastName = n.LastName,
+                        Department = n.Department.Name
+                    })
+                    .ToListAsync();
+
+                return nurses;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions or log them as needed
+                throw new ApplicationException("An error occurred while fetching the nurses.", ex);
+            }
         }
 
         public async Task<AddNurseViewModel> GetAddNurseViewModelAsync()

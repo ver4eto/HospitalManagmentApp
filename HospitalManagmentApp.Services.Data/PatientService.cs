@@ -42,23 +42,61 @@ namespace HospitalManagmentApp.Services.Data
             this.patientTreatmentRepo = patientTreatmentRepo;
         }
 
-        public async Task<List<PatientIndexViewModel>> GetAllPatientsAsync()
+        public async Task<List<PatientIndexViewModel>> GetAllPatientsAsync(string? search, string? department, int? room)
         {
-            return await patientRepo.GetAllAttcahed()
-         .Where(p => !p.IsDeleted)
-         .Select(p => new PatientIndexViewModel
-         {
-             Id = p.Id,
-             Name = $"{p.FirstName} {p.LastName}",
-             EGN = p.EGN,
-             PhoneNumber = p.PhoneNumber,
-             Address = p.Address,
-             Department = p.Department != null ? p.Department.Name : "Unknown",
-             Room = p.Room != null ? p.Room.RoomNumber : 0,
-             HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
-             EmailAddress = p.EmailAddress
-         })
-         .ToListAsync();
+            try
+            {
+                // Base query for patients
+                var patientsQuery = this.patientRepo
+                    .GetAllAttcahed()
+                    .Where(p => !p.IsDeleted);
+
+                // Apply search filter if search input is provided
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    var searchData = search.ToLower().Trim();
+                    patientsQuery = patientsQuery.Where(p =>
+                        p.FirstName.ToLower().Contains(searchData) ||
+                        p.LastName.ToLower().Contains(searchData) ||
+                        p.EGN.ToLower().Contains(searchData) ||
+                        (p.EmailAddress != null && p.EmailAddress.ToLower().Contains(searchData)) ||
+                        (p.PhoneNumber != null && p.PhoneNumber.ToLower().Contains(searchData)));
+                }
+                if (!string.IsNullOrWhiteSpace(department))
+                {
+                    var departmentFiletr = department.ToLower().Trim();
+                    patientsQuery = patientsQuery.Where(d => d.Department.Name.ToLower().Contains(departmentFiletr));
+                }
+
+                
+                if (room>0)
+                {
+                   
+                    patientsQuery = patientsQuery.Where(p => p.Room.RoomNumber==room);
+                }
+                // Project the data to the view model
+                var patients = await patientsQuery
+                    .Select(p => new PatientIndexViewModel
+                    {
+                        Id = p.Id,
+                        Name = $"{p.FirstName} {p.LastName}",
+                        EGN = p.EGN,
+                        PhoneNumber = p.PhoneNumber,
+                        Address = p.Address,
+                        Department = p.Department != null ? p.Department.Name : "Unknown",
+                        Room = p.Room != null ? p.Room.RoomNumber : 0,
+                        HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
+                        EmailAddress = p.EmailAddress
+                    })
+                    .ToListAsync();
+
+                return patients;
+            }
+            catch (Exception ex)
+            {
+               
+                throw new ApplicationException("An error occurred while fetching the patients.", ex);
+            }
         }
         public async Task<AddPatientViewModel> PrepareAddPatientViewModelAsync()
         {

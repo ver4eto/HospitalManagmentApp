@@ -15,6 +15,37 @@
 
 <h2>All Patients</h2>
 
+<form asp-action="Index" method="get" class="mb-4">
+
+    <div class="row">
+        <div class="col">
+            <input type="text"
+                   name="searchQuery"
+                   class="form-control"
+                   placeholder="Search by Name..."
+                   value="@ViewData["SearchQuery"]" />
+        </div>
+        <div class="col">
+            <input type="text"
+                   name="department"
+                   class="form-control"
+                   placeholder="Patient`s admission department..."
+                   value="@ViewData["Department"]" />
+        </div>
+        <div class="col">
+            <input type="number"
+                   name="room"
+                   class="form-control"
+                   placeholder="Patient`s room"
+                   value="@ViewData["Room"]" />
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+
+</form>
+
 <div class="row">
     @foreach (var patient in Model)
     {

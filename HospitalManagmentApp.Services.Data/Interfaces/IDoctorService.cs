@@ -5,7 +5,7 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
     public interface IDoctorService
     {
 
-        Task<IEnumerable<DoctorIndexViewModel>> IndexGetAllDoctorsAsync();
+        Task<IEnumerable<DoctorIndexViewModel>> IndexGetAllDoctorsAsync(string? searcheQuery, string? specialty, string? department );
         Task AddDoctorAsync(AddDoctorViewModel model);
         
         Task <EditDoctorViewModel?> GetEditDoctorViewModel(Guid id);

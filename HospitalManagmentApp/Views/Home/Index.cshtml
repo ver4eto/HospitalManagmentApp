@@ -4,6 +4,8 @@
 
 <div class="container mt-5">
     <h2 class="text-center mb-4">Hospital Management System</h2>
+
+    
     <div class="row justify-content-center gap-3">
 
         <!-- Manager Actions -->
@@ -112,9 +114,8 @@
                     <li><a class="dropdown-item" href="/Treatment/Index">View Treatments</a></li>
                     @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Doctor") || User.IsInRole("Nurse"))
 
-
-
                     {
+                       
                         <li> <a class="dropdown-item" href="/Treatment/Add">Add Treatment</a></li>
                        
                     }
