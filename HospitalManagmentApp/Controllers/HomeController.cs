@@ -27,12 +27,17 @@ namespace HospitalManagmentApp.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                
+               
                 return RedirectToAction("Welcome");
             }
 
+            bool isPatient = User.IsInRole("Patient"); // Replace with your role-check logic
             
-            return View();
+                ViewBag.ShowPatientBanner = isPatient;
+
+                return View();
+            
+            
            
         }
         public IActionResult Welcome()
