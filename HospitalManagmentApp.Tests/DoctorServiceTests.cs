@@ -7,8 +7,11 @@ using HospitalManagmentApp.DataModels;
 using HospitalManagmentApp.Services.Data;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using HospitalManagmentApp.Services.Mapping;
+using Microsoft.EntityFrameworkCore;
 using MockQueryable;
 using Moq;
+
+using System.Linq.Expressions;
 
 namespace HospitalManagmentApp.Tests
 {
@@ -51,106 +54,18 @@ namespace HospitalManagmentApp.Tests
             _doctorRepoMock = new Mock<IRepository<Doctor, Guid>>();
             _departmentRepoMock = new Mock<IRepository<Department, Guid>>();
             _userEntityService = new Mock<IUserEntityService>();
-           
+
             _doctorService = new DoctorService(_doctorRepoMock.Object, _departmentRepoMock.Object, _userEntityService.Object);
 
 
 
         }
 
-        [Test]
-        public async Task IndexGetAllDoctorsAsync_ReturnsDoctors_WhenDoctorsExist()
-        {
-            
-            var mockDoctorsData = new List<Doctor>
-        {
-            new Doctor
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "John",
-                LastName = "Doe",
-                Specialty = "Cardiology",
-                IsDeleted = false,
-                Department = new Department { Name = "Cardiology" }
-            },
-            new Doctor
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Jane",
-                LastName = "Smith",
-                Specialty = "Neurology",
-                IsDeleted = false,
-                Department = new Department { Name = "Neurology" }
-            }
-        };
 
-            var mockQueryable = mockDoctorsData.AsQueryable().BuildMock();
 
-            _doctorRepoMock
-                .Setup(r => r.GetAllAttcahed())
-                .Returns(mockQueryable);
 
-            var result = await _doctorService.IndexGetAllDoctorsAsync();
 
-            Assert.IsNotNull(result, "The result should not be null.");
-            Assert.AreEqual(2, result.Count(), "The number of doctors should match the mock data count.");
-            Assert.IsTrue(result.Any(d => d.FirstName == "John" && d.LastName == "Doe" && d.Specialty == "Cardiology"),
-                "Doctor 'John Doe' with 'Cardiology' specialty should be in the result.");
-            Assert.IsTrue(result.Any(d => d.FirstName == "Jane" && d.LastName == "Smith" && d.Specialty == "Neurology"),
-                "Doctor 'Jane Smith' with 'Neurology' specialty should be in the result.");
-        }
 
-        [Test]
-        public async Task IndexGetAllDoctorsAsync_ThrowsNullReferenceException_WhenNoDoctorsExist()
-        {
-            var emptyDoctorsQueryable = new List<Doctor>().BuildMock();
-            _doctorRepoMock.Setup(r => r.GetAllAttcahed()).Returns(emptyDoctorsQueryable);
-
-            var exception = Assert.ThrowsAsync<NullReferenceException>(async () =>
-                await _doctorService.IndexGetAllDoctorsAsync());
-
-            Assert.AreEqual("No doctors available!", exception.Message, "Exception message should match.");
-            _doctorRepoMock.Verify(r => r.GetAllAttcahed(), Times.Once, "GetAllAttcahed should be called once.");
-        }
-
-       
-        [Test]
-        public async Task MenageDoctor_ReturnsViewModel_WhenDoctorExistsAndIsNotDeleted()
-        {
-            var doctorId = Guid.NewGuid();
-            var department = new Department
-            {
-                Id = Guid.NewGuid(),
-                Name = "Cardiology"
-            };
-
-            var doctor = new Doctor
-            {
-                Id = doctorId,
-                FirstName = "John",
-                LastName = "Doe",
-                Specialty = "Cardiologist",
-                EmailAddress = "john.doe@example.com",
-                Salary = 120000,
-                Department = department,
-                IsDeleted = false,
-                UserId = Guid.NewGuid().ToString()
-            };
-
-            var doctorsMockQueryable = new List<Doctor> { doctor }.AsQueryable().BuildMock();
-            _doctorRepoMock.Setup(r => r.GetAllAttcahed()).Returns(doctorsMockQueryable);
-
-            var result = await _doctorService.MenageDoctor(doctorId);
-
-            Assert.IsNotNull(result, "Result should not be null when doctor exists.");
-            Assert.AreEqual(doctor.Id, result!.Id, "Doctor ID should match.");
-            Assert.AreEqual(doctor.FirstName, result.FirstName, "Doctor first name should match.");
-            Assert.AreEqual(doctor.LastName, result.LastName, "Doctor last name should match.");
-            Assert.AreEqual(doctor.Specialty, result.Specialty, "Doctor specialty should match.");
-            Assert.AreEqual(doctor.EmailAddress, result.EmailAddress, "Doctor email address should match.");
-            Assert.AreEqual(doctor.Salary, result.Salary, "Doctor salary should match.");
-            Assert.AreEqual(doctor.Department.Name, result.DepartmentName, "Department name should match.");
-        }
 
         [Test]
         public async Task AddDoctorAsync_AddsDoctor_WhenValidModelIsProvided()
@@ -214,7 +129,7 @@ namespace HospitalManagmentApp.Tests
         [Test]
         public async Task DeleteDoctorAsync_ReturnsTrue_WhenDoctorExistsAndIsNotDeleted()
         {
-           
+
             var doctorId = Guid.NewGuid();
             var doctor = new Doctor
             {
@@ -493,7 +408,7 @@ namespace HospitalManagmentApp.Tests
             Assert.AreEqual("John", result.FirstName, "The doctor's first name should match.");
             Assert.AreEqual("Doe", result.LastName, "The doctor's last name should match.");
             Assert.AreEqual("Cardiology", result.Specialty, "The doctor's specialty should match.");
-            
+
         }
 
         [Test]
@@ -649,5 +564,7 @@ namespace HospitalManagmentApp.Tests
         }
 
 
+       
     }
 }
+

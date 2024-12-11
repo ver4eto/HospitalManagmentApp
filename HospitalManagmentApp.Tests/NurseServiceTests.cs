@@ -93,7 +93,7 @@ namespace HospitalManagmentApp.Tests
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNursesQueryable);
 
             // Act
-            var result = await _nurseService.GetAllNursesAsync();
+            var result = await _nurseService.GetAllNursesAsync(null,null);
 
             // Assert
             Assert.IsNotNull(result, "The result should not be null when nurses exist.");
@@ -109,7 +109,7 @@ namespace HospitalManagmentApp.Tests
             var mockNursesQueryable = emptyNurses.AsQueryable().BuildMock();
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNursesQueryable);
 
-            var result = await _nurseService.GetAllNursesAsync();
+            var result = await _nurseService.GetAllNursesAsync(null, null);
 
             Assert.IsNotNull(result, "The result should not be null even when no nurses exist.");
             Assert.IsEmpty(result, "The result should be an empty list when no nurses exist.");
@@ -141,7 +141,7 @@ namespace HospitalManagmentApp.Tests
             var mockNursesQueryable = nurses.AsQueryable().BuildMock();
             _nurseRepo.Setup(r => r.GetAllAttcahed()).Returns(mockNursesQueryable);
 
-            var result = await _nurseService.GetAllNursesAsync();
+            var result = await _nurseService.GetAllNursesAsync(null,null);
 
             Assert.IsNotNull(result, "The result should not be null when nurses exist.");
             Assert.AreEqual(1, result.Count, "The result should contain only non-deleted nurses.");

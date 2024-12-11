@@ -92,7 +92,7 @@ namespace HospitalManagmentApp.Tests
             var patientsMockQueryable = patientData.AsQueryable().BuildMock();
             _patientRepoMock.Setup(r => r.GetAllAttcahed()).Returns(patientsMockQueryable);
 
-            var result = await _patientService.GetAllPatientsAsync();
+            var result = await _patientService.GetAllPatientsAsync(null,null,101,3,1);
 
             Assert.IsNotNull(result, "Result should not be null.");
             Assert.AreEqual(2, result.Count, "The number of patients should match the mock data count.");
@@ -106,7 +106,7 @@ namespace HospitalManagmentApp.Tests
             var emptyPatientsMockQueryable = new List<Patient>().AsQueryable().BuildMock();
             _patientRepoMock.Setup(r => r.GetAllAttcahed()).Returns(emptyPatientsMockQueryable);
 
-            var result = await _patientService.GetAllPatientsAsync();
+            var result = await _patientService.GetAllPatientsAsync(null, null, 101, 3, 1);
 
             Assert.IsNotNull(result, "Result should not be null.");
             Assert.IsEmpty(result, "Result should be an empty list when no patients exist.");
@@ -136,7 +136,7 @@ namespace HospitalManagmentApp.Tests
             var patientsMockQueryable = patientData.AsQueryable().BuildMock();
             _patientRepoMock.Setup(r => r.GetAllAttcahed()).Returns(patientsMockQueryable);
 
-            var result = await _patientService.GetAllPatientsAsync();
+            var result = await _patientService.GetAllPatientsAsync(null, null, 101, 3, 1);
 
             Assert.IsNotNull(result, "Result should not be null.");
             Assert.AreEqual(1, result.Count, "The number of patients should match the mock data count.");
