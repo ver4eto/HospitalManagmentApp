@@ -3,93 +3,126 @@
 }
 
 <div class="container mt-5">
-    <h2 class="text-center">Hospital Management System</h2>
-    <div class="row justify-content-center mt-4">
+    <h2 class="text-center mb-4">Hospital Management System</h2>
 
-        <!-- Doctor Dropdown -->
-        <div class="col-md-2">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="doctorDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Doctor
-                </button>
+    
+    <div class="row justify-content-center gap-3">
 
-                <div class="dropdown-menu" aria-labelledby="doctorDropdown">
-                    
-                    <a class="dropdown-item" asp-area="" asp-controller="Doctor" asp-action="Index">View Doctors</a>
-                    <a class="dropdown-item" asp-area="" asp-controller="Doctor" asp-action="Create">Add Doctor</a>
-                    <a class="dropdown-item" asp-area="" asp-controller="Doctor" asp-action="Manage">Manage Doctors</a>
+        <!-- Manager Actions -->
+        @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+        {
+            <div class="col-lg-3 col-md-4">
+                <div class="box shadow">
+                    <button class="btn btn-lg btn-success dropdown-toggle w-100" type="button" id="managerDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Manager Actions
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="managerDropdown">
+                        <li><a class="dropdown-item" asp-controller="Manager" asp-action="Index">Dashboard</a></li>
+                        <li><a class="dropdown-item" asp-controller="Manager" asp-action="EmployeeManage">Employees Management</a></li>
+                        <li><a class="dropdown-item" asp-controller="Manager" asp-action="FacilitiesManage">Facilities Management</a></li>
+                    </ul>
                 </div>
             </div>
-        </div>
 
-        <!-- Nurse Dropdown -->
-        <div class="col-md-2">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="nurseDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Nurse
-                </button>
-                <div class="dropdown-menu" aria-labelledby="nurseDropdown">
-                    <a class="dropdown-item"  asp-area="" asp-controller="Nurse" asp-action="Index">View Nurses</a>
-                    <a class="dropdown-item" asp-area="" asp-controller="Nurse" asp-action="Add">Add Nurse</a>
-                    <a class="dropdown-item" asp-area="" asp-controller="Nurse" asp-action="Manage">Manage Nurses</a>
+            <div class="col-lg-3 col-md-4">
+                <div class="box shadow">
+                    <button class="btn btn-lg btn-success dropdown-toggle w-100" type="button" id="doctorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Doctor
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="doctorDropdown">
+                        <li><a class="dropdown-item" asp-controller="Doctor" asp-action="Index">View Doctors</a></li>
+                        <li><a class="dropdown-item" asp-controller="Doctor" asp-action="Create">Add Doctor</a></li>                        
+                    </ul>
                 </div>
             </div>
-        </div>
 
-        <!-- Patient Dropdown -->
-        <div class="col-md-2">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="patientDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <!-- Nurse -->
+            <div class="col-lg-3 col-md-4">
+                <div class="box shadow">
+                    <button class="btn btn-lg btn-success dropdown-toggle w-100" type="button" id="nurseDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Nurse
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="nurseDropdown">
+                        <li><a class="dropdown-item" asp-controller="Nurse" asp-action="Index">View Nurses</a></li>
+                        <li><a class="dropdown-item" asp-controller="Nurse" asp-action="Add">Add Nurse</a></li>
+                       
+                    </ul>
+                </div>
+            </div>
+        }
+
+        
+        
+
+        <!-- Patient -->
+        <div class="col-lg-3 col-md-4">
+            <div class="box shadow">
+                <button class="btn btn-lg btn-success dropdown-toggle w-100" type="button" id="patientDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     Patient
                 </button>
-                <div class="dropdown-menu" aria-labelledby="patientDropdown">
-                    <a class="dropdown-item" href="/Patient/Index">View Patients</a>
-                    <a class="dropdown-item" href="/Patient/Add">Add Patient</a>
-                    <a class="dropdown-item" href="/Patient/Manage">Manage Patients</a>
-                </div>
+                <ul class="dropdown-menu" aria-labelledby="patientDropdown">
+                    <li><a class="dropdown-item" href="/Patient/Index">View Patients</a></li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Doctor") || User.IsInRole("Nurse"))
+
+                    {
+                        <li><a class="dropdown-item" href="/Patient/Add">Add Patient</a></li>
+                        <li><a class="dropdown-item" href="/Patient/Manage">Manage Patients</a></li>
+                    }
+                </ul>
             </div>
         </div>
 
-        <!-- Department Dropdown -->
-        <div class="col-md-2">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="departmentDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Department
+
+        <div class="col-lg-3 col-md-4">
+            <div class="box shadow">
+                <button class="btn btn-lg btn-success dropdown-toggle w-100" type="button" id="departmentDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Departments
                 </button>
-                <div class="dropdown-menu" aria-labelledby="departmentDropdown">
-                    <a class="dropdown-item" asp-area="" asp-controller="Department" asp-action="Index">View Departments</a>
-                    <a class="dropdown-item" asp-area="" asp-controller="Department" asp-action="Add">Add Department</a>
-                    <a class="dropdown-item" href="/Department/Manage">Manage Departments</a>
-                </div>
+                <ul class="dropdown-menu" aria-labelledby="departmentDropdown">
+                    
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Doctor") || User.IsInRole("Nurse"))
+
+
+
+                    {
+                        <li><a class="dropdown-item" href="/Department/Index">View Departments</a></li>
+                        <li> <a class="dropdown-item" href="/Department/Add">Add Department</a></li>
+                       
+                    }
+                </ul>
             </div>
         </div>
 
-        <!-- Room Dropdown -->
-        <div class="col-md-2">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="roomDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Room
+        <div class="col-lg-3 col-md-4">
+            <div class="box shadow">
+                <button class="btn btn-lg btn-success dropdown-toggle w-100" type="button" id="patientDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Rooms
                 </button>
-                <div class="dropdown-menu" aria-labelledby="roomDropdown">
-                    <a class="dropdown-item" href="/Room/Index">View Rooms</a>           
-                    <a class="dropdown-item" href="/Room/Manage">Manage Rooms</a>
-                </div>
+                <ul class="dropdown-menu" aria-labelledby="patientDropdown">
+                    <li><a class="dropdown-item" href="/Room/Index">View Rooms</a></li>
+                   
+                </ul>
             </div>
         </div>
 
-        <!-- Treatment Dropdown -->
-        <div class="col-md-2">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle w-100" type="button" id="treatmentDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Treatment
+        <div class="col-lg-3 col-md-4">
+            <div class="box shadow">
+                <button class="btn btn-lg btn-success dropdown-toggle w-100" type="button" id="patientDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Treatments
                 </button>
-                <div class="dropdown-menu" aria-labelledby="treatmentDropdown">
-                    <a class="dropdown-item" href="/Treatment/Index">View Treatments</a>
-                    <a class="dropdown-item" href="/Treatment/Add">Add Treatment</a>
-                    <a class="dropdown-item" href="/Treatment/Manage">Manage Treatments</a>
-                </div>
+                <ul class="dropdown-menu" aria-labelledby="treatmentDropdown">
+                    <li><a class="dropdown-item" href="/Treatment/Index">View Treatments</a></li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Doctor") || User.IsInRole("Nurse"))
+
+                    {
+                       
+                        <li> <a class="dropdown-item" href="/Treatment/Add">Add Treatment</a></li>
+                       
+                    }
+                </ul>
             </div>
         </div>
+
 
     </div>
 </div>

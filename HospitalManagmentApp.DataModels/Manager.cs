@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Manager;
 
 namespace HospitalManagmentApp.DataModels
@@ -32,7 +32,10 @@ namespace HospitalManagmentApp.DataModels
         [MaxLength(PhoneMaxLenght)]
         public string PhoneNumber { get; set; }=PhoneDefaultValue;
 
-       
 
+        public string UserId { get; set; } = null!;
+
+        [ForeignKey(nameof(UserId))]
+        public ApplicationUser User { get; set; } = null!;
     }
 }

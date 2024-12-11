@@ -1,0 +1,47 @@
+﻿@using HospitalManagment.ViewModels.Manager
+@model ManagerDoctorsReportsViewModel
+
+<h1 class="text-center">Doctors Reports</h1>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <!-- Total Doctors -->
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Doctors</h5>
+                    <p class="card-text display-4">@Model.TotalDoctors</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Patients -->
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Patients</h5>
+                    <p class="card-text display-4">@Model.TotalPatients</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Expenses for Doctors -->
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Salaries (Expenses)</h5>
+                    <p class="card-text display-4">@Model.TotalExpenses</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Average salary per doctor</h5>
+                    <p class="card-text display-4">@Model.AverageSalary</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

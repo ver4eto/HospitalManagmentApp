@@ -1,60 +1,66 @@
 ﻿@using HospitalManagment.ViewModels.Patient
+@using System.Security.Claims
 @model AddPatientViewModel
 
 <div class="container mt-5">
     <h2 class="text-center">Add New Patient</h2>
 
     <form asp-action="Add" method="post" class="mt-4">
-        <!-- First Name -->
+        @Html.AntiForgeryToken()
         <div class="form-group">
             <label asp-for="FirstName" class="control-label" style="font-weight: bold;">First Name</label>
             <input asp-for="FirstName" class="form-control" />
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
-        <!-- Last Name -->
+        
         <div class="form-group">
             <label asp-for="LastName" class="control-label" style="font-weight: bold;">Last Name</label>
             <input asp-for="LastName" class="form-control" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
 
-        <!-- EGN -->
+      
         <div class="form-group">
             <label asp-for="EGN" class="control-label" style="font-weight: bold;">EGN of Patient</label>
             <input asp-for="EGN" class="form-control" />
             <span asp-validation-for="EGN" class="text-danger"></span>
         </div>
 
-        <!-- Address -->
+    
         <div class="form-group">
             <label asp-for="Address" class="control-label" style="font-weight: bold;">Address</label>
             <input asp-for="Address" class="form-control" />
             <span asp-validation-for="Address" class="text-danger"></span>
         </div>
 
-        <!-- Email -->
+      
         <div class="form-group">
             <label asp-for="EmailAddress" class="control-label" style="font-weight: bold;">Email</label>
             <input asp-for="EmailAddress" type="email" class="form-control" />
             <span asp-validation-for="EmailAddress" class="text-danger"></span>
         </div>
 
-        <!-- Phone Number -->
+        <div class="form-group">
+            <label asp-for="Password" class="control-label" style="font-weight: bold;">Password</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+       
         <div class="form-group">
             <label asp-for="PhoneNumber" class="control-label" style="font-weight: bold;">Phone Number</label>
             <input asp-for="PhoneNumber" class="form-control" />
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
 
-        <!-- Has Medical Insurance -->
         <div class="form-group">
             <label asp-for="HasMedicalInsurance" class="control-label" style="font-weight: bold;">Has Medical Insurance?</label>
             <input asp-for="HasMedicalInsurance" type="checkbox" class="form-check-input" />
             <span asp-validation-for="HasMedicalInsurance" class="text-danger"></span>
         </div>
 
-        <!-- Department Dropdown -->
+       
         <div class="form-group">
             <label asp-for="DepartmentId" class="control-label" style="font-weight: bold;">Department</label>
             <select asp-for="DepartmentId" class="form-control" id="departmentDropdown" asp-items="@(new SelectList(Model.Departments, "Id", "Name"))">
@@ -63,7 +69,7 @@
             <span asp-validation-for="DepartmentId" class="text-danger"></span>
         </div>
 
-        <!-- Room Dropdown -->
+        
         <div class="form-group">
             <label asp-for="RoomId" class="control-label" style="font-weight: bold;">Room</label>
             <select asp-for="RoomId" class="form-control" id="roomDropdown">
@@ -72,7 +78,25 @@
             <span asp-validation-for="RoomId" class="text-danger"></span>
         </div>
 
-        <!-- Submit Button -->
+        @if(!User.IsInRole("Doctor")){
+        <div class="form-group">
+            <label for="SelectedDoctorId">Assign a Doctor</label>
+            <select asp-for="SelectedDoctorId" class="form-control">
+                <option value="">Select a Doctor</option>
+                @foreach (var doctor in Model.Doctors)
+
+                {
+                    <option value="@doctor.Value">@doctor.Text</option>
+                }
+            </select>
+        </div>
+        }
+        @if(User.IsInRole("Doctor"))
+        {
+          
+            <input type="hidden" name="SelectedDoctorId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+        }
+      
         <button type="submit" class="btn btn-primary mt-3">Add New Patient</button>
         <a asp-action="Index" class="btn btn-secondary mt-3 ml-2">Cancel</a>
     </form>
@@ -85,11 +109,11 @@
                 var departmentId = $(this).val();
                 var roomDropdown = $('#roomDropdown');
 
-                // Clear existing room options
+              
                 roomDropdown.empty().append('<option value="">-- Select a Room --</option>');
 
                 if (departmentId) {
-                    // Fetch available rooms for the selected department via AJAX
+                   
                     $.get('/Patient/GetFreeRooms', { departmentId: departmentId }, function (data) {
                         data.forEach(function (room) {
                             roomDropdown.append($('<option>', { value: room.value, text: room.text }));

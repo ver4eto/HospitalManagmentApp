@@ -3,6 +3,7 @@ using static HospitalManagmentApp.Common.ApplicationConstants;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Patient;
 
 using System.Web.Mvc;
+using System.ComponentModel;
 
 namespace HospitalManagment.ViewModels.Patient
 {
@@ -23,7 +24,9 @@ namespace HospitalManagment.ViewModels.Patient
         [EmailAddress]
         public string EmailAddress { get; set; } = null!;
 
-      
+        [Required(ErrorMessage = RequiredErrorMessage)]
+        [PasswordPropertyText]
+        public string Password { get; set; } = null!;
         public string? PhoneNumber { get; set; } 
 
         [Required(ErrorMessage = RequiredErrorMessage)]
@@ -42,5 +45,9 @@ namespace HospitalManagment.ViewModels.Patient
         public Guid RoomId { get; set; }
 
         public List<SelectListItem> Rooms { get; set; } = new List<SelectListItem>();
+
+        public Guid SelectedDoctorId { get; set; } 
+        public List<SelectListItem> Doctors { get; set; } = new List<SelectListItem>();
+       
     }
 }

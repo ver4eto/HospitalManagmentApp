@@ -10,6 +10,7 @@
     <h2 class="text-center">Edit Nurse Details</h2>
 
     <form asp-action="Edit" method="post" class="mt-4">
+        @Html.AntiForgeryToken()
         <input type="hidden" asp-for="Id" />
 
         <div class="form-group">

@@ -1,0 +1,18 @@
+﻿@using HospitalManagment.ViewModels.Manager
+@model ManagerIndexViewModel
+
+<h1 class="text-center">Manager Dashboard</h1>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            @foreach (var button in Model.ReportButtons)
+            {
+                <button class="btn @button.CssClass mb-3"
+                        onclick="location.href='@Url.Action(button.ActionName, "Manager")'">
+                    @button.Title
+                </button>
+            }
+        </div>
+    </div>
+</div>

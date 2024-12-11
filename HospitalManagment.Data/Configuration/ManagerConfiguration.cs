@@ -14,14 +14,21 @@ namespace HospitalManagmentApp.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Manager> builder)
         {
+            builder
+                .HasOne(m => m.User)
+                .WithMany(um => um.Managers)
+                .HasForeignKey(m => m.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasData
                 (
                 new Manager()
                 {
-                    Id =Guid.NewGuid(),
-                    FullName="Stoian Ivanov",
-                    PhoneNumber="+359883456789",
-                    EmailAddress=  "ivanovst@abv.bg"
+                    Id = new Guid("06ea23a1-095e-475f-937e-cb3e34c4def2"),
+                    FullName = "Stoian Ivanov",
+                    PhoneNumber = "+359883456789",
+                    EmailAddress = "ivanovst@abv.bg",
+                    UserId = "06ea23a1-095e-475f-937e-cb3e34c4def2"
                 }
                 );
         }

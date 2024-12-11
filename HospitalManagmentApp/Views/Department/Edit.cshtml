@@ -8,6 +8,7 @@
     <h2 class="text-center">Edit Department</h2>
 
     <form asp-action="Edit" method="post" class="mt-4">
+        @Html.AntiForgeryToken()
         <input type="hidden" asp-for="DepartmentId" />
 
         <div class="form-group">

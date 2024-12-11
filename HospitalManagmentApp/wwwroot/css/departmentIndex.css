@@ -1,0 +1,36 @@
+﻿/* General button styles */
+.btn-add, .btn-update, .btn-delete {
+    font-weight: bold; /* Make letters bold */
+    color: black; /* Set text color to black */
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 1rem;
+}
+
+/* Specific button colors */
+.btn-add {
+    background-color: lightgreen;
+}
+
+.btn-update {
+    background-color: lightgray;
+}
+
+.btn-delete {
+    background-color: red;
+}
+
+/* Larger department card */
+.card {
+    font-size: 1.2rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-img-top {
+    border-bottom: 2px solid #ddd;
+}

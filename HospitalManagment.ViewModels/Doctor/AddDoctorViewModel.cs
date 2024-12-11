@@ -1,10 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+
+using DoctorModel= HospitalManagmentApp.DataModels.Doctor;
+using HospitalManagmentApp.Services.Mapping;
+using System.ComponentModel.DataAnnotations;
 using static HospitalManagmentApp.Common.ApplicationConstants;
 using static HospitalManagmentApp.Common.EntityValidationConstants.Doctor;
+using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using System.ComponentModel;
 
 namespace HospitalManagment.ViewModels.Doctor
 {
-    public class AddDoctorViewModel
+    public class AddDoctorViewModel : IMapTo<DoctorModel>,IHaveCustomMappings
     {
         [Required(ErrorMessage =RequiredErrorMessage)]
         [Length(LastNameMinLenght,LastNameMaxLenght,ErrorMessage =LenghtErrorMessage)]
@@ -23,13 +30,22 @@ namespace HospitalManagment.ViewModels.Doctor
         public string EmailAddress { get; set; } = null!;
 
         [Required(ErrorMessage = RequiredErrorMessage)]
+        [PasswordPropertyText]
+        public string Password { get; set; } = null!;
+
+        [Required(ErrorMessage = RequiredErrorMessage)]
         [Range(1.0d, double.MaxValue,ErrorMessage =SalaryMinValueErrorMessage)]
         public decimal Salary { get; set; }
 
         [Required(ErrorMessage = RequiredErrorMessage)]
         public Guid DepartmentId { get; set; }
-        public ICollection<HospitalManagmentApp.DataModels.Department> Departents { get; set; }=new List<HospitalManagmentApp.DataModels.Department>();
+        public IEnumerable<HospitalManagmentApp.DataModels.Department> Departents { get; set; }=new List<HospitalManagmentApp.DataModels.Department>();
 
-       
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration
+        .CreateMap<AddDoctorViewModel, DoctorModel>()
+        .ForMember(d => d.DepartmentId, x => x.MapFrom(s => s.DepartmentId));
+        }
     }
 }

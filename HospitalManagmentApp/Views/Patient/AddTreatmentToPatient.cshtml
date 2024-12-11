@@ -1,0 +1,48 @@
+﻿@using HospitalManagment.ViewModels.Patient
+@model AddTreatmentToPatientViewModel
+
+@{
+    ViewData["Title"] = "Assign Treatments to Patient";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Assign Treatments to Patient</h2>
+    <hr />
+
+   
+    <div class="card my-4">
+        <div class="card-body">
+            <h4 class="card-title">Patient Details</h4>
+            <p><strong>First Name:</strong> @Model.FirstName</p>
+            <p><strong>Last Name:</strong> @Model.LastName</p>
+            <p><strong>Department:</strong> @Model.DepartmentName</p>
+        </div>
+    </div>
+
+  
+    <form asp-action="AddTreatmentToPatientAsync" asp-controller="Patient" method="post">
+        @Html.AntiForgeryToken()
+        
+        <input type="hidden" asp-for="PatientId" />
+        <input type="hidden" asp-for="DepartmentName" />
+        <input type="hidden" asp-for="FirstName" />
+        <input type="hidden" asp-for="LastName" />
+
+        <div class="form-group">
+            <label for="Treatments" style="font-weight: bold;">Available Treatments</label>
+            <select asp-for="SelectedTreatmentIds" class="form-control" multiple size="10">
+                @foreach (var treatment in Model.AvailableTreatments)
+                {
+                    <option value="@treatment.Value">@treatment.Text</option>
+                }
+            </select>
+
+            <span class="form-text text-muted">Hold down the Ctrl (Windows) or Command (Mac) key to select multiple treatments.</span>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a asp-action="Index" class="btn btn-secondary ml-2">Cancel</a>
+        </div>
+    </form>
+</div>

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HospitalManagmentApp.Services.AutoMapper;
+using DoctorModel = HospitalManagmentApp.DataModels.Doctor;
 
 namespace HospitalManagment.ViewModels.Doctor
 {
-    public class DeleteDoctorViewModel
+    public class DeleteDoctorViewModel : IMapFrom<DoctorModel>
     {
         public Guid Id { get; set; }
             
@@ -20,5 +16,6 @@ namespace HospitalManagment.ViewModels.Doctor
         public string Specialty { get; set; } =null!;
 
         public string? DepartmentName { get; set; }
+        public string UserId { get; set; } = null!;
     }
 }

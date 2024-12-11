@@ -1,47 +1,52 @@
-﻿using HospitalManagment.ViewModels.Doctor;
-using HospitalManagment.ViewModels.Nurse;
-using HospitalManagment.ViewModels.Patient;
-using HospitalManagmentApp.Data;
+﻿using HospitalManagment.ViewModels.Patient;
 using HospitalManagmentApp.DataModels;
+using HospitalManagmentApp.Services.Data.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using System.Drawing.Printing;
+using static HospitalManagmentApp.Common.EntityValidationConstants;
+using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
 
-using Microsoft.EntityFrameworkCore;
 
-using System.Web.Mvc;
 using Controller = Microsoft.AspNetCore.Mvc.Controller;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace HospitalManagmentApp.Controllers
 {
-
+    [Authorize(Roles ="Doctor, Nurse, Manager,Admin")]
     public class PatientController : Controller
     {
+        private readonly UserManager <ApplicationUser> userManager;
+        private readonly IPatientService patientService;
 
-        private readonly HMDbContext context;
-
-        public PatientController(HMDbContext context)
+        public PatientController(UserManager<ApplicationUser> userManager, IPatientService patientService)
         {
-            this.context = context;
+            this.userManager = userManager;
+            this.patientService = patientService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search, string? department, int? room, int pageNumber = 1, int pageSize = 3)   
         {
-            var patients = await context
-                .Patients
-                .Where(p => p.IsDeleted == false)
-                .Select(p => new PatientIndexViewModel()
-                {
-                    Name = $"{p.FirstName} {p.LastName}",
-                    EGN = p.EGN,
-                    PhoneNumber = p.PhoneNumber,
-                    Address = p.Address,
-                    Department = p.Department.Name,
-                    Room = p.Room.RoomNumber,
-                    HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
-                    EmailAddress = p.EmailAddress,
+            var totalPatients = await patientService.GetTotalPatientsCountAsync(search, department, room);
+            var totalPages = (int)Math.Ceiling((double)totalPatients / pageSize);
 
-                })
-                .ToListAsync();
+            // all patients for the current page
+            var patients = await patientService.GetAllPatientsAsync(search, department, room, pageSize, pageNumber);
+
+            // add info for pagination and filters
+            ViewData["SearchQuery"] = search;
+            ViewData["Department"] = department;
+            ViewData["Room"] = room;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = pageNumber;
+
+            if (!patients.Any())
+            {
+                ViewBag.Message = "No patients available for the searched criteria. Displaying all patients below.";
+                patients = await patientService.GetAllPatientsAsync(null, null, null, pageSize, pageNumber);
+            }
 
             return View(patients);
         }
@@ -49,90 +54,42 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var patient = new AddPatientViewModel();
-            patient.Departments = await GetDepartments();
-            patient.Rooms = new List<SelectListItem>() ;
+            var patient = await patientService.PrepareAddPatientViewModelAsync() ;
+            
             return View(patient);
         }
 
         [HttpGet]
-        public async Task< IActionResult> GetFreeRooms(Guid departmentId)
+        public async Task<IActionResult> GetFreeRooms(Guid departmentId)
         {
-            var freeRooms = context.Rooms
-                .Where(r => r.DepartmnetId == departmentId && r.HasFreeBeds == true)
-                .Select(r => new SelectListItem
-                {
-                    Value = r.Id.ToString(),
-                    Text = r.RoomNumber.ToString(),
-                }).ToList();
+            var freeRooms = await patientService.GetFreeRoomsAsync(departmentId);
 
-            return Json(freeRooms); // Return free rooms as JSON
+            return Json(freeRooms);
         }
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddPatientViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Departments = await GetDepartments();
-                model.Rooms = context.Rooms
-               .Where(r => r.DepartmnetId == model.DepartmentId && r.HasFreeBeds == true)
-               .Select(r => new SelectListItem
-               {
-                   Value = r.Id.ToString(),
-                   Text = r.RoomNumber.ToString()
-               }).ToList();
+               AddPatientViewModel addPatientViewModel =await patientService.PrepareAddPatientViewModelAsync();
 
+                return View(addPatientViewModel);
+            }
+
+            var isPatientAdded=await patientService.AddPatientAsync(model);
+            if (!isPatientAdded)
+            {
                 return View(model);
             }
-
-            var patient = new Patient()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                EmailAddress = model.EmailAddress,
-                Address = model.Address,
-                DepartmentId = model.DepartmentId,
-                HasMedicalInsurance=model.HasMedicalInsurance,
-                EGN=model.EGN,
-                PhoneNumber=model.PhoneNumber,
-                RoomId=model.RoomId,
-
-            };
-            var room = await context
-                .Rooms
-                .FindAsync(model.RoomId);
-
-            if (room != null)
-            {
-                room.HasFreeBeds = false;
-            }
-
-            await context.Patients.AddAsync(patient);
-            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Manage()
         {
-            var patients = await context
-                .Patients
-                .Where(p => p.IsDeleted == false)
-                .Select(p => new PatientIndexViewModel()
-                {
-                    Id = p.Id,
-                    Name = $"{p.FirstName} {p.LastName}",
-                    EGN = p.EGN,
-                    PhoneNumber = p.PhoneNumber,
-                    Address = p.Address,
-                    Department = p.Department.Name,
-                    Room = p.Room.RoomNumber,
-                    HasMedicalInsurance = HasMedicalInsurance(p.HasMedicalInsurance),
-                    EmailAddress = p.EmailAddress,
-
-                })
-                .ToListAsync();
+            var patients = await patientService.Menage();
 
             return View(patients);
         }
@@ -140,57 +97,37 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> MovePatient(Guid id)
         {
-            var patient=await context
-                .Patients
-                .Where (p => p.IsDeleted == false && p.Id==id)
-                .Include(p=>p.Room)
-                .Include(p=>p.Department)
-                .FirstOrDefaultAsync();
+            var patient=await patientService.GetMovePatientModelAsync(id);
 
             if (patient == null)
             {
                 return BadRequest();
             }
 
-            var model = new MovePatientToDepartmentViewModel()
-            {
-                PatientId = id,
-                Name = $"{patient.FirstName} {patient.LastName}",
-                EGN = patient.EGN,
-                CurrentRoom = patient.Room.RoomNumber,
-                CurrentDepartment = patient.Department.Name,
-                CurrentDepartmentId = patient.Department.Id,
-                CurrentRoomId = patient.Room.Id,
-                Departments=await GetDepartments()
-            };
-            return View(model);
+            return View(patient);
         }
 
         [HttpGet]
-        public async Task< IActionResult> GetFreeRoomsOnMove(Guid departmentId)
+        public async Task<IActionResult> GetFreeRoomsOnMove(Guid departmentId)
         {
-            var freeRooms =await context.Rooms
-                .Where(r => r.DepartmnetId == departmentId && !r.Patients.Any())
-                .Select(r => new { value = r.Id, text = r.RoomNumber })
-                .ToListAsync();
+            var freeRooms = await patientService.GetFreeRoomsOnMoveAsync(departmentId);
 
             return Json(freeRooms);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> MovePatient(MovePatientToDepartmentViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            var patient =await context.Patients.FindAsync(model.PatientId);
+            var patientIsMoved = await patientService.MovePatientAsync(model);
 
-            if (patient == null)
-                return NotFound();
-
-            patient.DepartmentId = model.NewDepartmentId;
-            patient.RoomId = model.NewRoomId;
-           await context.SaveChangesAsync();
+            if (patientIsMoved == false)
+                {
+                return BadRequest(); 
+            }
 
             return RedirectToAction("Index");
         }
@@ -199,9 +136,7 @@ namespace HospitalManagmentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> DischargePatient(Guid id)
         {
-            var patient = await context
-                .Patients
-                .FindAsync(id);
+            var patient = await patientService.GetDischargePatientViewModel(id);
 
             if (patient == null)
             {
@@ -209,49 +144,119 @@ namespace HospitalManagmentApp.Controllers
             }
             //TODO: check if user is in this department!!
 
-            var model = new DischargePatientViewModel
-            {
-                Id = id,
-                Name=$"{patient.FirstName} {patient.LastName}"
-            };
 
-            return View(model);
+            return View(patient);
 
         }
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DischargePatient(DischargePatientViewModel model, Guid id)
         {
-            var patient = await context
-                .Patients
-                .Where(d => d.Id == id)
-                .Where(d => d.IsDeleted == false)
-                .FirstOrDefaultAsync();
+            var patientIsDischarged = await patientService.DischargePatientAsync(model,id);
 
-            if (patient == null)
+            if (patientIsDischarged == false)
             {
                 return BadRequest();
             }
-
-            patient.IsDeleted = true;
-            await context.SaveChangesAsync();
+                       
             return RedirectToAction(nameof(Index));
         }
 
-        private static string HasMedicalInsurance(bool hasMedicalInsurance)
+        [HttpGet]
+        public async Task<IActionResult> SeePatientMedicalInfo(Guid patientId)
         {
-            if (hasMedicalInsurance==true)
-            {
-                return "Yes";
-            }
-            return "No";
+            var patientMedicalInfo=await patientService.SeePatientMedicalInfo(patientId);
 
+            if (patientMedicalInfo == null)
+            {
+                return NotFound();
+            }
+            return View(patientMedicalInfo);
         }
 
-        private async Task<ICollection<Department>> GetDepartments()
+        [HttpGet]
+        [Route("Patient/AddTreatmentToPatient")]
+        public async Task<IActionResult> AddTreatmentToPatient(Guid patientId)
         {
-            return await context.Departments.ToListAsync();
+           
+            var patient = await patientService.GetAddTreatmentToPatientViewModel(patientId);
+
+            if (patient == null)
+            {
+                return NotFound("Patient not found.");
+            }
+
+            return View(patient);
+        }
+
+        [HttpPost]
+        [Route("Patient/AddTreatmentToPatientAsync")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddTreatmentToPatientAsync(AddTreatmentToPatientViewModel model)
+        {
+            
+            if (!ModelState.IsValid)
+            {               
+                return View( model);
+            }
+
+            // Save changes to the database
+           var result = await patientService.AddTreatmentToPatientAsync(model);
+            if (result == true)
+            {
+                TempData["SuccessMessage"] = "Treatment was successfully added to the patient.";
+
+                // Redirect to the Index action
+                return RedirectToAction("Index");
+                //return RedirectToAction(nameof(AddTreatmentToPatient),new { patientId=model.PatientId});
+            }
+
+            else
+            {
+                ModelState.AddModelError("", "Failed to add treatment.");
+                return View(model);
+            }
+
+            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeTreatments(Guid patientId)
+        {
+           var model=await patientService.GetChangeTreatmentViewModel(patientId);
+
+            if (model == null)
+            {
+                return NotFound("Patient not found.");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeTreatments(ChangeTreatmentsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model); 
+            }
+
+            var result= await patientService.ChangeTreatmentsAsync(model);
+            if (result == true)
+            {
+
+                TempData["SuccessMessage"] = "Treatments updated successfully.";
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+               
+                TempData["ErrorMessage"] = "Failed to update treatments. Please try again.";
+                return RedirectToAction("ChangeTreatments", new { patientId = model.PatientId });
+            }
         }
     }
 }

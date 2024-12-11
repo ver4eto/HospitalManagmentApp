@@ -5,26 +5,103 @@
     ViewData["Title"] = "All Patients";
 }
 
+@if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @ViewBag.SuccessMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <h2>All Patients</h2>
 
+<!-- Filter Form -->
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="row">
+        <div class="col">
+            <input type="text"
+                   name="searchQuery"
+                   class="form-control"
+                   placeholder="Search by Name..."
+                   value="@ViewData["SearchQuery"]" />
+        </div>
+        <div class="col">
+            <input type="text"
+                   name="department"
+                   class="form-control"
+                   placeholder="Patient`s admission department..."
+                   value="@ViewData["Department"]" />
+        </div>
+        <div class="col">
+            <input type="number"
+                   name="room"
+                   class="form-control"
+                   placeholder="Patient`s room"
+                   value="@ViewData["Room"]" />
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+
+<!-- Patient Cards -->
 <div class="row">
-    @foreach (var patient in Model)
+    @if (Model.Any())
+
     {
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                <img src="~/images/patient.png" class="card-img-top" alt="Doctor Image" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <p class="card-title">Name: @patient.Name</p>
-                    <p class="card-title">Address: @patient.Address</p>
-                    <p class="card-title">Phone number: @patient.PhoneNumber</p>
+        @foreach (var patient in Model)
 
-                    <p class="card-title">Has medical insurance: @patient.HasMedicalInsurance</p>
-                    <p class="card-title">Email: @patient.EmailAddress</p>
-                    <p class="card-text">Department: @patient.Department</p>
-                    <p class="card-text">RoomNumber: @patient.Room</p>
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="~/images/patient.png" class="card-img-top" alt="Patient Image" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <p class="card-title">Name: @patient.Name</p>
+                        <p class="card-title">Address: @patient.Address</p>
+                        <p class="card-title">Phone number: @patient.PhoneNumber</p>
+                        <p class="card-title">Has medical insurance: @patient.HasMedicalInsurance</p>
+                        <p class="card-title">Email: @patient.EmailAddress</p>
+                        <p class="card-text">Department: @patient.Department</p>
+                        <p class="card-text">Room Number: @patient.Room</p>
 
+                        <div class="text-center mt-3">
+                            <a asp-controller="Patient" asp-action="SeePatientMedicalInfo" asp-route-patientId="@patient.Id" class="btn btn-primary">
+                                View Medical Info
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
+        }
+    }
+
+    else
+
+    {
+        <div class="alert alert-warning" role="alert">
+            No patients found for the given criteria.
         </div>
     }
 </div>
+
+<!-- Pagination Controls -->
+@if (ViewBag.TotalPages > 1)
+
+{
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+
+            {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                    <a class="page-link"
+                       href="?pageNumber=@i&pageSize=3&searchQuery=@ViewData["SearchQuery"]&department=@ViewData["Department"]&room=@ViewData["Room"]">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,13 +14,14 @@ namespace HospitalManagmentApp.DataModels
         public Guid Id { get; set; }
 
         [Required]
-        [Comment("Doctor`s First Name")]
-        [MaxLength(FirstNameMaxLenght)]
+        [Comment("Doctor`s Last Name")]
+        [MaxLength(LastNameMaxLenght)]
+        
         public string LastName { get; set; } = null!;
 
         [Required]
-        [MaxLength(LastNameMaxLenght)]
-        [Comment("Doctor`s Last Name")]
+        [MaxLength(FirstNameMaxLenght)]
+        [Comment("Doctor`s First Name")]
         public string FirstName { get; set; } = null!;
 
         [Required]
@@ -45,14 +45,16 @@ namespace HospitalManagmentApp.DataModels
 
        
         [Comment("In which department works the doctor")]
-        public Guid DepartmnetId { get; set; } 
+        public Guid DepartmentId { get; set; } 
 
-        [ForeignKey(nameof(DepartmnetId))]
+        [ForeignKey(nameof(DepartmentId))]
         public Department Department { get; set; } =null!;
 
         public IEnumerable<PatientDoctor> DoctorPatients { get; set; } = new HashSet<PatientDoctor>();
 
-        //public Guid UserId { get; set; }
-        //public IdentityUser User { get; set; } = null!;
+        public string UserId { get; set; } = null!;
+
+        [ForeignKey(nameof(UserId))]
+        public ApplicationUser User { get; set; } = null!;
     }
 }

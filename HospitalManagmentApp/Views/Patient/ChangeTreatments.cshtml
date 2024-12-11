@@ -1,0 +1,51 @@
+﻿@using HospitalManagment.ViewModels.Patient
+@model ChangeTreatmentsViewModel
+
+<h2>Change Treatments for @Model.FirstName @Model.LastName</h2>
+<p>Department: @Model.DepartmentName</p>
+
+<form asp-action="ChangeTreatments" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="PatientId" />
+    <input type="hidden" asp-for="FirstName" />
+    <input type="hidden" asp-for="LastName" />
+    <input type="hidden" asp-for="DepartmentName" />
+
+    <div class="form-group">
+        <h4>Assigned Treatments</h4>
+        @if (Model.AssignedTreatments.Any())
+
+        {
+            <select asp-for="RemovedTreatmentIds" class="form-control" multiple>
+                @foreach (var treatment in Model.AssignedTreatments)
+
+                {
+                    <option value="@treatment.Value">@treatment.Text</option>
+                }
+            </select>
+            <span class="form-text">Select treatments to remove.</span>
+        }
+
+        else
+
+        {
+            <p>No treatments assigned to this patient.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <h4>Available Treatments</h4>
+        <select asp-for="NewTreatmentIds" class="form-control" multiple>
+            @foreach (var treatment in Model.AvailableTreatments)
+            {
+                <option value="@treatment.Value">@treatment.Text</option>
+            }
+        </select>
+        <span class="form-text">Select treatments to add.</span>
+    </div>
+
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
