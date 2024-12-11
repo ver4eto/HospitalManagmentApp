@@ -42,16 +42,15 @@ namespace HospitalManagmentApp.Services.Data
             this.patientTreatmentRepo = patientTreatmentRepo;
         }
 
-        public async Task<List<PatientIndexViewModel>> GetAllPatientsAsync(string? search, string? department, int? room)
+        public async Task<List<PatientIndexViewModel>> GetAllPatientsAsync(string? search, string? department, int? room,int pageSize, int pageNumber=1)
         {
             try
             {
-                // Base query for patients
                 var patientsQuery = this.patientRepo
-                    .GetAllAttcahed()
-                    .Where(p => !p.IsDeleted);
+            .GetAllAttcahed()
+            .Where(p => !p.IsDeleted);
 
-                // Apply search filter if search input is provided
+              
                 if (!string.IsNullOrWhiteSpace(search))
                 {
                     var searchData = search.ToLower().Trim();
@@ -62,20 +61,27 @@ namespace HospitalManagmentApp.Services.Data
                         (p.EmailAddress != null && p.EmailAddress.ToLower().Contains(searchData)) ||
                         (p.PhoneNumber != null && p.PhoneNumber.ToLower().Contains(searchData)));
                 }
+
+               
                 if (!string.IsNullOrWhiteSpace(department))
                 {
-                    var departmentFiletr = department.ToLower().Trim();
-                    patientsQuery = patientsQuery.Where(d => d.Department.Name.ToLower().Contains(departmentFiletr));
+                    var departmentFilter = department.ToLower().Trim();
+                    patientsQuery = patientsQuery.Where(p => p.Department.Name.ToLower().Contains(departmentFilter));
                 }
 
-                
-                if (room>0)
+        
+                if (room.HasValue && room > 0)
                 {
-                   
-                    patientsQuery = patientsQuery.Where(p => p.Room.RoomNumber==room);
+                    patientsQuery = patientsQuery.Where(p => p.Room != null && p.Room.RoomNumber == room);
                 }
-                // Project the data to the view model
+
+              
+                var totalPatients = await patientsQuery.CountAsync(); // Get the total number of records
+
                 var patients = await patientsQuery
+                    .OrderBy(p => p.Id) // Ensure consistent ordering
+                    .Skip((pageNumber - 1) * pageSize) // Skip records for previous pages
+                    .Take(pageSize) // Take the records for the current page
                     .Select(p => new PatientIndexViewModel
                     {
                         Id = p.Id,
@@ -98,6 +104,36 @@ namespace HospitalManagmentApp.Services.Data
                 throw new ApplicationException("An error occurred while fetching the patients.", ex);
             }
         }
+
+        public async Task<int> GetTotalPatientsCountAsync(string? search, string? department, int? room)
+        {
+            var patientsQuery = this.patientRepo
+                .GetAllAttcahed()
+                .Where(p => !p.IsDeleted);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var searchData = search.ToLower().Trim();
+                patientsQuery = patientsQuery.Where(p =>
+                    p.FirstName.ToLower().Contains(searchData) ||
+                    p.LastName.ToLower().Contains(searchData) ||
+                    p.EGN.ToLower().Contains(searchData) ||
+                    (p.EmailAddress != null && p.EmailAddress.ToLower().Contains(searchData)) ||
+                    (p.PhoneNumber != null && p.PhoneNumber.ToLower().Contains(searchData)));
+            }
+            if (!string.IsNullOrWhiteSpace(department))
+            {
+                var departmentFilter = department.ToLower().Trim();
+                patientsQuery = patientsQuery.Where(d => d.Department.Name.ToLower().Contains(departmentFilter));
+            }
+            if (room.HasValue && room > 0)
+            {
+                patientsQuery = patientsQuery.Where(p => p.Room != null && p.Room.RoomNumber == room);
+            }
+
+            return await patientsQuery.CountAsync(); 
+        }
+
         public async Task<AddPatientViewModel> PrepareAddPatientViewModelAsync()
         {
             var departments = await GetDepartments();

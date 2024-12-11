@@ -4,6 +4,7 @@ using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
+using System.Drawing.Printing;
 using static HospitalManagmentApp.Common.EntityValidationConstants;
 using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
 
@@ -26,19 +27,25 @@ namespace HospitalManagmentApp.Controllers
             this.userManager = userManager;
             this.patientService = patientService;
         }
-        public async Task<IActionResult> Index(string? search, string? department, int? room)
+        public async Task<IActionResult> Index(string? search, string? department, int? room, int pageNumber = 1, int pageSize = 3)   
         {
-            var patients = await patientService.GetAllPatientsAsync(search,department, room);
+            var totalPatients = await patientService.GetTotalPatientsCountAsync(search, department, room);
+            var totalPages = (int)Math.Ceiling((double)totalPatients / pageSize);
 
-            ViewData["SearchQuery"] = search;          
+            // all patients for the current page
+            var patients = await patientService.GetAllPatientsAsync(search, department, room, pageSize, pageNumber);
+
+            // add info for pagination and filters
+            ViewData["SearchQuery"] = search;
             ViewData["Department"] = department;
             ViewData["Room"] = room;
-            ViewBag.SuccessMessage = TempData["SuccessMessage"];
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = pageNumber;
 
             if (!patients.Any())
             {
-                ViewBag.Message = "No patients available.";
-                patients = await this.patientService.GetAllPatientsAsync(null, null, null);
+                ViewBag.Message = "No patients available for the searched criteria. Displaying all patients below.";
+                patients = await patientService.GetAllPatientsAsync(null, null, null, pageSize, pageNumber);
             }
 
             return View(patients);

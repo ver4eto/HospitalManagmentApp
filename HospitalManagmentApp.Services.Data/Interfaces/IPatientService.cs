@@ -7,7 +7,9 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
 {
     public interface IPatientService
     {
-        Task<List<PatientIndexViewModel>> GetAllPatientsAsync(string? search, string? department, int? room);
+        Task<List<PatientIndexViewModel>> GetAllPatientsAsync(string? search, string? department, int? room,int pageSize, int pageNumber);
+
+        Task<int> GetTotalPatientsCountAsync(string? search, string? department, int? room);
         Task<AddPatientViewModel> PrepareAddPatientViewModelAsync();
         Task <bool> AddPatientAsync(AddPatientViewModel model);
         Task<MovePatientToDepartmentViewModel?> GetMovePatientModelAsync(Guid id);
