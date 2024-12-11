@@ -7,7 +7,7 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
 
         Task<IEnumerable<DoctorIndexViewModel>> IndexGetAllDoctorsAsync();
         Task AddDoctorAsync(AddDoctorViewModel model);
-        Task <MenageDoctorViewModel?> MenageDoctor(Guid id);
+        
         Task <EditDoctorViewModel?> GetEditDoctorViewModel(Guid id);
         Task <bool> EditDoctorAsync(EditDoctorViewModel model);
       
@@ -17,6 +17,6 @@ namespace HospitalManagmentApp.Services.Data.Interfaces
         Task<AddDoctorViewModel> GetAddDoctorViewModel();
         Task<DeleteDoctorViewModel> GetDeleteDoctorViewModel(Guid id);
         Task<bool> DeleteDoctorAsync(DeleteDoctorViewModel model,Guid id);
-       // Task<IEnumerable<Department>> GetDepartments();
+       
     }
 }

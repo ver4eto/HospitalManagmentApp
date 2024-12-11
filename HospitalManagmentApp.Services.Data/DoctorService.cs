@@ -239,32 +239,6 @@ namespace HospitalManagmentApp.Services.Data
 
         }
 
-        public async Task<MenageDoctorViewModel?> MenageDoctor(Guid id)
-        {
-            MenageDoctorViewModel? model = null;
-
-            var doctor = await this.doctorsRepository.GetAllAttcahed()
-            .Where(d => d.IsDeleted == false && d.Id == id)
-            .Include(d => d.Department)
-            .FirstOrDefaultAsync();
-
-            if (doctor.IsDeleted == false)
-            {
-                model = new()
-                {
-                    Id = doctor.Id,
-                    FirstName = doctor.FirstName,
-                    LastName = doctor.LastName,
-                    Specialty = doctor.Specialty,
-                    EmailAddress = doctor.EmailAddress,
-                    Salary = doctor.Salary,
-                    DepartmentName = doctor.Department.Name,
-                    UserId = doctor.UserId,
-                };
-                
-            }
-            return model;
-        }
         private async Task<IEnumerable<DataModels.Department>> GetDepartments()
         {
             return await departmentRepository.GetAllAsync();

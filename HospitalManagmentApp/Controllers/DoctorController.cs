@@ -47,20 +47,6 @@ namespace HospitalManagmentApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
-        [HttpGet]
-        public async Task<IActionResult> Menage(Guid id)
-        {
-            MenageDoctorViewModel? model = await this.doctorService.MenageDoctor(id);
-
-            if (model == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(model);
-        }
-
         
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
@@ -90,15 +76,6 @@ namespace HospitalManagmentApp.Controllers
                 return this.View(model);
             }
 
-            //doctor.FirstName = model.FirstName;
-            //doctor.LastName = model.LastName;
-            //doctor.Salary = model.Salary;
-            //doctor.Specialty = model.Specialty;
-            //doctor.DepartmnetId=model.DepartmentId;
-            //doctor.EmailAddress = model.EmailAddress;
-           
-            
-            //await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
         }

@@ -29,8 +29,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="doctorDropdown">
                         <li><a class="dropdown-item" asp-controller="Doctor" asp-action="Index">View Doctors</a></li>
-                        <li><a class="dropdown-item" asp-controller="Doctor" asp-action="Create">Add Doctor</a></li>
-                        <li><a class="dropdown-item" asp-controller="Doctor" asp-action="Menage">Manage Doctors</a></li>
+                        <li><a class="dropdown-item" asp-controller="Doctor" asp-action="Create">Add Doctor</a></li>                        
                     </ul>
                 </div>
             </div>
@@ -44,7 +43,7 @@
                     <ul class="dropdown-menu" aria-labelledby="nurseDropdown">
                         <li><a class="dropdown-item" asp-controller="Nurse" asp-action="Index">View Nurses</a></li>
                         <li><a class="dropdown-item" asp-controller="Nurse" asp-action="Add">Add Nurse</a></li>
-                        <li><a class="dropdown-item" asp-controller="Nurse" asp-action="Manage">Manage Nurses</a></li>
+                       
                     </ul>
                 </div>
             </div>
@@ -86,7 +85,7 @@
                     {
                         <li><a class="dropdown-item" href="/Department/Index">View Departments</a></li>
                         <li> <a class="dropdown-item" href="/Department/Add">Add Department</a></li>
-                        <li>  <a class="dropdown-item" href="/Department/Manage">Manage Departments</a></li>
+                       
                     }
                 </ul>
             </div>
@@ -99,12 +98,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="patientDropdown">
                     <li><a class="dropdown-item" href="/Room/Index">View Rooms</a></li>
-                    @if (User.IsInRole("Manager") || User.IsInRole("Admin") || User.IsInRole("Doctor") || User.IsInRole("Nurse"))
-
-                    {
-                       
-                        <li><a class="dropdown-item" href="/Room/Manage">Manage Rooms</a></li>
-                    }
+                   
                 </ul>
             </div>
         </div>
@@ -122,14 +116,12 @@
 
                     {
                         <li> <a class="dropdown-item" href="/Treatment/Add">Add Treatment</a></li>
-                        <li>  <a class="dropdown-item" href="/Treatment/Manage">Manage Treatments</a></li>
+                       
                     }
                 </ul>
             </div>
         </div>
 
-        <!-- Other Dropdowns (Department, Room, Treatment) -->
-        @* Repeat the pattern above for other dropdowns like Department, Room, Treatment *@
 
     </div>
 </div>

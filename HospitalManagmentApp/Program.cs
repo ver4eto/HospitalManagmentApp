@@ -159,7 +159,20 @@ using (var scope = app.Services.CreateScope())
     {
         ("smith@abv.bg", "Doctor"),
         ("ivanovst@abv.bg", "Manager"),
-        ("petrovlazar@abv.bg", "Patient"),        
+        ("mary.johnson@example.com","Patient"),
+        ("petrovlazar@abv.bg", "Patient"),     
+        ("patricia.brown@example.com","Patient"),
+        ("robert.williams@example.com","Patient"),
+        ("nikolovapa@abv.bg","Nurse"),
+        ("michael.wilson@example.com","Patient"),
+        ("angelovz@abv.bg","Doctor"),
+        ("jennifer.miller@example.com","Patient"),
+        ("taskovao@abv.bg","Nurse"),
+        ("david.taylor@example.com","Patient"),
+        ("james.anderson@example.com","Patient"),
+        ("susan.anderson@example.com","Patient"),
+        ("slaveykir@abv.bg","Doctor"),
+        ("elizabeth.moore@example.com","Patient"),
         ("jhonson@abv.bg", "Doctor"),
         ("jhondoe@abv.bg","Doctor"),
         ("petrovp@abv.bg","Doctor"),
@@ -174,7 +187,8 @@ using (var scope = app.Services.CreateScope())
         ("ivanovivan@abv.bg","Patient"),
         ("petrovavanya@abv.bg","Patient"),
         ("stefanovp@abv.bg","Patient"),
-        ("sokolovs@abv.bg","Patient")
+        ("sokolovs@abv.bg","Patient"),
+        ("atanasovao@abv.bg","Doctor")
     };
 
     foreach (var (email, role) in usersToAssign)
