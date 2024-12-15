@@ -61,7 +61,7 @@
                     <p class="card-text"><strong>Department: </strong>@doctor.DepartmentName</p>
                            <div class="btn-group" role="group" aria-label="Doctor Actions">
         <!-- Update Button -->
-            <a asp-controller="Doctor" asp-action="Menage" asp-route-id="@doctor.Id" class="btn btn-warning btn-sm">Update</a>
+            <a asp-controller="Doctor" asp-action="Edit" asp-route-id="@doctor.Id" class="btn btn-warning btn-sm">Update</a>
 
         <!-- Delete Button -->
         <form asp-controller="Doctor" asp-action="Delete" asp-route-id="@doctor.Id" method="post" class="d-inline">
