@@ -1,11 +1,20 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace HospitalManagmentApp.DataModels
 {
+    [PrimaryKey(nameof(PatientId), nameof(DoctorId))]
     public class Appointment
     {
-        public Guid Id { get; init; } = Guid.NewGuid();
-        public Doctor Doctor { get; init; } = default!;
-        public Patient Patient { get; init; } = default!;
+        public Guid Id { get; init; } = Guid.Empty;
+
+        public Guid DoctorId { get; set; }
+        public Doctor Doctor { get; set; } = null!;
+
+        public Guid PatientId { get; set; }= Guid.Empty;
+        public Patient Patient { get; init; } =null!;
+
+
         public DateTime Start { get; init; }
         public DateTime End { get; init; }
 
