@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace HospitalManagmentApp.DataModels
 {
@@ -14,9 +15,13 @@ namespace HospitalManagmentApp.DataModels
         public Guid PatientId { get; set; }= Guid.Empty;
         public Patient Patient { get; set; } =null!;
 
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime Start { get; set; }
 
-        public DateTime Start { get; init; }
-        public DateTime End { get; init; }
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime End { get; set; }
 
         public override string ToString() => $"{Start:yyyy-MM-dd HH:mm} – {End:HH:mm} | Dr. {Doctor.FirstName} {Doctor.LastName} with {Patient.FirstName} {Patient.LastName}";
     }
