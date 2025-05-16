@@ -12,7 +12,7 @@ namespace HospitalManagmentApp.DataModels
         public Doctor Doctor { get; set; } = null!;
 
         public Guid PatientId { get; set; }= Guid.Empty;
-        public Patient Patient { get; init; } =null!;
+        public Patient Patient { get; set; } =null!;
 
 
         public DateTime Start { get; init; }
