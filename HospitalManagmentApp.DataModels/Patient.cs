@@ -49,7 +49,7 @@ namespace HospitalManagmentApp.DataModels
 
         public IEnumerable<PatientTreatment> PatientTreatments { get; set; } = new HashSet<PatientTreatment>();
         public IEnumerable<PatientDoctor> Doctors { get; set; } = new HashSet<PatientDoctor>();
-
+        public IEnumerable<Appointment> Appointments { get; set; } = new HashSet<Appointment>();
 
         [Comment("In which department the patient is assigned")]
         public Guid DepartmentId { get; set; } = Guid.Empty;
