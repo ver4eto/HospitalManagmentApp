@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HospitalManagmentApp.DataModels
 {
-    [PrimaryKey(nameof(PatientId), nameof(DoctorId))]
+    
     public class Appointment
     {
+        [Key]
         public Guid Id { get; init; } = Guid.Empty;
 
-        public Guid DoctorId { get; set; }
+        public Guid DoctorId { get; set; }= Guid.Empty; 
         public Doctor Doctor { get; set; } = null!;
 
         public Guid PatientId { get; set; }= Guid.Empty;
