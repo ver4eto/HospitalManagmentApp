@@ -51,6 +51,7 @@ namespace HospitalManagmentApp.DataModels
         public Department Department { get; set; } =null!;
 
         public IEnumerable<PatientDoctor> DoctorPatients { get; set; } = new HashSet<PatientDoctor>();
+        public IEnumerable<Appointment> Appointments { get; set; } =  new HashSet<Appointment>();
 
         public string UserId { get; set; } = null!;
 

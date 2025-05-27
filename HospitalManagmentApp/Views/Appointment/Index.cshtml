@@ -1,0 +1,77 @@
+﻿@using HospitalManagment.ViewModels.Appointment
+@model IEnumerable<AppointmentIndexViewModel>
+
+<h2>All Appointments</h2>
+
+@* 1) If the entire model is null… *@
+@if (Model == null)
+
+{
+    <div class="alert alert-danger">
+        Oops—there was a problem loading appointments.
+    </div>
+}
+@* 2) If it’s non-null but empty… *@
+else if (!Model.Any())
+
+{
+    <div class="alert alert-info">
+        No appointments to display.
+    </div>
+}
+
+else
+
+{
+    @* 3) Only now do we safely loop *@
+    <div class="row">
+        @foreach (var appointment in Model)
+
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Doctor</dt>
+                            <dd class="col-sm-9">
+                                Dr. @appointment.DoctorFirstName @appointment.DoctorLastName
+                            </dd>
+
+                            <dt class="col-sm-3">Patient</dt>
+                            <dd class="col-sm-9">
+                                @appointment.PatientFirstName @appointment.PatientLastName
+                            </dd>
+
+                            <dt class="col-sm-3">Start Time</dt>
+                            <dd class="col-sm-9">
+                                @appointment.Start.ToString("yyyy-MM-dd HH:mm")
+                            </dd>
+
+                            <dt class="col-sm-3">End Time</dt>
+                            <dd class="col-sm-9">
+                                @appointment.End.ToString("yyyy-MM-dd HH:mm")
+                            </dd>
+                        </dl>
+
+                        <div class="btn-group" role="group">
+                            <a asp-controller="Appointment"
+                               asp-action="Edit"
+                               asp-route-id="@appointment.Id"
+                               class="btn btn-sm btn-warning">Edit</a>
+                            <form asp-controller="Appointment"
+                                  asp-action="Delete"
+                                  asp-route-id="@appointment.Id"
+                                  method="post"
+                                  class="d-inline"
+                                  onsubmit="return confirm('Delete this appointment?');">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -3,7 +3,6 @@ using HospitalManagmentApp.Data;
 using HospitalManagmentApp.Models;
 using HospitalManagmentApp.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace HospitalManagmentApp.Controllers
