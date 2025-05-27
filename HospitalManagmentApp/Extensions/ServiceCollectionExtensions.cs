@@ -28,6 +28,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped(typeof(IRepository<ApplicationUser, Guid>), typeof(BaseRepository<ApplicationUser, Guid>));
             services.AddScoped(typeof(IRepository<PatientDoctor, object>), typeof(BaseRepository<PatientDoctor, object>));
             services.AddScoped(typeof(IRepository<PatientTreatment, object>), typeof(BaseRepository<PatientTreatment, object>));
+            services.AddScoped(typeof(IRepository<Appointment,Guid>), typeof(BaseRepository<Appointment, Guid>));
 
             return services;
         }

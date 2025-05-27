@@ -78,6 +78,38 @@
             </div>
         </div>
 
+        
+            <!-- Appointments -->
+            <div class="col-lg-3 col-md-4">
+                <div class="box shadow">
+                    <button class="btn btn-lg btn-success dropdown-toggle w-100"
+                            type="button" id="appointmentDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Appointments
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="appointmentDropdown">
+                        <li>
+                        <li><a class="dropdown-item" href="/Appointment/Index">View Appointments</a></li>
+                        
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Appointment"
+                               asp-action="Create">
+                                Add Appointment
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Appointment"
+                               asp-action="Manage">
+                                Manage Appointments
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
 
         <div class="col-lg-3 col-md-4">
             <div class="box shadow">
